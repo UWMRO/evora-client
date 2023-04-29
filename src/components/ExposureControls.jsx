@@ -4,7 +4,7 @@ import {useEffect, useState} from "react"
 
 
 
-function ExposureControls({ exposureType, imageType, filterType }) {
+function ExposureControls({ exposureType, imageType, filterType, setDisplayedImage }) {
 
     const [playing, setPlaying] = useState(false)
     const [audio] = useState(new Audio(process.env.PUBLIC_URL + '/tadaa-47995.mp3'))
@@ -46,7 +46,8 @@ function ExposureControls({ exposureType, imageType, filterType }) {
 
         console.log(message)
         // need to create url for file
-        window.JS9.Load(message.url)
+        // window.JS9.Load(message.url)
+        setDisplayedImage(message.url)
 
         // Play sounds after exposure completes.
         console.log('here')
