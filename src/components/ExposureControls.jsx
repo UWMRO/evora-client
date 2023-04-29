@@ -88,6 +88,22 @@ function ExposureControls({ exposureType, imageType, filterType }) {
                 <input type='number' {...register('expnum', { required: false })}/>
                 </label>
             }
+            {exposureType === 'Series'
+            && <label> Number of Accumulations
+                <input type='number' {...register('accumnum', { required: false })}/>
+                </label>
+            }
+            {exposureType === 'Series'
+            && <label> Kinetic Cycle Time
+                <input type='number' {...register('kinetictime', { required: false })}/>
+                </label>
+            }
+            {exposureType === 'Series'
+            && <label> Accumulate Cycle Time
+                <input type='number' {...register('accumtime', { required: false })}/>
+                </label>
+            }
+            
             <button type='submit'>Get Exposure</button>
 
         </form>
