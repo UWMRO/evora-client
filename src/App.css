@@ -1,0 +1,77 @@
+.App {
+  text-align: center;
+}
+
+.exposure-controls label {
+  display:block;
+  margin: 8px;
+} 
+
+.exposure-controls input {
+  margin-left: 4px;
+}
+
+.ImageTypeSelector {
+  text-align: left;
+  border: 1px solid black;
+}
+
+.Temperature label{
+  text-align: center;
+  display:block;
+  margin: 4px;
+}
+
+.Temperature input {
+  display: inline-block;
+  margin: 4px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.Logo {
+  height: 150px;
+  width: 150px;
+  border-radius: 50px;
+  margin-top: 2%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  background: rgb(254,0,240);
+  background: linear-gradient(90deg, rgba(254,0,240,1) 0%, rgba(97,9,121,1) 50%, rgba(0,237,255,0.7008053221288515) 100%);
+  color: white;
+}
+
