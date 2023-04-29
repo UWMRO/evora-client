@@ -18,13 +18,44 @@
 
 .Temperature label{
   text-align: center;
-  display:block;
-  margin: 4px;
+  display: inline-block;
+  margin: 4px 4px 10px 4px;
+}
+
+.Temperature button {
+  width: 37px;
+  margin-left: 10px;
 }
 
 .Temperature input {
   display: inline-block;
-  margin: 4px;
+  width: 26px;
+  padding-right: 25px;
+  margin: 10px 0px 0 10px;
+}
+
+.Temperature input[type="text"]::placeholder {
+  text-align: right;
+}
+
+.tempCelsiusIcon {
+  position: relative;
+  color: black;
+}
+
+.tempCelsiusIcon::before {
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 999;
+  position: absolute;
+  top: 2px;
+  left: 46px;
+  content: "°C";
+}
+
+.tempMessage {
+  display: block;
+  margin: 10px 0;
 }
 
 .App-logo {

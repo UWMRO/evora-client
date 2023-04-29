@@ -22,20 +22,20 @@ function SetTemp({temp, setTemp}) {
       }
     }
 
+    let coolingMessage = "";
+    if(temp != null){
+      coolingMessage = <span className='tempMessage'>Cooling to: {temp} °C</span>
+    }
+
     return (
       <form onSubmit={handleSubmit(onSubmit)} className='Temperature'>
-        <label>Input Temperature (Celsius)
-          <input type='text' {...register('temperature', { required: true })} placeholder='temperature (celsius)'/>
-        </label>
-        {temp}
-        <input type='submit'/>
-        
-        
-        
+        <label>Set Temperature</label>
+        <span className='tempCelsiusIcon'>
+          <input type='text' {...register('temperature', { required: true })} maxlength='4' placeholder='-50'/>
+        </span>
+        <button type='submit'>Set</button>
+        {coolingMessage}
       </form>
-      
-            
-      
       
     );
   }
