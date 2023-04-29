@@ -5,7 +5,7 @@
 .exposure-controls label {
   display:block;
   margin: 8px;
-} 
+}
 
 .exposure-controls input {
   margin-left: 4px;
@@ -100,9 +100,18 @@
   }
 }
 
+.blink {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 body {
   background: rgb(254,0,240);
   background: linear-gradient(90deg, rgba(254,0,240,1) 0%, rgba(97,9,121,1) 50%, rgba(0,237,255,0.7008053221288515) 100%);
   color: white;
 }
-
