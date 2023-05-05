@@ -5,7 +5,7 @@
 .exposure-controls label {
   display:block;
   margin: 8px;
-} 
+}
 
 .exposure-controls input {
   margin-left: 4px;
@@ -18,13 +18,44 @@
 
 .Temperature label{
   text-align: center;
-  display:block;
-  margin: 4px;
+  display: inline-block;
+  margin: 4px 4px 10px 4px;
+}
+
+.Temperature button {
+  width: 37px;
+  margin-left: 10px;
 }
 
 .Temperature input {
   display: inline-block;
-  margin: 4px;
+  width: 26px;
+  padding-right: 25px;
+  margin: 10px 0px 0 10px;
+}
+
+.Temperature input[type="text"]::placeholder {
+  text-align: right;
+}
+
+.tempCelsiusIcon {
+  position: relative;
+  color: black;
+}
+
+.tempCelsiusIcon::before {
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 999;
+  position: absolute;
+  top: 2px;
+  left: 46px;
+  content: "°C";
+}
+
+.tempMessage {
+  display: block;
+  margin: 10px 0;
 }
 
 .App-logo {
@@ -69,9 +100,28 @@
   }
 }
 
+.blink {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 body {
   background: rgb(254,0,240);
   background: linear-gradient(90deg, rgba(254,0,240,1) 0%, rgba(97,9,121,1) 50%, rgba(0,237,255,0.7008053221288515) 100%);
   color: white;
 }
 
+.display {
+  width: 100%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.display div {
+  margin: auto;
+}

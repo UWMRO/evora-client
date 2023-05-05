@@ -47,13 +47,11 @@ function App() {
         temp = {temp}
         setDisplayedImage = {setDisplayedImage}
       />
-      
-
-      <div className="JS9Menubar"></div>
-      <div className="JS9"></div>
-      <div className="JS9Statusbar"></div>
-      
-    
+      <div className="display">
+        <div className="JS9Menubar"></div>
+        <div className="JS9"></div>
+        <div className="JS9Statusbar"></div>
+      </div>
     </div>
     
   );

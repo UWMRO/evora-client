@@ -8,18 +8,16 @@ function GetTemp({currTemp, setCurrTemp}) {
       setCurrTemp(temperature["temperature"])
     }
 
+    let tempMessage = "";
+    if(currTemp != null){
+      tempMessage = <span className='tempMessage'>Current temp: {currTemp} °C</span>
+    }
 
     return (
       <fieldset className="Temperature">
-        <label> Current Temperature {currTemp}
-          <button onClick={callGetTemperature}>Get Temperature</button>
-          
-        </label>
-
-      
-      
-            
-      
+        <label>Get Temperature</label>
+        <button onClick={callGetTemperature}>Get</button>
+        {tempMessage}
       </fieldset>
     );
   }
