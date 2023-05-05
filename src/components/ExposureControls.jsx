@@ -38,6 +38,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
         // window.JS9.Load(message.url)
         setDisplayedImage(message.url)
+        setLastExpName(message.url)
 
         // Play sounds after exposure completes.
         setPlaying(true)
