@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import ImageTypeSelector from './components/ImageTypeSelector';
 import SetTemp from './components/SetTemp';
+import GetStatus from './components/GetStatus'
 import GetTemp from './components/GetTemp';
 import ExposureTypeSelector from './components/SetExposureType';
 import FilterTypeSelector from './components/FilterControls';
@@ -20,6 +21,7 @@ function App() {
   const [filterType, setFilterType] = useState('Ha')
   const [temp, setTemp] = useState()
   const [currTemp, setCurrTemp] = useState()
+  const [currStatus, setCurrStatus] = useState()
   const [displayedImage, setDisplayedImage] = useState(process.env.PUBLIC_URL + '/coma.fits')
 
   
@@ -34,6 +36,7 @@ function App() {
     <h1 className='Title'>Manastash Ridge Observatory Controls</h1>
     
       <PingServer/>
+      <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus}/>
       <ImageTypeSelector imageType={imageType} setImageType={setImageType}/>
       <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType}/>
       <FilterTypeSelector filterType={filterType} setFilterType={setFilterType}/>

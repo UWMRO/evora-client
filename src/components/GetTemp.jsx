@@ -10,7 +10,7 @@ function GetTemp({currTemp, setCurrTemp}) {
 
     let tempMessage = "";
     if(currTemp != null){
-      tempMessage = <span className='tempMessage'>Current temp: {currTemp} °C</span>
+      tempMessage = <span className='tempMessage'>Current Temperature: {currTemp} °C</span>
     }
 
     return (

@@ -16,6 +16,17 @@
   border: 1px solid black;
 }
 
+.Status label{
+  text-align: center;
+  display: inline-block;
+  margin: 4px 4px 10px 4px;
+}
+
+.statusMessage {
+  display: block;
+  margin: 10px 0;
+}
+
 .Temperature label{
   text-align: center;
   display: inline-block;
