@@ -21,9 +21,10 @@ function App() {
   const [filterType, setFilterType] = useState('Ha')
   const [temp, setTemp] = useState()
   const [currTemp, setCurrTemp] = useState()
+  const [displayedImage, setDisplayedImage] = useState(process.env.PUBLIC_URL + '/coma.fits')
 
   
-  useEffect(()=>{setTimeout(()=>window.JS9.Load(process.env.PUBLIC_URL + '/coma.fits'), 500)})
+  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage), 500)}, [displayedImage])
 
 
   return (
@@ -44,6 +45,7 @@ function App() {
         imageType={imageType} 
         filterType={filterType}
         temp = {temp}
+        setDisplayedImage = {setDisplayedImage}
       />
       <div className="display">
         <div className="JS9Menubar"></div>
