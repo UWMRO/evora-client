@@ -5,7 +5,7 @@ export async function getTemperature() {
     // await is kind of like a dotted line where the interpreter snips the function in two.
     // Everything that would execute after the await keyword is shelved until the network
     // request completes.
-    const response = await fetch('/getTemperature')
+    const response = await fetch('/api/getTemperature')
 	// The same applies here - we make another dotted line between trying to read the response
 	// body as JSON and the remainder of the function
     const data = await response.json()
@@ -20,7 +20,7 @@ export async function getTemperature() {
 export async function setTemperature(input) {
     //need to pass in input variable into Flask server
     console.log(typeof input)
-    const response = await fetch('/setTemperature', {
+    const response = await fetch('/api/setTemperature', {
         method:"POST",
         credentials:"include",
         body: JSON.stringify({'temperature' : input.toString()}),
@@ -36,7 +36,7 @@ export async function setTemperature(input) {
 }
 
 export async function capture(input) {
-    const response = await fetch('/capture', {
+    const response = await fetch('/api/capture', {
         method:"POST",
         credentials:"include",
         body: JSON.stringify(input),
@@ -53,7 +53,7 @@ export async function capture(input) {
 
 export async function setFilter(input) {
 
-    const response = await fetch('/setFilter', {
+    const response = await fetch('/api/setFilter', {
         method:"POST",
         credentials:"include",
         body: JSON.stringify(input),
@@ -70,7 +70,7 @@ export async function setFilter(input) {
 
 export async function getStatusTEC() {
 
-    const response = await fetch('/getStatusTEC')
+    const response = await fetch('/api/getStatusTEC')
 
     const data = await response.json()
 
@@ -79,7 +79,7 @@ export async function getStatusTEC() {
 
 export async function getFilterWheelStatus() {
 
-    const response = await fetch('/fw_test')
+    const response = await fetch('/api/fw_test')
 
     const data = await response.json()
 
