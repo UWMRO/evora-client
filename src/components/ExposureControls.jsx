@@ -86,7 +86,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
             {(!isExposing && lastExpName !== "") &&
                 <div>Last exposure: {lastExpName} &nbsp;
-                    <a href={`http://127.0.0.1:8080${lastExpName}`}>Download</a>
+                    <a href={lastExpName}>Download</a>
                     <br/><br/>
                 </div>
             }
