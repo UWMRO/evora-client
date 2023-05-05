@@ -115,3 +115,13 @@ body {
   background: linear-gradient(90deg, rgba(254,0,240,1) 0%, rgba(97,9,121,1) 50%, rgba(0,237,255,0.7008053221288515) 100%);
   color: white;
 }
+
+.display {
+  width: 100%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.display div {
+  margin: auto;
+}
