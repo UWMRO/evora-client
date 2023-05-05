@@ -5,7 +5,7 @@
 .exposure-controls label {
   display:block;
   margin: 8px;
-} 
+}
 
 .exposure-controls input {
   margin-left: 4px;
@@ -97,6 +97,16 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.blink {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
   }
 }
 
