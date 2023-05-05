@@ -69,6 +69,10 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
                 <input type='text' {...register('filename', { required: false })} placeholder="image.fits"/>
 
             </label> */}
+            <label>Header Comment
+                <input type='text' {...register('comment', { required: false })}/>
+            </label>
+
 
             {exposureType !== 'Real Time'
             && <label> Exposure Time
