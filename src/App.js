@@ -9,7 +9,6 @@ import FilterTypeSelector from './components/FilterControls';
 import ExposureControls from './components/ExposureControls';
 import PingServer from './components/PingServer';
 import logo from './aueg_logo.png'
-import DownloadCapture from './components/DownloadCapture';
 
 // https://github.com/ericmandel/js9
 
