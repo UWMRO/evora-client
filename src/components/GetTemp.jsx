@@ -4,13 +4,16 @@ function GetTemp({currTemp, setCurrTemp}) {
 
     async function callGetTemperature() {
       const temperature = JSON.parse(await getTemperature());
-      // console.log(temperature);
-      setCurrTemp(temperature["temperature"])
+      // Round the number
+      var tempNum = parseFloat(temperature["temperature"]);
+      var rounded = Math.round((tempNum + Number.EPSILON) * 100) / 100;
+
+      setCurrTemp(rounded.toString())
     }
 
     let tempMessage = "";
     if(currTemp != null){
-      tempMessage = <span className='tempMessage'>Current temp: {currTemp} °C</span>
+      tempMessage = <span className='tempMessage'>Current Temperature: {currTemp} °C</span>
     }
 
     return (
