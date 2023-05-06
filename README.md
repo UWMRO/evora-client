@@ -49,7 +49,7 @@ To deploy the web application in production, first build it using `npm build`. T
 
 Now we need to create a route in our reverse proxy to point to the webapp. We assume that `nginx` has already been installed and configured as described in the [server](https://github.com/UWMRO/evora-server#configuring-nginx).
 
-Edit the configuration file `/etc/nginx/sites-available/evora.conf` and add the following routes, replacing the path to the Evora client build files.
+Edit the configuration file `/etc/nginx/sites-enabled/evora.conf` and add the following routes, replacing the path to the Evora client build files.
 
 ```nginx
 location / {
