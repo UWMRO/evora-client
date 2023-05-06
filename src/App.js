@@ -10,6 +10,8 @@ import FilterTypeSelector from './components/FilterControls';
 import ExposureControls from './components/ExposureControls';
 import PingServer from './components/PingServer';
 import logo from './aueg_logo.png'
+import { callGetStatus } from './Tools';
+
 
 // https://github.com/ericmandel/js9
 
@@ -24,9 +26,15 @@ function App() {
   const [currStatus, setCurrStatus] = useState()
   const [displayedImage, setDisplayedImage] = useState(process.env.PUBLIC_URL + '/coma.fits')
 
-  
-  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage), 500)}, [displayedImage])
+  useEffect(()=>{setInterval(() => {
+      callGetStatus().then(
+        value => setCurrStatus(value)
+      )
+    }, 1000)}, [])
 
+  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage), 500)}, [displayedImage])
+  
+  console.log(currStatus);
 
   return (
     <div className='App' > 
@@ -48,6 +56,7 @@ function App() {
         filterType={filterType}
         temp = {temp}
         setDisplayedImage = {setDisplayedImage}
+        currStatus = {currStatus}
       />
       <div className="display">
         <div className="JS9Menubar"></div>

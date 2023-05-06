@@ -1,13 +1,15 @@
 import { capture } from "../apiClient"
 import { useForm } from "react-hook-form"
 import {useEffect, useState} from "react"
+import { type } from "@testing-library/user-event/dist/type"
 
 
 
-function ExposureControls({ exposureType, imageType, filterType, setDisplayedImage }) {
+function ExposureControls({ exposureType, imageType, filterType, setDisplayedImage, currStatus }) {
 
     const [playing, setPlaying] = useState(false)
     const [audio] = useState(new Audio(process.env.PUBLIC_URL + '/tadaa-47995.mp3'))
+    // const [audio] = useState(new Audio(process.env.PUBLIC_URL + '/Vine-boom-sound-effect.mp3'))
     const [isExposing, setIsExposing] = useState(false)
     const [lastExpName, setLastExpName] = useState("")
 
@@ -44,7 +46,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         setPlaying(true)
 
     }
-
+    console.log(currStatus, typeof currStatus)
     useEffect(() => {
         playing ? audio.play() : audio.pause();
       },
@@ -95,7 +97,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
                 </div>
             }
 
-            <button disabled={isExposing} type='submit'>Get Exposure</button>
+            <button disabled={currStatus === 20072} type='submit'>Get Exposure</button>
 
         </form>
     );
