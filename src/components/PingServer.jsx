@@ -1,4 +1,4 @@
-import { getStatusTEC, getFilterWheelStatus } from "../apiClient"
+import { getStatusTEC, getFilterWheel } from "../apiClient"
 
 function PingServer() {
 
@@ -7,10 +7,10 @@ function PingServer() {
         const msg = await getStatusTEC()
         console.log(msg)
     }
-    
+
     async function fwOnPing() {
         console.log("Pinging Filter Wheel Connection")
-        const msg = await getFilterWheelStatus()
+        const msg = await getFilterWheel()
         console.log(msg.message)
     }
 
