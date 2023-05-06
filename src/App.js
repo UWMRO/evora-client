@@ -25,7 +25,7 @@ function App() {
   const [displayedImage, setDisplayedImage] = useState(process.env.PUBLIC_URL + '/coma.fits')
 
   
-  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage), 500)}, [displayedImage])
+  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage, {refresh: true}), 500)}, [displayedImage])
 
 
   return (

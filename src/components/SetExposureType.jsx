@@ -15,12 +15,12 @@ function ExposureTypeSelector({exposureType, setExposureType}) {
                 exposureType === 'Single'
               }/>
           </label>
-          {/* <label> Real Time
+          <label> Real Time
               <input type='radio' name='ImageType' onChange={GetExposureTypeClicked} value='Real Time'
               checked={
                 exposureType === 'Real Time'
               }/>
-          </label> */}
+          </label>
           <label> Series
               <input type='radio' name='ImageType' onChange={GetExposureTypeClicked} value='Series'
               checked={

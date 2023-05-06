@@ -10,20 +10,24 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     const [audio] = useState(new Audio(process.env.PUBLIC_URL + '/tadaa-47995.mp3'))
     const [isExposing, setIsExposing] = useState(false)
     const [lastExpName, setLastExpName] = useState("")
+    const [exposureData, setExposureData] = useState(null)
+    const [stopRealtime, setStopRealTime] = useState(false)
 
     const {register, handleSubmit} = useForm()
 
 
 
     const onSubmit = async data => {
+        if (isExposing) return
+        setExposureData(null)
         // if exposure time is less than 0, set it to 0
-        data.exptime = Math.max(0, data.exptime)
+        data.exptime = exposureType === "Real Time" ? 0.3 : Math.max(0, data.exptime)
         // make sure exposure number is at least 1 exposure
         data.expnum = Math.max(1, data.expnum).toString()
 
         data.exptype = exposureType
         // if exposure time is 0, use bias type
-        data.imgtype = data.exptime == 0 ? "Bias" : imageType
+        data.imgtype = data.exptime === 0 ? "Bias" : imageType
         data.exptime = data.exptime.toString()
         data.filtype = filterType
 
@@ -37,13 +41,33 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         // need to create url for file
 
         // window.JS9.Load(message.url)
-        setDisplayedImage(message.url)
+        console.log(message.url)
+        setDisplayedImage((old => {
+            if (old === message.url) {
+                window.JS9.RefreshImage()
+            }
+            return message.url
+        }))
         setLastExpName(message.url)
 
         // Play sounds after exposure completes.
-        setPlaying(true)
+        if (!exposureType === "Real Time") {
+            setPlaying(true)
+        }
 
+        setExposureData(data)
     }
+
+    // Stop the exposure
+    useEffect(() => {
+        if (exposureData == null) return
+        if (exposureData.exptype === "Real Time" && !stopRealtime) 
+        {
+            console.log("starting submit again")
+            onSubmit(exposureData);
+        }
+    }, [exposureData]
+    )
 
     useEffect(() => {
         playing ? audio.play() : audio.pause();
@@ -95,7 +119,11 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
                 </div>
             }
 
-            <button disabled={isExposing} type='submit'>Get Exposure</button>
+            {(isExposing && exposureType === "Real Time" &&
+                <button onClick={() => setStopRealTime(true)}>End Exposure</button>
+            )}
+
+            <button disabled={isExposing} onClick={() => setStopRealTime(false)} type='submit'>Get Exposure</button>
 
         </form>
     );
