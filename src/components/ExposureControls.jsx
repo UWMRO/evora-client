@@ -41,7 +41,6 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         // need to create url for file
 
         // window.JS9.Load(message.url)
-        console.log(message.url)
         setDisplayedImage((old => {
             if (old === message.url) {
                 window.JS9.RefreshImage()
@@ -58,23 +57,25 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         setExposureData(data)
     }
 
-    // Stop the exposure
+    // Repeat exposures in Real Time until stopped
     useEffect(() => {
         if (exposureData == null) return
         if (exposureData.exptype === "Real Time" && !stopRealtime) 
         {
-            console.log("starting submit again")
             onSubmit(exposureData);
         }
     }, [exposureData]
     )
 
+
+    // toggle audio playing
     useEffect(() => {
         playing ? audio.play() : audio.pause();
       },
       [playing, audio]
     );
 
+    // Listeners for audio
     useEffect(() => {
       audio.addEventListener('ended', () => setPlaying(false));
       return () => {
@@ -89,29 +90,35 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
                 Exposure Controls
             </legend>
 
+            {/* [OLD] File name field */}
             {/* <label> File Name
                 <input type='text' {...register('filename', { required: false })} placeholder="image.fits"/>
 
             </label> */}
+
+            {/* Header comment field */}
             <label>Header Comment
                 <input type='text' {...register('comment', { required: false })}/>
             </label>
 
-
+            {/* Exposure Time */}
             {exposureType !== 'Real Time'
             && <label> Exposure Time
                 <input type='number' {...register('exptime', { required: true })}/>
                 </label>
             }
 
+            {/* Number of Exposures */}
             {exposureType === 'Series'
             && <label> Number of Exposures
                 <input type='number' {...register('expnum', { required: false })}/>
                 </label>
             }
 
+            {/* Exposing Indicator */}
             {isExposing && <><div className='blink'>Exposing</div><br/></>}
 
+            {/* fits file download text */}
             {(!isExposing && lastExpName !== "") &&
                 <div>Last exposure: {lastExpName} &nbsp;
                     <a href={lastExpName}>Download</a>
@@ -119,10 +126,12 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
                 </div>
             }
 
+            {/* End exposure (for real time) */}
             {(isExposing && exposureType === "Real Time" &&
                 <button onClick={() => setStopRealTime(true)}>End Exposure</button>
             )}
 
+            {/* Get Exposure Button */}
             <button disabled={isExposing} onClick={() => setStopRealTime(false)} type='submit'>Get Exposure</button>
 
         </form>
