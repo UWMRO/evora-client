@@ -1,11 +1,11 @@
-function ExposureTypeSelector({exposureType, setExposureType}) {
+function ExposureTypeSelector({exposureType, setExposureType, isDisabled}) {
     
     function GetExposureTypeClicked(e) {
         setExposureType(e.target.value)
     }
 
     return (
-      <fieldset> 
+      <fieldset disabled={isDisabled}> 
           <legend>
               Exposure Type
           </legend>
