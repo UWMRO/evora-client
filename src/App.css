@@ -136,3 +136,7 @@ body {
 .display div {
   margin: auto;
 }
+
+fieldset.filter > label,button  {
+  margin-left: 10px;
+}
