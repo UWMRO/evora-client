@@ -1,6 +1,5 @@
 import './App.css';
 import { useState, useEffect } from "react";
-import { useForm } from 'react-hook-form';
 import ImageTypeSelector from './components/ImageTypeSelector';
 import SetTemp from './components/SetTemp';
 import GetStatus from './components/GetStatus'
@@ -23,9 +22,10 @@ function App() {
   const [currTemp, setCurrTemp] = useState()
   const [currStatus, setCurrStatus] = useState()
   const [displayedImage, setDisplayedImage] = useState(process.env.PUBLIC_URL + '/coma.fits')
+  const [disabledExpType, setDisabledExpType] = useState(false)
 
   
-  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage), 500)}, [displayedImage])
+  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage, {refresh: true}), 500)}, [displayedImage])
 
 
   return (
@@ -38,7 +38,7 @@ function App() {
       <PingServer/>
       <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus}/>
       <ImageTypeSelector imageType={imageType} setImageType={setImageType}/>
-      <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType}/>
+      <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disabledExpType}/>
       <FilterTypeSelector filterType={filterType} setFilterType={setFilterType}/>
       <SetTemp temp={temp} setTemp={setTemp}/>
       <GetTemp currTemp={currTemp} setCurrTemp={setCurrTemp}/>
@@ -48,6 +48,7 @@ function App() {
         filterType={filterType}
         temp = {temp}
         setDisplayedImage = {setDisplayedImage}
+        setDisableExpType = {setDisabledExpType}
       />
       <div className="display">
         <div className="JS9Menubar"></div>

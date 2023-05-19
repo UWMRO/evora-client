@@ -1,11 +1,11 @@
-function ExposureTypeSelector({exposureType, setExposureType}) {
+function ExposureTypeSelector({exposureType, setExposureType, isDisabled}) {
     
     function GetExposureTypeClicked(e) {
         setExposureType(e.target.value)
     }
 
     return (
-      <fieldset> 
+      <fieldset disabled={isDisabled}> 
           <legend>
               Exposure Type
           </legend>
@@ -15,12 +15,12 @@ function ExposureTypeSelector({exposureType, setExposureType}) {
                 exposureType === 'Single'
               }/>
           </label>
-          {/* <label> Real Time
+          <label> Real Time
               <input type='radio' name='ImageType' onChange={GetExposureTypeClicked} value='Real Time'
               checked={
                 exposureType === 'Real Time'
               }/>
-          </label> */}
+          </label>
           <label> Series
               <input type='radio' name='ImageType' onChange={GetExposureTypeClicked} value='Series'
               checked={
