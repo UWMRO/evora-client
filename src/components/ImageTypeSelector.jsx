@@ -1,11 +1,11 @@
-function ImageTypeSelector({imageType, setImageType}) {
+function ImageTypeSelector({imageType, setImageType, isDisabled}) {
 
     function GetImageTypeClicked(e) {
         setImageType(e.target.value)
     }
     
   return (
-    <fieldset> 
+    <fieldset disabled={isDisabled}> 
         <legend>
             Image Type
         </legend>

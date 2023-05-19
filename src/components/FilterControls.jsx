@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getFilterWheel, homeFilterWheel, setFilterWheel } from '../apiClient';
 
-function FilterTypeSelector({ filterType, setFilterType }) {
+function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
   const [moving, setMoving] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ function FilterTypeSelector({ filterType, setFilterType }) {
   };
 
   return (
-    <fieldset disabled={moving} className="filter">
+    <fieldset disabled={(moving || isDisabled)} className="filter">
       <legend>Filters</legend>
       <label disabled>
         Home
