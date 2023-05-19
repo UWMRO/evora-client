@@ -4,7 +4,7 @@ import {useEffect, useState} from "react"
 
 
 
-function ExposureControls({ exposureType, imageType, filterType, setDisplayedImage, setDisableControls}) {
+function ExposureControls({ exposureType, imageType, filterType, setDisplayedImage, update}) {
 
     const [playing, setPlaying] = useState(false)
     const [audio] = useState(new Audio(process.env.PUBLIC_URL + '/tadaa-47995.mp3'))
@@ -19,7 +19,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
     const onSubmit = async data => {
         if (isExposing) return
-        setDisableControls(true)
+        update(true)
         setExposureData(null)
         // if exposure time is less than 0, set it to 0
         data.exptime = exposureType === "Real Time" ? 0.3 : Math.max(0, data.exptime)
@@ -54,17 +54,21 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         if (!exposureType === "Real Time") {
             setPlaying(true)
         }
-
-        setDisableControls(false)
         setExposureData(data)
+        update(exposureType === "Real Time")
     }
 
     // Repeat exposures in Real Time until stopped
     useEffect(() => {
         if (exposureData == null) return
-        if (exposureData.exptype === "Real Time" && !stopRealtime) 
+        if (exposureData.exptype === "Real Time") 
         {
-            onSubmit(exposureData);
+            if (!stopRealtime) {
+                onSubmit(exposureData);
+            }
+            else {
+                update(false)
+            }
         }
     }, [exposureData]
     )

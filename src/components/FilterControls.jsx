@@ -6,13 +6,13 @@ import { getFilterWheel, homeFilterWheel, setFilterWheel } from '../apiClient';
 function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
   const [moving, setMoving] = useState(false);
 
-  useEffect(() => {
-    setInterval(() => {
-      getFilterWheel()
-        .then((reply) => setFilterType(reply.filter))
-        .catch((err) => console.log(err));
-    }, 1000);
-  }, [setFilterType]);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     getFilterWheel()
+  //       .then((reply) => setFilterType(reply.filter))
+  //       .catch((err) => console.log(err));
+  //   }, 1000);
+  // }, [setFilterType]);
 
   const handleFilterChange = (filter) => {
     setMoving(true);

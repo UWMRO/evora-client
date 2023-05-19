@@ -22,7 +22,7 @@ function App() {
   const [currTemp, setCurrTemp] = useState()
   const [currStatus, setCurrStatus] = useState()
   const [displayedImage, setDisplayedImage] = useState(process.env.PUBLIC_URL + '/coma.fits')
-  const [disableControls, setDisableControls] = useState(false)
+  const [_, makeUpdate] = useState()
 
   
   useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage, {refresh: true}), 500)}, [displayedImage])
@@ -37,10 +37,10 @@ function App() {
     
       <PingServer/>
       <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus}/>
-      <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={disableControls}/>
-      <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disableControls}/>
-      <FilterTypeSelector filterType={filterType} setFilterType={setFilterType} isDisabled={disableControls}/>
-      <SetTemp temp={temp} setTemp={setTemp} isDisabled={disableControls}/>
+      <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={currStatus === 20072}/>
+      <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={currStatus === 20072}/>
+      <FilterTypeSelector filterType={filterType} setFilterType={setFilterType} isDisabled={currStatus === 20072}/>
+      <SetTemp temp={temp} setTemp={setTemp} isDisabled={currStatus === 20072}/>
       <GetTemp currTemp={currTemp} setCurrTemp={setCurrTemp}/>
       <ExposureControls
         exposureType={exposureType}
@@ -48,7 +48,7 @@ function App() {
         filterType={filterType}
         temp = {temp}
         setDisplayedImage = {setDisplayedImage}
-        setDisableControls = {setDisableControls}
+        update = {makeUpdate}
       />
       <div className="display">
         <div className="JS9Menubar"></div>
