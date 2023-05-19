@@ -1,5 +1,4 @@
 import { getStatus } from "../apiClient";
-import { useEffect } from "react";
 
 function GetStatus({currStatus, setCurrStatus}) {
 
@@ -12,12 +11,6 @@ function GetStatus({currStatus, setCurrStatus}) {
     if(currStatus != null){
       statusMessage = <span className='statusMessage'>Current Status: {currStatus}</span>
     }
-
-    // get status on refresh
-    useEffect(() => {
-      callGetStatus();
-      console.log(currStatus)
-    });
 
     return (
       <fieldset className="Status">
