@@ -8,7 +8,9 @@ import ExposureTypeSelector from './components/SetExposureType';
 import FilterTypeSelector from './components/FilterControls';
 import ExposureControls from './components/ExposureControls';
 import PingServer from './components/PingServer';
+import OnOff from './components/OnOffFunctionality'
 import logo from './aueg_logo.png'
+import { getStatus } from "./apiClient"
 import DownloadCapture from './components/DownloadCapture';
 
 // https://github.com/ericmandel/js9
@@ -22,6 +24,7 @@ function App() {
   const [temp, setTemp] = useState()
   const [currTemp, setCurrTemp] = useState()
   const [displayedImage, setDisplayedImage] = useState(process.env.PUBLIC_URL + '/coma.fits')
+  const [initialized, setInitialized] = useState(getStatus()['status'] === '20073')
 
   
   useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage), 500)}, [displayedImage])
@@ -35,6 +38,7 @@ function App() {
     <h1 className='Title'>Manastash Ridge Observatory Controls</h1>
     
       <PingServer/>
+      <OnOff initialized={initialized} setInitialized={setInitialized}/>
       <ImageTypeSelector imageType={imageType} setImageType={setImageType}/>
       <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType}/>
       <FilterTypeSelector filterType={filterType} setFilterType={setFilterType}/>

@@ -17,6 +17,18 @@ export async function getTemperature() {
     // return await response.json()
 }
 
+export async function initialize() {
+    const response = await fetch('/api/initialize')
+    const data = await response.json()
+    return JSON.stringify(data)
+}
+
+export async function shutdown() {
+    const response = await fetch('/api/shutdown')
+    const data = await response.json()
+    return JSON.stringify(data)
+}
+
 export async function setTemperature(input) {
     //need to pass in input variable into Flask server
     console.log(typeof input)
@@ -75,6 +87,12 @@ export async function getStatusTEC() {
     const data = await response.json()
 
     return data
+}
+
+export async function getStatus() {
+    const response = await fetch('/api/getStatus')
+    const data = await response.json()
+    return JSON.stringify(data)
 }
 
 export async function getFilterWheelStatus() {
