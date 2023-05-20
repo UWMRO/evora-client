@@ -12,6 +12,14 @@ function GetTemp({currTemp, setCurrTemp}) {
 
   let tempMessage = "";
 
+  const initialize_array = (num) => {
+    let newArray = [];
+    for(let i = 0; i < num; i++){
+      newArray.push(0);
+    }
+    return newArray
+  }
+
   const [dateArray, setDateArray] = useState(() => {
     const initialState = initialize_array(NUM_OF_DATA_POINTS);
     return initialState;
@@ -44,7 +52,6 @@ function GetTemp({currTemp, setCurrTemp}) {
         setTempDataArray(tempDataArray.slice(1, NUM_OF_DATA_POINTS + 1));
       }
     }, TIMER);
-    console.log(dateArray);
     return () => clearInterval(interval);
     }
   }, [dateArray,tempDataArray, tempGraphButtonText, TIMER, NUM_OF_DATA_POINTS]);
@@ -56,14 +63,6 @@ function GetTemp({currTemp, setCurrTemp}) {
     var rounded = Math.round((tempNum + Number.EPSILON) * 100) / 100;
 
     setCurrTemp(rounded.toString())
-  }
-
-  const initialize_array = (num) => {
-    let newArray = [];
-    for(let i = 0; i < num; i++){
-      newArray.push(0);
-    }
-    return newArray
   }
 
   if(currTemp != null){
