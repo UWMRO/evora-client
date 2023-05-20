@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getFilterWheel, homeFilterWheel, setFilterWheel } from '../apiClient';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 function FilterTypeSelector({ filterType, setFilterType }) {
   const [moving, setMoving] = useState(false);
@@ -34,15 +35,6 @@ function FilterTypeSelector({ filterType, setFilterType }) {
   return (
     <fieldset disabled={moving} className="filter">
       <legend>Filters</legend>
-      <label disabled>
-        Home
-        <input
-          type="radio"
-          name="FilterType"
-          value="Home"
-          checked={filterType === 'Home'}
-        />
-      </label>
       <label>
         Ha
         <input
@@ -93,7 +85,28 @@ function FilterTypeSelector({ filterType, setFilterType }) {
           checked={filterType === 'r'}
         />
       </label>
-      <button onClick={handleHome}>Home</button>
+      <label>
+        i
+        <input
+          type="radio"
+          name="FilterType"
+          onChange={() => handleFilterChange('i')}
+          value="r"
+          checked={filterType === 'i'}
+        />
+      </label>
+      {!moving && <button onClick={handleHome}>Home</button>}
+      {moving && (
+        <label style={{ width: '200px' }}>
+          <BeatLoader
+            cssOverride={{ verticalAlign: 'middle', alignContent: 'end' }}
+            color="red"
+            size={12}
+            loading={true}
+            speedMultiplier={0.7}
+          />
+        </label>
+      )}
     </fieldset>
   );
 }
