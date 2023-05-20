@@ -34,13 +34,15 @@ function OnOff({initialized, setInitialized}) {
             <button disabled={!initialized} onClick={onShutdown}>
                 { shuttingDown ? "Shutting Down ..." : "Shut Down" }
             </button>
-            <BeatLoader
-              cssOverride={{ verticalAlign: 'middle', alignContent: 'end' }}
-              color="red"
-              size={12}
-              loading={shuttingDown}
-              speedMultiplier={0.7}
-            />
+            <label style={{ width: '200px' }}>
+              <BeatLoader
+                cssOverride={{ verticalAlign: 'middle', alignContent: 'end' }}
+                color="red"
+                size={12}
+                loading={shuttingDown}
+                speedMultiplier={0.7}
+              />
+            </label>
         </fieldset>
     )
 }
