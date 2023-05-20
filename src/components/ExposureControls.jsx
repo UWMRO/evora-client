@@ -56,6 +56,13 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             return message.url
         }))
         setLastExpName(message.url)
+        
+        // take another exposure for series
+        if (exposureType === "Series" && data.expnum > 1) {
+            data.expnum--;
+            onSubmit(data);
+            return;
+        }
 
         // Play sounds after exposure completes.
         if (!exposureType === "Real Time") {
