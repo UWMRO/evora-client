@@ -1,16 +1,15 @@
+import { useEffect, useState } from "react";
 import './App.css';
-import { useState, useEffect } from "react";
-import ImageTypeSelector from './components/ImageTypeSelector';
-import SetTemp from './components/SetTemp';
-import GetStatus from './components/GetStatus'
-import GetTemp from './components/GetTemp';
-import ExposureTypeSelector from './components/SetExposureType';
-import FilterTypeSelector from './components/FilterControls';
+import { getStatus } from "./apiClient";
+import logo from './aueg_logo.png';
 import ExposureControls from './components/ExposureControls';
-import PingServer from './components/PingServer';
-import OnOff from './components/OnOffFunctionality'
-import logo from './aueg_logo.png'
-import { getStatus } from "./apiClient"
+import FilterTypeSelector from './components/FilterControls';
+import GetStatus from './components/GetStatus';
+import GetTemp from './components/GetTemp';
+import ImageTypeSelector from './components/ImageTypeSelector';
+import OnOff from './components/OnOffFunctionality';
+import ExposureTypeSelector from './components/SetExposureType';
+import SetTemp from './components/SetTemp';
 
 // https://github.com/ericmandel/js9
 
@@ -38,7 +37,7 @@ function App() {
     </a>
     <h1 className='Title'>Manastash Ridge Observatory Controls</h1>
 
-      <PingServer/>
+      {/* <PingServer/> */}
       <OnOff initialized={initialized} setInitialized={setInitialized}/>
       <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus} isDisabled={!initialized}/>
       <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={disableControls || !initialized}/>
