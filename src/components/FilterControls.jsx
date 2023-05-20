@@ -85,6 +85,16 @@ function FilterTypeSelector({ filterType, setFilterType }) {
           checked={filterType === 'r'}
         />
       </label>
+      <label>
+        r
+        <input
+          type="radio"
+          name="FilterType"
+          onChange={() => handleFilterChange('i')}
+          value="r"
+          checked={filterType === 'i'}
+        />
+      </label>
       {!moving && <button onClick={handleHome}>Home</button>}
       {moving && (
         <label style={{ width: '200px' }}>
