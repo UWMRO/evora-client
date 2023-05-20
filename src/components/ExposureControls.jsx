@@ -62,7 +62,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     // Repeat exposures in Real Time until stopped
     useEffect(() => {
         if (exposureData == null) return
-        if (exposureData.exptype === "Real Time" && !stopRealtime) 
+        if (exposureData.exptype === "Real Time" && !stopRealtime)
         {
             onSubmit(exposureData);
         }
@@ -104,7 +104,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             </label>
 
             {/* Exposure Time */}
-            {exposureType !== 'Real Time'
+            {((exposureType !== 'Real Time') && (imageType !== "Bias"))
             && <label> Exposure Time
                 <input type='number' {...register('exptime', { required: true })}/>
                 </label>
