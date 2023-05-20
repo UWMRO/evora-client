@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getTemperature } from "../apiClient";
 
-
 import { Line } from 'react-chartjs-2';
 import { Chart } from "chart.js/auto";
 
-function GetTemp({currTemp, setCurrTemp}) {
+function GetTemp({currTemp, setCurrTemp, isDisabled}) {
+
 
   let TIMER = 3000; //TIMER IN MS
   let NUM_OF_DATA_POINTS = 20;
@@ -131,7 +131,7 @@ const graphOnOffHandler = () => {
 }
 
     return (
-      <fieldset className="Temperature">
+      <fieldset className="Temperature" disabled={isDisabled}>
         <label>Get Temperature</label>
         <button onClick={callGetTemperature}>Get</button>
         <button onClick={graphButtonHandler} style={{ width:'48px'}}>{buttonText}</button>

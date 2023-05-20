@@ -24,8 +24,8 @@ function App() {
   const [currTemp, setCurrTemp] = useState()
   const [currStatus, setCurrStatus] = useState()
   const [displayedImage, setDisplayedImage] = useState(process.env.PUBLIC_URL + '/coma.fits')
+  const [disableControls, setDisableControls] = useState(false)
   const [initialized, setInitialized] = useState(getStatus()['status'] === '20073')
-  const [disabledExpType, setDisabledExpType] = useState(false)
 
 
   useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage, {refresh: true}), 500)}, [displayedImage])
@@ -40,19 +40,20 @@ function App() {
 
       <PingServer/>
       <OnOff initialized={initialized} setInitialized={setInitialized}/>
-      <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus}/>
-      <ImageTypeSelector imageType={imageType} setImageType={setImageType}/>
-      <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disabledExpType}/>
-      <FilterTypeSelector filterType={filterType} setFilterType={setFilterType}/>
-      <SetTemp temp={temp} setTemp={setTemp}/>
-      <GetTemp currTemp={currTemp} setCurrTemp={setCurrTemp}/>
+      <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus} isDisabled={!initialized}/>
+      <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={disableControls || !initialized}/>
+      <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disableControls || !initialized}/>
+      <FilterTypeSelector filterType={filterType} setFilterType={setFilterType} isDisabled={disableControls || !initialized}/>
+      <SetTemp temp={temp} setTemp={setTemp} isDisabled={disableControls || !initialized}/>
+      <GetTemp currTemp={currTemp} setCurrTemp={setCurrTemp} isDisabled={!initialized}/>
       <ExposureControls
         exposureType={exposureType}
         imageType={imageType}
         filterType={filterType}
         temp = {temp}
         setDisplayedImage = {setDisplayedImage}
-        setDisableExpType = {setDisabledExpType}
+        setDisableControls = {setDisableControls}
+        isDisabled = {!initialized}
       />
       <div className="display">
         <div className="JS9Menubar"></div>

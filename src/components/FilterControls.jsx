@@ -1,26 +1,30 @@
 //import { setFilter } from "../apiClient";
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getFilterWheel, homeFilterWheel, setFilterWheel } from '../apiClient';
 import BeatLoader from 'react-spinners/BeatLoader';
 
-function FilterTypeSelector({ filterType, setFilterType }) {
+function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
   const [moving, setMoving] = useState(false);
 
-  useEffect(() => {
-    setInterval(() => {
-      getFilterWheel()
-        .then((reply) => setFilterType(reply.filter))
-        .catch((err) => console.log(err));
-    }, 1000);
+  const updateFilterPosition = useCallback(async () => {
+    getFilterWheel()
+      .then((reply) => setFilterType(reply.filter))
+      .catch((err) => console.log(err));
   }, [setFilterType]);
+
+  useEffect(() => {
+    // Do this once when the app loads.
+    updateFilterPosition();
+  }, [updateFilterPosition]);
 
   const handleFilterChange = (filter) => {
     setMoving(true);
     setFilterWheel(filter)
       .then(() => {
-        setMoving(false);
-        setFilterType(filter);
+        updateFilterPosition()
+          .then(() => setMoving(false))
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   };
@@ -28,12 +32,16 @@ function FilterTypeSelector({ filterType, setFilterType }) {
   const handleHome = () => {
     setMoving(true);
     homeFilterWheel()
-      .then(() => setMoving(false))
+      .then(() => {
+        updateFilterPosition()
+          .then(() => setMoving(false))
+          .catch((err) => console.log(err));
+      })
       .catch((err) => console.log(err));
   };
 
   return (
-    <fieldset disabled={moving} className="filter">
+    <fieldset disabled={moving || isDisabled} className="filter">
       <legend>Filters</legend>
       <label>
         Ha
