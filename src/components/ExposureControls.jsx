@@ -35,7 +35,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         // make sure exposure number is at least 1 exposure
         data.expnum = Math.max(1, data.expnum).toString()
 
-        data.exptype = exposureType
+        data.exptype = exposureType === "Series" ? "Single" : exposureType;
         // if exposure time is 0, use bias type
         data.imgtype = data.exptime === 0 ? "Bias" : imageType
         data.exptime = data.exptime.toString()
@@ -63,7 +63,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         // take another exposure for series
         if (exposureType === "Series" && data.expnum > 1) {
             data.expnum--;
-            onSubmit(data);
+            setTimeout(() => onSubmit(data), 1000);
             return;
         }
 
