@@ -43,32 +43,32 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Deploying for production
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To deploy the web application in production, first build it using `npm build`. This will create a series of minified files in `build/`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Now we need to create a route in our reverse proxy to point to the webapp. We assume that `nginx` has already been installed and configured as described in the [server](https://github.com/UWMRO/evora-server#configuring-nginx).
 
-### Code Splitting
+Edit the configuration file `/etc/nginx/sites-enabled/evora.conf` and add the following routes, replacing the path to the Evora client build files.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```nginx
+location / {
+    root <path-to-evora-client>/build;
+    index index.html index.php;
+}
 
-### Analyzing the Bundle Size
+location /data {
+    alias /data;
+    autoindex on;
+    index index.html index.php;
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Note that we have also added a static alias to `/data` where the images will be saved. After this, restart `nginx` with
 
-### Making a Progressive Web App
+```console
+sudo systemctl restart nginx
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+and try accessing the webapp from [http://localhost:9900](http://localhost:9900).

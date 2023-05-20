@@ -31,7 +31,7 @@ function SetTemp({temp, setTemp}) {
       <form onSubmit={handleSubmit(onSubmit)} className='Temperature'>
         <label>Set Temperature</label>
         <span className='tempCelsiusIcon'>
-          <input type='text' {...register('temperature', { required: true })} maxlength='4' placeholder='-50'/>
+          <input type='text' {...register('temperature', { required: true })} maxLength='4' placeholder='-50'/>
         </span>
         <button type='submit'>Set</button>
         {coolingMessage}
