@@ -36,7 +36,7 @@ function OnOff({initialized, setInitialized}) {
             </button>
             <label style={{ width: '200px' }}>
               <BeatLoader
-                cssOverride={{ verticalAlign: 'middle', alignContent: 'end' }}
+                cssOverride={{ verticalAlign: 'bottom', alignContent: 'end' }}
                 color="red"
                 size={12}
                 loading={shuttingDown}
