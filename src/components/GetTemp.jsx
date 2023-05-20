@@ -1,6 +1,6 @@
 import { getTemperature } from "../apiClient";
 
-function GetTemp({currTemp, setCurrTemp}) {
+function GetTemp({currTemp, setCurrTemp, isDisabled}) {
 
     async function callGetTemperature() {
       const temperature = JSON.parse(await getTemperature());
@@ -17,7 +17,7 @@ function GetTemp({currTemp, setCurrTemp}) {
     }
 
     return (
-      <fieldset className="Temperature">
+      <fieldset className="Temperature" disabled={isDisabled}>
         <label>Get Temperature</label>
         <button onClick={callGetTemperature}>Get</button>
         {tempMessage}
