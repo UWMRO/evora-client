@@ -8,7 +8,9 @@ import ExposureTypeSelector from './components/SetExposureType';
 import FilterTypeSelector from './components/FilterControls';
 import ExposureControls from './components/ExposureControls';
 import PingServer from './components/PingServer';
+import OnOff from './components/OnOffFunctionality'
 import logo from './aueg_logo.png'
+import { getStatus } from "./apiClient"
 
 // https://github.com/ericmandel/js9
 
@@ -23,19 +25,21 @@ function App() {
   const [currStatus, setCurrStatus] = useState()
   const [displayedImage, setDisplayedImage] = useState(process.env.PUBLIC_URL + '/coma.fits')
   const [disableControls, setDisableControls] = useState(false)
+  const [initialized, setInitialized] = useState(getStatus()['status'] === '20073')
 
-  
+
   useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage, {refresh: true}), 500)}, [displayedImage])
 
 
   return (
-    <div className='App' > 
+    <div className='App' >
     <a href='https://sites.google.com/a/uw.edu/mro/' target='_blank' rel='noreferrer'>
       <img src={logo} className='Logo' alt='Logo'/>
     </a>
     <h1 className='Title'>Manastash Ridge Observatory Controls</h1>
-    
+
       <PingServer/>
+      <OnOff initialized={initialized} setInitialized={setInitialized}/>
       <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus}/>
       <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={disableControls}/>
       <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disableControls}/>
@@ -44,7 +48,7 @@ function App() {
       <GetTemp currTemp={currTemp} setCurrTemp={setCurrTemp}/>
       <ExposureControls
         exposureType={exposureType}
-        imageType={imageType} 
+        imageType={imageType}
         filterType={filterType}
         temp = {temp}
         setDisplayedImage = {setDisplayedImage}
@@ -56,7 +60,7 @@ function App() {
         <div className="JS9Statusbar"></div>
       </div>
     </div>
-    
+
   );
 }
 

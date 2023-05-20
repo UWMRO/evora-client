@@ -22,7 +22,14 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         setDisableControls(true)
         setExposureData(null)
         // if exposure time is less than 0, set it to 0
-        data.exptime = exposureType === "Real Time" ? 0.3 : Math.max(0, data.exptime)
+        if (exposureType === "Real Time") {
+            data.exptime = 1.0
+        } else if(imageType === "Bias") {
+            data.exptime = 0.0
+        } else {
+            data.exptime = Math.max(0, data.exptime)
+        }
+
         // make sure exposure number is at least 1 exposure
         data.expnum = Math.max(1, data.expnum).toString()
 
@@ -62,7 +69,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     // Repeat exposures in Real Time until stopped
     useEffect(() => {
         if (exposureData == null) return
-        if (exposureData.exptype === "Real Time" && !stopRealtime) 
+        if (exposureData.exptype === "Real Time" && !stopRealtime)
         {
             onSubmit(exposureData);
         }
@@ -104,7 +111,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             </label>
 
             {/* Exposure Time */}
-            {exposureType !== 'Real Time'
+            {((exposureType !== 'Real Time') && (imageType !== "Bias"))
             && <label> Exposure Time
                 <input type='number' {...register('exptime', { required: true })}/>
                 </label>
