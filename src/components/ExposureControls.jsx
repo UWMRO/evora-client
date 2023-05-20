@@ -13,6 +13,8 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     const [exposureData, setExposureData] = useState(null)
     const [stopRealtime, setStopRealTime] = useState(false)
 
+    const [seriesExposures, setSeriesExposures] = useState([])
+
     const {register, handleSubmit} = useForm()
 
 
@@ -56,6 +58,14 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             return message.url
         }))
         setLastExpName(message.url)
+        seriesExposures.push(message.url)
+        
+        // take another exposure for series
+        if (exposureType === "Series" && data.expnum > 1) {
+            data.expnum--;
+            onSubmit(data);
+            return;
+        }
 
         // Play sounds after exposure completes.
         if (!exposureType === "Real Time") {
@@ -91,6 +101,15 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         audio.removeEventListener('ended', () => setPlaying(false));
       };
     }, [audio]);
+
+
+    function seriesLinks() {
+        const links = seriesExposures.map((link) => {
+                return (<><div>{link}</div><a href={link}>Download</a><br /><br /></>)
+                }
+            )
+        return [...links]
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='exposure-controls'>
@@ -128,11 +147,20 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             {isExposing && <><div className='blink'>Exposing</div><br/></>}
 
             {/* fits file download text */}
-            {(!isExposing && lastExpName !== "") &&
+            {(!isExposing && lastExpName !== "" && exposureType !== "Series") &&
                 <div>Last exposure: {lastExpName} &nbsp;
                     <a href={lastExpName}>Download</a>
                     <br/><br/>
                 </div>
+            }
+
+            {/* Download mutliple (Series) */}
+            {(exposureType === "Series" && seriesExposures.length != 0) &&
+                (<><div>Series exposures:</div><br /></>)
+            }
+        
+            {(exposureType === "Series" && seriesExposures.length != 0) &&
+                seriesLinks()
             }
 
             {/* End exposure (for real time) */}
@@ -141,7 +169,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             )}
 
             {/* Get Exposure Button */}
-            <button disabled={isExposing} onClick={() => setStopRealTime(false)} type='submit'>Get Exposure</button>
+            <button disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>
 
             </fieldset>
         </form>
