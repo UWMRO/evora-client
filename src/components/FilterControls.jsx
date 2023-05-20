@@ -32,7 +32,11 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
   const handleHome = () => {
     setMoving(true);
     homeFilterWheel()
-      .then(() => setMoving(false))
+      .then(() => {
+        updateFilterPosition()
+          .then(() => setMoving(false))
+          .catch((err) => console.log(err));
+      })
       .catch((err) => console.log(err));
   };
 
