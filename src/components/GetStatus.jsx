@@ -1,6 +1,6 @@
 import { getStatus } from "../apiClient";
 
-function GetStatus({currStatus, setCurrStatus}) {
+function GetStatus({currStatus, setCurrStatus, isDisabled}) {
 
     async function callGetStatus() {
       const status = JSON.parse(await getStatus());
@@ -13,7 +13,7 @@ function GetStatus({currStatus, setCurrStatus}) {
     }
 
     return (
-      <fieldset className="Status">
+      <fieldset className="Status" disabled={isDisabled}>
         <label>Get Status</label>
         <button onClick={callGetStatus}>Get</button>
         {statusMessage}

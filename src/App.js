@@ -40,12 +40,12 @@ function App() {
 
       <PingServer/>
       <OnOff initialized={initialized} setInitialized={setInitialized}/>
-      <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus}/>
-      <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={disableControls}/>
-      <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disableControls}/>
-      <FilterTypeSelector filterType={filterType} setFilterType={setFilterType} isDisabled={disableControls}/>
-      <SetTemp temp={temp} setTemp={setTemp} isDisabled={disableControls}/>
-      <GetTemp currTemp={currTemp} setCurrTemp={setCurrTemp}/>
+      <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus} isDisabled={!initialized}/>
+      <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={disableControls || !initialized}/>
+      <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disableControls || !initialized}/>
+      <FilterTypeSelector filterType={filterType} setFilterType={setFilterType} isDisabled={disableControls || !initialized}/>
+      <SetTemp temp={temp} setTemp={setTemp} isDisabled={disableControls || !initialized}/>
+      <GetTemp currTemp={currTemp} setCurrTemp={setCurrTemp} isDisabled={!initialized}/>
       <ExposureControls
         exposureType={exposureType}
         imageType={imageType}
@@ -53,6 +53,7 @@ function App() {
         temp = {temp}
         setDisplayedImage = {setDisplayedImage}
         setDisableControls = {setDisableControls}
+        isDisabled = {!initialized}
       />
       <div className="display">
         <div className="JS9Menubar"></div>

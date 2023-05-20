@@ -4,7 +4,7 @@ import {useEffect, useState} from "react"
 
 
 
-function ExposureControls({ exposureType, imageType, filterType, setDisplayedImage, setDisableControls}) {
+function ExposureControls({ exposureType, imageType, filterType, setDisplayedImage, setDisableControls, isDisabled}) {
 
     const [playing, setPlaying] = useState(false)
     const [audio] = useState(new Audio(process.env.PUBLIC_URL + '/tadaa-47995.mp3'))
@@ -94,7 +94,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='exposure-controls'>
-
+            <fieldset disabled={isDisabled}>
             <legend>
                 Exposure Controls
             </legend>
@@ -143,6 +143,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             {/* Get Exposure Button */}
             <button disabled={isExposing} onClick={() => setStopRealTime(false)} type='submit'>Get Exposure</button>
 
+            </fieldset>
         </form>
     );
 
