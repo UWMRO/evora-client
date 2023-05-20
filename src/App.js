@@ -11,7 +11,6 @@ import PingServer from './components/PingServer';
 import OnOff from './components/OnOffFunctionality'
 import logo from './aueg_logo.png'
 import { getStatus } from "./apiClient"
-import DownloadCapture from './components/DownloadCapture';
 
 // https://github.com/ericmandel/js9
 
@@ -28,17 +27,17 @@ function App() {
   const [initialized, setInitialized] = useState(getStatus()['status'] === '20073')
   const [disabledExpType, setDisabledExpType] = useState(false)
 
-  
+
   useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage, {refresh: true}), 500)}, [displayedImage])
 
 
   return (
-    <div className='App' > 
+    <div className='App' >
     <a href='https://sites.google.com/a/uw.edu/mro/' target='_blank' rel='noreferrer'>
       <img src={logo} className='Logo' alt='Logo'/>
     </a>
     <h1 className='Title'>Manastash Ridge Observatory Controls</h1>
-    
+
       <PingServer/>
       <OnOff initialized={initialized} setInitialized={setInitialized}/>
       <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus}/>
@@ -48,8 +47,8 @@ function App() {
       <SetTemp temp={temp} setTemp={setTemp}/>
       <GetTemp currTemp={currTemp} setCurrTemp={setCurrTemp}/>
       <ExposureControls
-        exposureType={exposureType} 
-        imageType={imageType} 
+        exposureType={exposureType}
+        imageType={imageType}
         filterType={filterType}
         temp = {temp}
         setDisplayedImage = {setDisplayedImage}
@@ -61,7 +60,7 @@ function App() {
         <div className="JS9Statusbar"></div>
       </div>
     </div>
-    
+
   );
 }
 
