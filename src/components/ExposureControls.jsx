@@ -22,7 +22,14 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         setDisableExpType(true)
         setExposureData(null)
         // if exposure time is less than 0, set it to 0
-        data.exptime = exposureType === "Real Time" ? 0.3 : Math.max(0, data.exptime)
+        if (exposureType === "Real Time") {
+            data.exptime = 1.0
+        } else if(imageType === "Bias") {
+            data.exptime = 0.0
+        } else {
+            data.exptime = Math.max(0, data.exptime)
+        }
+
         // make sure exposure number is at least 1 exposure
         data.expnum = Math.max(1, data.expnum).toString()
 
