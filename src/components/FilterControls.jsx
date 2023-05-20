@@ -86,7 +86,7 @@ function FilterTypeSelector({ filterType, setFilterType }) {
         />
       </label>
       <label>
-        r
+        i
         <input
           type="radio"
           name="FilterType"
