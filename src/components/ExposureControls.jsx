@@ -3,7 +3,10 @@ import { useForm } from "react-hook-form"
 import {useEffect, useState} from "react"
 
 
-
+/**
+ * Fields for submitting exposure request including header comment, exposure time, number of exposures, and
+ * extra displays for successful exposures.
+ */
 function ExposureControls({ exposureType, imageType, filterType, setDisplayedImage, setDisableControls, isDisabled}) {
 
     const [playing, setPlaying] = useState(false)

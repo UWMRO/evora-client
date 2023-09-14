@@ -1,3 +1,6 @@
+/**
+ * Displays options to select the type of image to expose.
+ */
 function ImageTypeSelector({imageType, setImageType, isDisabled}) {
 
     function GetImageTypeClicked(e) {

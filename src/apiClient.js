@@ -1,3 +1,7 @@
+/*
+ * Contains all functions for api requests to the server.
+ */
+
 // Creates a POST request.
 export function buildPostPayload(data) {
   return {

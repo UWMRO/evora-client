@@ -1,3 +1,6 @@
+/**
+ * Displays options to select the exposure type for the capture.
+ */
 function ExposureTypeSelector({exposureType, setExposureType, isDisabled}) {
     
     function GetExposureTypeClicked(e) {

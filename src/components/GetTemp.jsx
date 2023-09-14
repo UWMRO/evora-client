@@ -4,6 +4,9 @@ import { getTemperature } from "../apiClient";
 import { Line } from 'react-chartjs-2';
 import { Chart } from "chart.js/auto";
 
+/**
+ * Displays a button to get and show the temperature of the camera
+ */
 function GetTemp({currTemp, setCurrTemp, isDisabled}) {
 
 

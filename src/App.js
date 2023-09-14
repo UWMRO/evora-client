@@ -15,6 +15,9 @@ import SetTemp from './components/SetTemp';
 
 // Use python http.server to serve downloaded files?
 
+/**
+ * Main page of MRO Controls. Contains all child elements.
+ */
 function App() {
   const [exposureType, setExposureType] = useState('Single')
   const [imageType, setImageType] = useState('Bias')
