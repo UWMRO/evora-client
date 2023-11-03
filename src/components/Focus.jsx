@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import React from "react";
 
 // const backendUrl = 'http://localhost:3005';  
-const baseURL = '/api'
+const backendUrl = '/api'
 
 
 function Focus() {
