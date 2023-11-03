@@ -10,6 +10,7 @@ import ImageTypeSelector from './components/ImageTypeSelector';
 import OnOff from './components/OnOffFunctionality';
 import ExposureTypeSelector from './components/SetExposureType';
 import SetTemp from './components/SetTemp';
+import Focus from "./components/Focus";
 
 // https://github.com/ericmandel/js9
 
@@ -54,6 +55,7 @@ function App() {
         setDisableControls = {setDisableControls}
         isDisabled = {!initialized}
       />
+      <Focus isDisabled={disableControls || !initialized}/>
       <div className="display">
         <div className="JS9Menubar"></div>
         <div className="JS9"></div>
