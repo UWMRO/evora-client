@@ -1,5 +1,8 @@
 import { getStatus } from "../apiClient";
 
+/**
+ * Displays a button to display the current status of andor.
+*/
 function GetStatus({currStatus, setCurrStatus, isDisabled}) {
 
     async function callGetStatus() {

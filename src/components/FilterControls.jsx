@@ -4,6 +4,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { getFilterWheel, homeFilterWheel, setFilterWheel } from '../apiClient';
 import BeatLoader from 'react-spinners/BeatLoader';
 
+/**
+ * Displays the different filter wheel positions and allows to pick one.
+ */
 function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
   const [moving, setMoving] = useState(false);
 
