@@ -63,7 +63,6 @@ function App() {
         <div className="JS9Statusbar"></div>
       </div>
     </div>
-
   );
 }
 
