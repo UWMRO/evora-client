@@ -10,10 +10,9 @@ import "chart.js/auto";
 function GetTemp({currTemp, setCurrTemp, isDisabled}) {
 
 
-  let TIMER = 3000; //TIMER IN MS
   let NUM_OF_DATA_POINTS = 20;
 
-  let tempMessage = "";
+  let tempMessage = <span className='tempMessage'>Current Temperature: -999 °C</span>;
 
   const initialize_array = (num) => {
     let newArray = [];
@@ -40,7 +39,12 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
 
   //Graph data collection loop
   useEffect(() => {
+    let TIMER; // in ms
     if(tempGraphButtonText !== 'Turn ON'){
+      TIMER = 3000;
+    } else {
+      TIMER = 30000;
+    }
     const interval = setInterval(() => {
       const temperaturePromise = getTemperature();
       temperaturePromise.then(val => {
@@ -60,8 +64,7 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
       }
     }, TIMER);
     return () => clearInterval(interval);
-    }
-  }, [dateArray, tempDataArray, tempGraphButtonText, setCurrTemp, TIMER, NUM_OF_DATA_POINTS]);
+  }, [dateArray, tempDataArray, tempGraphButtonText, setCurrTemp, NUM_OF_DATA_POINTS]);
 
   async function callGetTemperature() {
     const temperature = JSON.parse(await getTemperature());
