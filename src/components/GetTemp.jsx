@@ -32,19 +32,13 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
     return initialState;
   });
 
-  const [buttonText, setButtonText] = useState('Show');
+  const [buttonText, setButtonText] = useState('Details');
   const [graphDisplay, setGraphDisplay] = useState('none');
-  const [tempGraphButtonText, setTempGraphButtonText] = useState('Turn ON');
-  const [tempGraphButtonClass, setTempGraphButtonClass] = useState('tempGraphOFF');
+  const [graphDelay, setGraphDelay] = useState(30000);
 
-  //Graph data collection loop
+  // get temperature loop
   useEffect(() => {
-    let TIMER; // in ms
-    if(tempGraphButtonText !== 'Turn ON'){
-      TIMER = 3000;
-    } else {
-      TIMER = 30000;
-    }
+    if (graphDelay === -1) return;
     const interval = setInterval(() => {
       const temperaturePromise = getTemperature();
       temperaturePromise.then(val => {
@@ -62,9 +56,9 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
       if(tempDataArray.length > NUM_OF_DATA_POINTS){
         setTempDataArray(tempDataArray.slice(1, NUM_OF_DATA_POINTS + 1));
       }
-    }, TIMER);
+    }, graphDelay);
     return () => clearInterval(interval);
-  }, [dateArray, tempDataArray, tempGraphButtonText, setCurrTemp, NUM_OF_DATA_POINTS]);
+  }, [dateArray, tempDataArray, setCurrTemp, graphDelay, NUM_OF_DATA_POINTS]);
 
   async function callGetTemperature() {
     const temperature = JSON.parse(await getTemperature());
@@ -121,22 +115,12 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
   };
 
   const graphButtonHandler = () => {
-    if(buttonText === 'Show'){
+    if(buttonText === 'Details'){
       setButtonText('Hide');
       setGraphDisplay('block');
     } else {
-      setButtonText('Show');
+      setButtonText('Details');
       setGraphDisplay('none');
-    }
-  }
-
-  const graphOnOffHandler = () => {
-    if(tempGraphButtonClass === 'tempGraphOFF'){
-      setTempGraphButtonClass('tempGraphON');
-      setTempGraphButtonText('Turn OFF');
-    } else {
-      setTempGraphButtonClass('tempGraphOFF');
-      setTempGraphButtonText('Turn ON');
     }
   }
 
@@ -144,11 +128,19 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
     <fieldset className="Temperature" disabled={isDisabled}>
       <label>Get Temperature</label>
       <button onClick={callGetTemperature}>Get</button>
-      <button onClick={graphButtonHandler} style={{ width:'48px'}}>{buttonText}</button>
+      <button onClick={graphButtonHandler} style={{ width:'52px'}}>{buttonText}</button>
       {tempMessage}
       <div className="graphContainer" style={{ display: graphDisplay}}>
-        <button onClick={graphOnOffHandler}className={tempGraphButtonClass}>{tempGraphButtonText}</button>
-        <p>Turning on this graph will enable auto-updating for the current temperature even if hidden</p>
+        Update Interval (Current: {graphDelay === -1 ? "Disabled" : graphDelay / 1000 + "s"}): <select name="delay" id="delay">
+          <option value="1000">1s</option>
+          <option value="3000">3s</option>
+          <option value="5000">5s</option>
+          <option value="10000">10s</option>
+          <option value="15000">15s</option>
+          <option selected="selected" value="30000">30s</option>
+          <option value="-1">Disable</option>
+        </select>
+        <button onClick={function() {setGraphDelay(Number(document.getElementById("delay").value));}}>Set</button>
         <Line data={data} options={options}/>
       </div>
     </fieldset>
