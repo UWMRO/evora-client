@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { getTemperature } from "../apiClient";
 
 import { Line } from 'react-chartjs-2';
-// eslint-disable-next-line
-import { Chart } from "chart.js/auto";  // this says unused but removing it will break things
+import "chart.js/auto";
 
 /**
  * Displays a button to get and show the temperature of the camera
