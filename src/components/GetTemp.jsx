@@ -85,34 +85,8 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
     ],
   };
 
-  const options = {
-    plugins: {
-        legend: {
-          display: false
-        }
-      },
-    scales: {
-      x: {
-        grid: {
-          color: 'grey'
-        },
-        ticks: {
-          color: 'white'
-        }
-      },
-      y: {
-        max: 30,
-        min: -100,
-        grid: {
-          color: 'grey'
-        },
-        ticks: {
-          stepSize: 5,
-          color: 'white'
-        }
-      }
-    }
-  };
+  const options = require("./resources/graph_options.json");
+  
 
   const graphButtonHandler = () => {
     if(buttonText === 'Details'){
