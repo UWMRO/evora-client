@@ -42,7 +42,7 @@ function App() {
 
       {/* <PingServer/> */}
       <OnOff initialized={initialized} setInitialized={setInitialized}/>
-      <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus} isDisabled={!initialized}/>
+      <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus}/>
       <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={disableControls || !initialized}/>
       <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disableControls || !initialized}/>
       <FilterTypeSelector filterType={filterType} setFilterType={setFilterType} isDisabled={disableControls || !initialized}/>
