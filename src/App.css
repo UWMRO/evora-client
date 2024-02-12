@@ -116,7 +116,23 @@
 }
 
 .blink {
+  margin-top: 30px;
   animation: blinker 2s linear infinite;
+}
+
+.timerOutside {
+  margin: 20px auto;
+  width: 20%;
+  background-color: #e0e0de;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.timerInside {
+  background-color: #01be00;
+  height: 12px;
+  border-radius: 8px;
+  transition: width 1s ease;
 }
 
 @keyframes blinker {
@@ -210,5 +226,14 @@ fieldset.filter > label,button  {
   }
   to {
       left: 100%;
+  }
+}
+
+@keyframes smoothProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
   }
 }

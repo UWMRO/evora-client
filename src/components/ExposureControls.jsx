@@ -20,6 +20,21 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
     const {register, handleSubmit} = useForm()
 
+    // For time/loading bar
+    const [time, setTime] = useState(undefined);
+    const [currTimer, setCurrTimer] = useState(undefined);
+
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+      
+        // Pad the minutes and seconds with leading zeros if they are less than 10
+        const formattedMinutes = minutes.toString().padStart(2, '0');
+        const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+      
+        return `${formattedMinutes}:${formattedSeconds}`;
+    }
+
 
 
     const onSubmit = async data => {
@@ -43,6 +58,11 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         data.imgtype = data.exptime === 0 ? "Bias" : imageType
         data.exptime = data.exptime.toString()
         data.filtype = filterType
+
+        if (exposureType !== "Bias" && exposureType != "Real Time") {
+            setTime(data.exptime);
+            setCurrTimer(data.exptime);
+        }
 
         setIsExposing(true)
 
@@ -104,6 +124,23 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         audio.removeEventListener('ended', () => setPlaying(false));
       };
     }, [audio]);
+
+
+    // For the timer countdown and the progress bar
+    useEffect(() => {
+        if (currTimer !== undefined && currTimer !== 0) {
+          // Every 1000 milliseconds 
+          const intervalId = setInterval(() => {
+            setCurrTimer(currTimer => currTimer - 1);
+          }, 1000);
+
+          return () => clearInterval(intervalId);
+        } else if (currTimer === 0) {
+          // When timer hits 0, set to undefined to hide the bar and timer
+          setTime(undefined);
+          setCurrTimer(undefined);
+        }
+      }, [currTimer]);
 
 
     function seriesLinks() {
@@ -172,7 +209,17 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             )}
 
             {/* Get Exposure Button */}
-            <button disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>
+            {!isExposing && (<button disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>)}
+
+            {/* Show the timer and the progress bar */}
+            {currTimer !== undefined && (
+                <div >
+                    {formatTime(currTimer)}
+                    <div className="timerOutside">
+                        <div className="timerInside" style={{animation: `smoothProgress ${time}s linear forwards`}} />
+                    </div>
+                </div>
+            )}
 
             </fieldset>
         </form>
