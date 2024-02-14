@@ -20,9 +20,10 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
     const {register, handleSubmit} = useForm()
 
-    // For time/loading bar
-    const [time, setTime] = useState(undefined);
+    // For timet/loading bar
+    const [time, setTime] = useState(undefined);  // progress bar progress
     const [currTimer, setCurrTimer] = useState(undefined);
+    const [endTime, setEndTime] = useState(null);  // Timer accuracy
 
     function formatTime(seconds) {
         const minutes = Math.floor(seconds / 60);
@@ -62,6 +63,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         if (exposureType !== "Bias" && exposureType != "Real Time") {
             setTime(data.exptime);
             setCurrTimer(data.exptime);
+            setEndTime(Date.now() + data.exptime * 1000);
         }
 
         setIsExposing(true)
@@ -126,21 +128,25 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     }, [audio]);
 
 
-    // For the timer countdown and the progress bar
     useEffect(() => {
-        if (currTimer !== undefined && currTimer !== 0) {
-          // Every 1000 milliseconds 
-          const intervalId = setInterval(() => {
-            setCurrTimer(currTimer => currTimer - 1);
-          }, 1000);
-
+        if (endTime) {
+          const updateTimer = () => {
+            const timeLeftInSeconds = Math.round((endTime - Date.now()) / 1000);
+            
+            if (timeLeftInSeconds >= 0) {
+              setCurrTimer(timeLeftInSeconds);
+            } else {
+              clearInterval(intervalId);
+              setCurrTimer(undefined); // Timer has finished
+              setTime(undefined);
+            }
+          };
+    
+          const intervalId = setInterval(updateTimer, 1000);
+    
           return () => clearInterval(intervalId);
-        } else if (currTimer === 0) {
-          // When timer hits 0, set to undefined to hide the bar and timer
-          setTime(undefined);
-          setCurrTimer(undefined);
         }
-      }, [currTimer]);
+    }, [endTime]);
 
 
     function seriesLinks() {
