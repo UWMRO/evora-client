@@ -8,6 +8,7 @@ function SetTemp({temp, setTemp, isDisabled}) {
 
     const {register, handleSubmit} = useForm()
 
+    // Remove this? "defined but never used"
     async function callSetTemperature(value) {
       console.log(value)
       setTemp(await setTemperature(value))

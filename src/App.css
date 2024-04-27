@@ -6,6 +6,16 @@
   text-align: center;
 }
 
+.random {
+  margin-top: 0%;
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.controls {
+  margin-top: 10%;
+}
+
 .exposure-controls label {
   display:block;
   margin: 8px;
@@ -16,12 +26,12 @@
 }
 
 .ImageTypeSelector {
-  text-align: left;
+  text-align: middle;
   border: 1px solid black;
 }
 
 .Status label{
-  text-align: center;
+  text-align: left;
   display: inline-block;
   margin: 4px 4px 10px 4px;
 }
@@ -70,7 +80,7 @@
 
 .tempMessage {
   display: block;
-  margin: 10px 0;
+  margin: 10px;
 }
 
 .App-logo {
@@ -79,10 +89,10 @@
 }
 
 .Logo {
-  height: 150px;
-  width: 150px;
-  border-radius: 50px;
-  margin-top: 2%;
+  height: 100px;
+  width: 100px;
+  border-radius: 30px;
+  margin-top: 1%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -92,7 +102,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #b4fc25;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -126,8 +136,7 @@
 }
 
 body {
-  background: rgb(254,0,240);
-  background: linear-gradient(90deg, rgba(254,0,240,1) 0%, rgba(97,9,121,1) 50%, rgba(0,237,255,0.7008053221288515) 100%);
+  background: linear-gradient(90deg, rgb(38, 35, 28) 0%, rgb(53, 32, 90) 25%, rgb(78, 76, 160) 50%, rgb(53, 32, 90) 75%, rgb(38, 35, 28) 100%);
   color: white;
 }
 
@@ -145,6 +154,10 @@ fieldset.filter > label,button  {
   margin-left: 10px;
 }
 
+fieldset {
+  border: 3px solid;
+  border-radius: 5px
+}
 .graphContainer {
   width: 80%;
   margin: 0 auto;
