@@ -95,8 +95,8 @@ function Focus() {
 
 
   return (
-    <div className="App">
-        <div>
+    <fieldset className="Focus">
+    <div>
           <label htmlFor="filename">File name:</label>
           <input type="text" id="filename" value={filename} onChange={handleFilenameChange} />
           <label htmlFor="focuserPosition">Focuser Position:</label>
@@ -107,7 +107,7 @@ function Focus() {
         {img && (
           <img src={img} alt="An example image" />
         )}
-    </div>
+    </fieldset>
   );
 }
 
