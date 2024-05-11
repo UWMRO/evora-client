@@ -10,8 +10,8 @@ import ImageTypeSelector from './components/ImageTypeSelector';
 import OnOff from './components/OnOffFunctionality';
 import ExposureTypeSelector from './components/SetExposureType';
 import SetTemp from './components/SetTemp';
+import Focus from "./components/Focus";
 import Framing from "./components/Framing";
-
 
 // https://github.com/ericmandel/js9
 
@@ -61,6 +61,8 @@ function App() {
           isDisabled = {!initialized}
         />
         <Framing isDisabled={disableControls || !initialized}/>
+        <Focus isDisabled={disableControls || !initialized}/>
+
       </div>
       <div className="display">
         <div className="JS9Menubar"></div>
