@@ -10,6 +10,8 @@ import ImageTypeSelector from './components/ImageTypeSelector';
 import OnOff from './components/OnOffFunctionality';
 import ExposureTypeSelector from './components/SetExposureType';
 import SetTemp from './components/SetTemp';
+import Framing from "./components/Framing";
+
 
 // https://github.com/ericmandel/js9
 
@@ -37,6 +39,7 @@ function App() {
     <a href='https://sites.google.com/a/uw.edu/mro/' target='_blank' rel='noreferrer'>
       <img src={logo} className='Logo' alt='Logo'/>
     </a>
+
     <h1 className='Title' style={{fontSize: '20px'}}>Manastash Ridge Observatory Controls</h1>
     <div className="Interface">
       <div className="Controls">
@@ -57,6 +60,7 @@ function App() {
           setDisableControls = {setDisableControls}
           isDisabled = {!initialized}
         />
+        <Framing isDisabled={disableControls || !initialized}/>
       </div>
       
       <div className="display">
