@@ -8,6 +8,7 @@ function SetTemp({temp, setTemp, isDisabled}) {
 
     const {register, handleSubmit} = useForm()
 
+    // Remove this? "defined but never used"
     async function callSetTemperature(value) {
       console.log(value)
       setTemp(await setTemperature(value))
@@ -31,6 +32,7 @@ function SetTemp({temp, setTemp, isDisabled}) {
     }
 
     return (
+      <fieldset disabled={isDisabled}> 
       <form onSubmit={handleSubmit(onSubmit)} className='Temperature'>
         <label>Set Temperature</label>
         <span className='tempCelsiusIcon'>
@@ -39,7 +41,7 @@ function SetTemp({temp, setTemp, isDisabled}) {
         <button type='submit' disabled={isDisabled}>Set</button>
         {coolingMessage}
       </form>
-      
+      </fieldset>
     );
   }
 
