@@ -9,6 +9,20 @@ function Framing(isDisabled) {
     const [filename, setFilename] = useState('');
     const [solvingResult, setSolvingResult] = useState('');
 
+    const [positionHint, setPositionHint] = useState({
+        hintRaDeg: '',
+        hintDecDeg: '',
+        hintRadiusDeg: 5 // Default value of 5
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setPositionHint({
+            ...positionHint,
+            [name]: value
+        });
+    };
+
     const handleFilenameChange = (event) => {
         setFilename(event.target.value);
     };
@@ -19,7 +33,12 @@ function Framing(isDisabled) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ filename })
+            body: JSON.stringify({
+                filename: filename,
+                hint_ra_deg: positionHint.hintRaDeg,
+                hint_dec_deg: positionHint.hintDecDeg,
+                hint_radius_deg: positionHint.hintRadiusDeg
+            })
         })
         .then(response => {
             if (!response.ok) {
@@ -55,7 +74,47 @@ function Framing(isDisabled) {
 
             <div>
                 <label htmlFor="filename">File name:</label>
-                <input type="text" id="filename" value={filename} onChange={handleFilenameChange} />
+                <input
+                    type="text"
+                    id="filename"
+                    value={filename}
+                    onChange={handleFilenameChange}
+                    style={{ width: "300px" }} // Adjusted width
+                />
+                <div>
+                    <label>
+                        RA (deg):
+                        <input
+                            type="number"
+                            name="hintRaDeg"
+                            value={positionHint.hintRaDeg}
+                            onChange={handleInputChange}
+                            style={{ width: "60px" }}
+                        />
+                    </label>
+                    &nbsp; {/* Add space between RA and Dec */}
+                    <label>
+                        Dec (deg):
+                        <input
+                            type="number"
+                            name="hintDecDeg"
+                            value={positionHint.hintDecDeg}
+                            onChange={handleInputChange}
+                            style={{ width: "60px" }}
+                        />
+                    </label>
+                    &nbsp; { }
+                    <label>
+                        Radius (deg):
+                        <input
+                            type="number"
+                            name="hintRadiusDeg"
+                            value={positionHint.hintRadiusDeg}
+                            onChange={handleInputChange}
+                            style={{ width: "60px" }}
+                        />
+                    </label>
+                </div>
                 <button onClick={handleSendButtonClick}>Plate solve</button>
             </div>
 
