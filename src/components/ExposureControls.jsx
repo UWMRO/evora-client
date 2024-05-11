@@ -55,7 +55,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         console.log(message)
         setCaptureResponse(message.message)
 
-        if (message.message === "Capture aborted") {  // sketchy way to check if exposure was aborted. We are hardcoding the message here.
+        if (message.status !== 0) {  // capture failed/aborted
             setLastExpName("");
             console.log(lastExpName);
             return;
