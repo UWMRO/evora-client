@@ -7,32 +7,33 @@ import BeatLoader from 'react-spinners/BeatLoader';
  */
 function OnOff({initialized, setInitialized}) {
 
+    const [initializing, setInitializing] = useState(false);
     const [shuttingDown, setShuttingDown] = useState(false);
 
     async function onInitialize() {
-        console.log("Initializing Andor...")
-        const msg = await initialize()
-        console.log(msg)
-        setInitialized(true)
+        console.log("Initializing Andor...");
+        setInitializing(true);
+
+        const msg = await initialize();
+        console.log(msg);
+        setInitialized(true);
+        setInitializing(false);
     }
 
     async function onShutdown() {
-        console.log("Shutting down Andor...")
-        setShuttingDown(true)
+        console.log("Shutting down Andor...");
+        setShuttingDown(true);
 
-        const msg = await shutdown()
-        console.log(msg)
-        setInitialized(false)
-        setShuttingDown(false)
-        // console.log("Pinging Filter Wheel Connection")
-        // const msg = await getFilterWheelStatus()
-        // console.log(msg.message)
+        const msg = await shutdown();
+        console.log(msg);
+        setInitialized(false);
+        setShuttingDown(false);
     }
 
     return(
         <fieldset>
             <button disabled={initialized} onClick={onInitialize}>
-                Initialize
+                { initializing ? "Initializing ..." : "Initialize" }
             </button>
             <button disabled={!initialized} onClick={onShutdown}>
                 { shuttingDown ? "Shutting Down ..." : "Shut Down" }
@@ -42,7 +43,7 @@ function OnOff({initialized, setInitialized}) {
                 cssOverride={{ verticalAlign: 'bottom', alignContent: 'end' }}
                 color="red"
                 size={12}
-                loading={shuttingDown}
+                loading={initializing || shuttingDown}
                 speedMultiplier={0.7}
               />
             </label>
