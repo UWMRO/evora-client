@@ -45,7 +45,7 @@ function App() {
       <div className="Controls">
         {/* <PingServer/> */}
         <OnOff initialized={initialized} setInitialized={setInitialized}/>
-        <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus} isDisabled={!initialized}/>
+        <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus}/>
         <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={disableControls || !initialized}/>
         <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disableControls || !initialized}/>
         <FilterTypeSelector filterType={filterType} setFilterType={setFilterType} isDisabled={disableControls || !initialized}/>
@@ -64,7 +64,6 @@ function App() {
         <Focus isDisabled={disableControls || !initialized}/>
 
       </div>
-      
       <div className="display">
         <div className="JS9Menubar"></div>
         <div className="JS9"></div>
