@@ -86,4 +86,5 @@ export const ERROR_CODES = {
     20990: "DRV_NOCAMERA",
     20991: "DRV_NOT_SUPPORTED",
     20992: "DRV_NOT_AVAILABLE",
+    32552: "Not initialized",
 }
