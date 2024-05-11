@@ -8,6 +8,7 @@ const backendUrl = '/api'
 function Framing(isDisabled) {
     const [filename, setFilename] = useState('');
     const [solvingResult, setSolvingResult] = useState('');
+    const [loading, setLoading] = useState(false); // Loading state
 
     const [positionHint, setPositionHint] = useState({
         hintRaDeg: '',
@@ -28,6 +29,7 @@ function Framing(isDisabled) {
     };
 
     const handleSendButtonClick = () => {
+        setLoading(true); // Set loading state to true when request starts
         fetch(`${backendUrl}/api/plate_solve`, {
             method: 'POST',
             headers: {
@@ -41,6 +43,7 @@ function Framing(isDisabled) {
             })
         })
         .then(response => {
+            setLoading(false); // Set loading state to false when request completes
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -62,6 +65,7 @@ function Framing(isDisabled) {
             }
         })
         .catch(error => {
+            setLoading(false); // Set loading state to false in case of error
             console.error('Error sending request to backend:', error);
             const clickableLink = `Plate solving failed.`;
             setSolvingResult(clickableLink);
@@ -115,7 +119,15 @@ function Framing(isDisabled) {
                         />
                     </label>
                 </div>
-                <button onClick={handleSendButtonClick}>Plate solve</button>
+                {/* Conditional rendering based on loading state */}
+                {loading ? (
+                    <button style={{backgroundColor: 'gray'}}> {/* Apply gray style when loading */}
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Working on it...
+                    </button>
+                ) : (
+                    <button onClick={handleSendButtonClick}>Plate solve</button>
+                )}
             </div>
 
             <div>
@@ -126,6 +138,4 @@ function Framing(isDisabled) {
     );
 }
 
-
 export default Framing;
-
