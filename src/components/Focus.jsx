@@ -85,6 +85,7 @@ function Focus() {
       })
       .then(data => {
         console.log('Response from backend:', data);
+        setImg(null);
         refreshSid();
       })
       .catch(error => {
