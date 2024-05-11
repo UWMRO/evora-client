@@ -1,0 +1,28 @@
+{
+    "plugins": {
+        "legend": {
+          "display": false
+        }
+      },
+    "scales": {
+      "x": {
+        "grid": {
+          "color": "grey"
+        },
+        "ticks": {
+          "color": "white"
+        }
+      },
+      "y": {
+        "max": 30,
+        "min": -100,
+        "grid": {
+          "color": "grey"
+        },
+        "ticks": {
+          "stepSize": 5,
+          "color": "white"
+        }
+      }
+    }
+  }

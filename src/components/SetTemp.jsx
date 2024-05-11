@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form"
 import { setTemperature } from "../apiClient";
 
+/**
+ * Displays a field to input a set temperature to the camera.
+ */
 function SetTemp({temp, setTemp, isDisabled}) {
 
     const {register, handleSubmit} = useForm()

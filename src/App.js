@@ -16,6 +16,9 @@ import Focus from "./components/Focus";
 
 // Use python http.server to serve downloaded files?
 
+/**
+ * Main page of MRO Controls. Contains all child elements.
+ */
 function App() {
   const [exposureType, setExposureType] = useState('Single')
   const [imageType, setImageType] = useState('Bias')
@@ -62,7 +65,6 @@ function App() {
         <div className="JS9Statusbar"></div>
       </div>
     </div>
-
   );
 }
 

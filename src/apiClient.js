@@ -1,6 +1,8 @@
+/*
+ * Contains all functions for api requests to the server.
+ */
 // const baseURL = 'http://localhost:3005';  
 const baseURL = '/api'
-
 
 // Creates a POST request.
 export function buildPostPayload(data) {
