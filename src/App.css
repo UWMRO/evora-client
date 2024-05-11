@@ -2,18 +2,21 @@
  * Styles for the frontend
  */
 
-.App {
+ .App {
   text-align: center;
 }
 
-.random {
-  margin-top: 0%;
+.Interface {
   display: grid;
   grid-auto-flow: column;
+  margin-top: -1%;
 }
 
-.controls {
-  margin-top: 10%;
+.Controls {
+  display: grid;
+  justify-content: space between;
+  margin-left: 15%;
+  margin-top: 1em;
 }
 
 .exposure-controls label {
@@ -89,8 +92,8 @@
 }
 
 .Logo {
-  height: 100px;
-  width: 100px;
+  height: 90px;
+  width: 90px;
   border-radius: 30px;
   margin-top: 1%;
 }
@@ -136,14 +139,14 @@
 }
 
 body {
-  background: linear-gradient(90deg, rgb(38, 35, 28) 0%, rgb(53, 32, 90) 25%, rgb(78, 76, 160) 50%, rgb(53, 32, 90) 75%, rgb(38, 35, 28) 100%);
+  background: linear-gradient(45deg, rgb(78, 76, 160) 0%, rgb(35, 17, 65) 20%, rgb(53, 32, 90) 50%, rgb(35, 17, 65) 80%, rgb(78, 76, 160) 100%);
   color: white;
 }
 
 .display {
-  width: 100%;
   margin-top: 1em;
   margin-bottom: 1em;
+  margin-left: 3%;
 }
 
 .display div {
@@ -152,11 +155,13 @@ body {
 
 fieldset.filter > label,button  {
   margin-left: 10px;
+  border-radius: 5px;
 }
 
 fieldset {
-  border: 3px solid;
-  border-radius: 5px
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: rgb(41, 37, 37);
 }
 .graphContainer {
   width: 80%;
