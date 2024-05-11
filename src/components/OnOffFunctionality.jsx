@@ -2,6 +2,9 @@ import { useState } from "react";
 import { initialize, shutdown } from "../apiClient"
 import BeatLoader from 'react-spinners/BeatLoader';
 
+/**
+ * Displays options ot initialize and shut down andor.
+ */
 function OnOff({initialized, setInitialized}) {
 
     const [shuttingDown, setShuttingDown] = useState(false);
