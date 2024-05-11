@@ -79,6 +79,12 @@ export async function capture(input) {
   return data;
 }
 
+export async function abort() {
+  const response = await fetch('/api/abort');
+  const data = await response.json();
+  return data;
+}
+
 export async function setFilter(input) {
   const response = await fetch(`${baseURL}/setFilter`, {
     method: 'POST',

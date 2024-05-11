@@ -1,5 +1,5 @@
-import { capture } from "../apiClient"
-import { useForm } from "react-hook-form"
+import { capture, abort } from "../apiClient"
+import { set, useForm } from "react-hook-form"
 import {useEffect, useState} from "react"
 
 
@@ -15,6 +15,8 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     const [lastExpName, setLastExpName] = useState("")
     const [exposureData, setExposureData] = useState(null)
     const [stopRealtime, setStopRealTime] = useState(false)
+
+    const [capture_response, setCaptureResponse] = useState("")
 
     const [seriesExposures, setSeriesExposures] = useState([])
 
@@ -51,6 +53,13 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         setIsExposing(false)
 
         console.log(message)
+        setCaptureResponse(message.message)
+
+        if (message.message === "Capture aborted") {  // sketchy way to check if exposure was aborted. We are hardcoding the message here.
+            setLastExpName("");
+            console.log(lastExpName);
+            return;
+        }
         // need to create url for file
 
         // window.JS9.Load(message.url)
@@ -114,6 +123,23 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         return [...links]
     }
 
+    /**
+     * Abort the exporsure
+     */
+    async function abortExposure() {
+        if (!isExposing) return;
+
+        setStopRealTime(true);
+
+        const response = await abort();
+
+        setIsExposing(false);
+        setDisableControls(false);
+
+        console.log(response);
+        setCaptureResponse(response.message);
+    }
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='exposure-controls'>
             <fieldset disabled={isDisabled}>
@@ -158,13 +184,18 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             }
 
             {/* Download mutliple (Series) */}
-            {(exposureType === "Series" && seriesExposures.length != 0) &&
+            {(exposureType === "Series" && seriesExposures.length !== 0) &&
                 (<><div>Series exposures:</div><br /></>)
             }
         
-            {(exposureType === "Series" && seriesExposures.length != 0) &&
+            {(exposureType === "Series" && seriesExposures.length !== 0) &&
                 seriesLinks()
             }
+
+            {/* Capture response */}
+            {(!isExposing && 
+                <p>{capture_response}</p>
+            )}
 
             {/* End exposure (for real time) */}
             {(isExposing && exposureType === "Real Time" &&
@@ -173,6 +204,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
             {/* Get Exposure Button */}
             <button disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>
+            {(exposureType !== "Real Time" && <button disabled={!isExposing} onClick={abortExposure}>Abort Exposure</button>)}
 
             </fieldset>
         </form>
