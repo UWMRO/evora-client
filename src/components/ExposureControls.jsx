@@ -1,4 +1,4 @@
-import { capture } from "../apiClient"
+import { capture, abort } from "../apiClient"
 import { set, useForm } from "react-hook-form"
 import {useEffect, useState} from "react"
 
@@ -15,6 +15,8 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     const [lastExpName, setLastExpName] = useState("")
     const [exposureData, setExposureData] = useState(null)
     const [stopRealtime, setStopRealTime] = useState(false)
+
+    const [capture_response, setCaptureResponse] = useState("")
 
     const [seriesExposures, setSeriesExposures] = useState([])
 
@@ -51,6 +53,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         setIsExposing(false)
 
         console.log(message)
+        setCaptureResponse(message.message)
         // need to create url for file
 
         // window.JS9.Load(message.url)
@@ -128,6 +131,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         setDisableControls(false);
 
         console.log(response);
+        setCaptureResponse(response.message);
     }
 
     return (
@@ -181,6 +185,11 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             {(exposureType === "Series" && seriesExposures.length != 0) &&
                 seriesLinks()
             }
+
+            {/* Capture response */}
+            {(!isExposing && 
+                <p>{capture_response}</p>
+            )}
 
             {/* End exposure (for real time) */}
             {(isExposing && exposureType === "Real Time" &&
