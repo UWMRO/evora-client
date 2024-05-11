@@ -1,5 +1,5 @@
 import { capture } from "../apiClient"
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import {useEffect, useState} from "react"
 
 
@@ -114,6 +114,22 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         return [...links]
     }
 
+    /**
+     * Abort the exporsure
+     */
+    async function abortExposure() {
+        if (!isExposing) return;
+
+        setStopRealTime(true);
+
+        const response = await abort();
+
+        setIsExposing(false);
+        setDisableControls(false);
+
+        console.log(response);
+    }
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='exposure-controls'>
             <fieldset disabled={isDisabled}>
@@ -173,6 +189,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
             {/* Get Exposure Button */}
             <button disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>
+            <button disabled={!isExposing} onClick={abortExposure}>Abort Exposure</button>
 
             </fieldset>
         </form>
