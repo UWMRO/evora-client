@@ -1,12 +1,13 @@
 /*
  * Contains all functions for api requests to the server.
  */
+// const baseURL = 'http://localhost:3005';  
+const baseURL = '/api'
 
 // Creates a POST request.
 export function buildPostPayload(data) {
   return {
     method: 'POST',
-    credentials: 'include',
     body: JSON.stringify(data),
     cache: 'no-cache',
     headers: new Headers({
@@ -22,7 +23,7 @@ export async function getTemperature() {
   // await is kind of like a dotted line where the interpreter snips the function in two.
   // Everything that would execute after the await keyword is shelved until the network
   // request completes.
-  const response = await fetch('/api/getTemperature');
+  const response = await fetch(`${baseURL}/getTemperature`);
   // The same applies here - we make another dotted line between trying to read the response
   // body as JSON and the remainder of the function
   const data = await response.json();
@@ -35,13 +36,13 @@ export async function getTemperature() {
 }
 
 export async function initialize() {
-    const response = await fetch('/api/initialize')
+    const response = await fetch(`${baseURL}/initialize`)
     const data = await response.json()
     return JSON.stringify(data)
 }
 
 export async function shutdown() {
-    const response = await fetch('/api/shutdown')
+    const response = await fetch(`${baseURL}/shutdown`)
     const data = await response.json()
     return JSON.stringify(data)
 }
@@ -49,9 +50,8 @@ export async function shutdown() {
 export async function setTemperature(input) {
   //need to pass in input variable into Flask server
   console.log(typeof input);
-  const response = await fetch('/api/setTemperature', {
+  const response = await fetch(`${baseURL}/setTemperature`, {
     method: 'POST',
-    credentials: 'include',
     body: JSON.stringify({ temperature: input.toString() }),
     cache: 'no-cache',
     headers: new Headers({
@@ -65,9 +65,8 @@ export async function setTemperature(input) {
 }
 
 export async function capture(input) {
-  const response = await fetch('/api/capture', {
+  const response = await fetch(`${baseURL}/capture`, {
     method: 'POST',
-    credentials: 'include',
     body: JSON.stringify(input),
     cache: 'no-cache',
     headers: new Headers({
@@ -80,10 +79,15 @@ export async function capture(input) {
   return data;
 }
 
+export async function abort() {
+  const response = await fetch('/api/abort');
+  const data = await response.json();
+  return data;
+}
+
 export async function setFilter(input) {
-  const response = await fetch('/api/setFilter', {
+  const response = await fetch(`${baseURL}/setFilter`, {
     method: 'POST',
-    credentials: 'include',
     body: JSON.stringify(input),
     cache: 'no-cache',
     headers: new Headers({
@@ -97,7 +101,7 @@ export async function setFilter(input) {
 }
 
 export async function getStatusTEC() {
-  const response = await fetch('/api/getStatusTEC');
+  const response = await fetch(`${baseURL}/getStatusTEC`);
 
   const data = await response.json();
 
@@ -105,13 +109,13 @@ export async function getStatusTEC() {
 }
 
 export async function getStatus() {
-  const response = await fetch('/api/getStatus');
+  const response = await fetch(`${baseURL}/getStatus`);
   const data = await response.json();
   return JSON.stringify(data);
 }
 
 export async function getFilterWheel() {
-  const response = await fetch('/api/getFilterWheel');
+  const response = await fetch(`${baseURL}/getFilterWheel`);
   const data = await response.json();
   return data;
 }
@@ -119,13 +123,13 @@ export async function getFilterWheel() {
 export async function setFilterWheel(filter) {
   const payload = buildPostPayload({ filter });
   console.log(payload);
-  const response = await fetch('/api/setFilterWheel', payload);
+  const response = await fetch(`${baseURL}/setFilterWheel`, payload);
   const data = await response.json();
   return data;
 }
 
 export async function homeFilterWheel() {
-  const response = await fetch('/api/homeFilterWheel');
+  const response = await fetch(`${baseURL}/homeFilterWheel`);
   const data = await response.json();
   return data;
 }

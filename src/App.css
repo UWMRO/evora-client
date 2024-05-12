@@ -2,8 +2,21 @@
  * Styles for the frontend
  */
 
-.App {
+ .App {
   text-align: center;
+}
+
+.Interface {
+  display: grid;
+  grid-auto-flow: column;
+  margin-top: -1%;
+}
+
+.Controls {
+  display: grid;
+  justify-content: space between;
+  margin-left: 15%;
+  margin-top: 1em;
 }
 
 .exposure-controls label {
@@ -16,12 +29,12 @@
 }
 
 .ImageTypeSelector {
-  text-align: left;
+  text-align: middle;
   border: 1px solid black;
 }
 
 .Status label{
-  text-align: center;
+  text-align: left;
   display: inline-block;
   margin: 4px 4px 10px 4px;
 }
@@ -70,7 +83,7 @@
 
 .tempMessage {
   display: block;
-  margin: 10px 0;
+  margin: 10px;
 }
 
 .App-logo {
@@ -79,10 +92,10 @@
 }
 
 .Logo {
-  height: 150px;
-  width: 150px;
-  border-radius: 50px;
-  margin-top: 2%;
+  height: 90px;
+  width: 90px;
+  border-radius: 30px;
+  margin-top: 1%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -92,7 +105,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #b4fc25;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -142,15 +155,15 @@
 }
 
 body {
-  background: rgb(254,0,240);
-  background: linear-gradient(90deg, rgba(254,0,240,1) 0%, rgba(97,9,121,1) 50%, rgba(0,237,255,0.7008053221288515) 100%);
+  background: linear-gradient(45deg, rgb(78, 76, 160) 0%, rgb(35, 17, 65) 20%, rgb(53, 32, 90) 50%, rgb(35, 17, 65) 80%, rgb(78, 76, 160) 100%);
   color: white;
+  height: 100vh;
 }
 
 .display {
-  width: 100%;
   margin-top: 1em;
   margin-bottom: 1em;
+  margin-left: 3%;
 }
 
 .display div {
@@ -159,8 +172,14 @@ body {
 
 fieldset.filter > label,button  {
   margin-left: 10px;
+  border-radius: 5px;
 }
 
+fieldset {
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: rgb(41, 37, 37);
+}
 .graphContainer {
   width: 80%;
   margin: 0 auto;

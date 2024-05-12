@@ -106,7 +106,6 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
       {tempMessage}
       <div className="graphContainer" style={{ display: graphDisplay}}>
         Update Interval (Current: {graphDelay === -1 ? "Disabled" : graphDelay / 1000 + "s"}): <select name="delay" id="delay">
-          <option value="1000">1s</option>
           <option value="3000">3s</option>
           <option value="5000">5s</option>
           <option value="10000">10s</option>

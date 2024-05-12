@@ -10,6 +10,8 @@ import ImageTypeSelector from './components/ImageTypeSelector';
 import OnOff from './components/OnOffFunctionality';
 import ExposureTypeSelector from './components/SetExposureType';
 import SetTemp from './components/SetTemp';
+import Focus from "./components/Focus";
+import Framing from "./components/Framing";
 
 // https://github.com/ericmandel/js9
 
@@ -29,8 +31,7 @@ function App() {
   const [disableControls, setDisableControls] = useState(false)
   const [initialized, setInitialized] = useState(getStatus()['status'] === '20073')
 
-
-  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage, {refresh: true}), 500)}, [displayedImage])
+  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage, {refresh: true}), 2000)}, [displayedImage])
 
 
   return (
@@ -38,31 +39,39 @@ function App() {
     <a href='https://sites.google.com/a/uw.edu/mro/' target='_blank' rel='noreferrer'>
       <img src={logo} className='Logo' alt='Logo'/>
     </a>
-    <h1 className='Title'>Manastash Ridge Observatory Controls</h1>
 
-      {/* <PingServer/> */}
-      <OnOff initialized={initialized} setInitialized={setInitialized}/>
-      <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus} isDisabled={!initialized}/>
-      <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={disableControls || !initialized}/>
-      <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disableControls || !initialized}/>
-      <FilterTypeSelector filterType={filterType} setFilterType={setFilterType} isDisabled={disableControls || !initialized}/>
-      <SetTemp temp={temp} setTemp={setTemp} isDisabled={disableControls || !initialized}/>
-      <GetTemp currTemp={currTemp} setCurrTemp={setCurrTemp} isDisabled={!initialized}/>
-      <ExposureControls
-        exposureType={exposureType}
-        imageType={imageType}
-        filterType={filterType}
-        temp = {temp}
-        setDisplayedImage = {setDisplayedImage}
-        setDisableControls = {setDisableControls}
-        isDisabled = {!initialized}
-      />
+    <h1 className='Title' style={{fontSize: '20px'}}>Manastash Ridge Observatory Controls</h1>
+    <div className="Interface">
+      <div className="Controls">
+        {/* <PingServer/> */}
+        <OnOff initialized={initialized} setInitialized={setInitialized}/>
+        <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus}/>
+        <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={disableControls || !initialized}/>
+        <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disableControls || !initialized}/>
+        <FilterTypeSelector filterType={filterType} setFilterType={setFilterType} isDisabled={disableControls || !initialized}/>
+        <SetTemp temp={temp} setTemp={setTemp} isDisabled={disableControls || !initialized}/>
+        <GetTemp currTemp={currTemp} setCurrTemp={setCurrTemp} isDisabled={!initialized}/>
+        <ExposureControls
+          exposureType={exposureType}
+          imageType={imageType}
+          filterType={filterType}
+          temp = {temp}
+          setDisplayedImage = {setDisplayedImage}
+          setDisableControls = {setDisableControls}
+          isDisabled = {!initialized}
+        />
+        <Framing isDisabled={disableControls || !initialized}/>
+        <Focus isDisabled={disableControls || !initialized}/>
+
+      </div>
       <div className="display">
         <div className="JS9Menubar"></div>
         <div className="JS9"></div>
         <div className="JS9Statusbar"></div>
       </div>
     </div>
+    </div>
+      
   );
 }
 
