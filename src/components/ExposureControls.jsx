@@ -36,8 +36,6 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         return `${formattedMinutes}:${formattedSeconds}`;
     }
 
-
-
     const onSubmit = async data => {
         if (isExposing) return
         setDisableControls(true)
@@ -111,7 +109,6 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     }, [exposureData]
     )
 
-
     // toggle audio playing
     useEffect(() => {
         playing ? audio.play() : audio.pause();
@@ -127,26 +124,24 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
       };
     }, [audio]);
 
-
     useEffect(() => {
-        if (endTime) {
-          const updateTimer = () => {
-            const timeLeftInSeconds = Math.round((endTime - Date.now()) / 1000);
-            
-            if (timeLeftInSeconds >= 0) {
-              setCurrTimer(timeLeftInSeconds);
-            } else {
-              clearInterval(intervalId);
-              setCurrTimer(undefined); // Timer has finished
-              setTime(undefined);
-            }
-          };
-    
-          const intervalId = setInterval(updateTimer, 1000);
-    
-          return () => clearInterval(intervalId);
+        let intervalId;
+
+        if (currTimer !== undefined) {
+            intervalId = setInterval(() => {
+                // Need Date.now because setInterval can drift
+                const timeLeftInSeconds = Math.round((endTime - Date.now()) / 1000);
+                if (timeLeftInSeconds >= 0) {
+                    setCurrTimer(timeLeftInSeconds);
+                } else {
+                    clearInterval(intervalId);
+                    setCurrTimer(undefined); // Clear timer when it reaches zero
+                }
+            }, 1000);
         }
-    }, [endTime]);
+
+        return () => clearInterval(intervalId);
+    }, [endTime, currTimer]);
 
 
     function seriesLinks() {
@@ -215,14 +210,15 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             )}
 
             {/* Get Exposure Button */}
-            {!isExposing && (<button disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>)}
+            {!isExposing && (<button className="btn"disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>)}
 
             {/* Show the timer and the progress bar */}
             {currTimer !== undefined && (
                 <div >
                     {formatTime(currTimer)}
                     <div className="timerOutside">
-                        <div className="timerInside" style={{animation: `smoothProgress ${time}s linear forwards`}} />
+                        {/* Key causes a rerender for series */}
+                        <div key={endTime} className="timerInside" style={{animation: `smoothProgress ${time}s linear forwards`}} />
                     </div>
                 </div>
             )}
