@@ -98,38 +98,8 @@
   margin-top: 1%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #b4fc25;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .blink {
-  margin-top: 30px;
+  margin-top: 20px;
   animation: blinker 2s linear infinite;
 }
 
@@ -206,33 +176,23 @@ fieldset {
   background-color: rgb(214, 0, 0);
   border: 3px solid black;
 }
+
 .indeterminate-progress-bar {
-  /* Color */
   background-color: #d1d5db;
-
-  /* Rounded border */
   border-radius: 9999px;
-
-  /* Size */
   height: 0.5rem;
-
   position: relative;
   overflow: hidden;
 }
 
 .indeterminate-progress-bar__progress {
-  /* Color */
   background-color: #3b82f6;
-
-  /* Rounded border */
   border-radius: 9999px;
-
-  /* Absolute position */
   position: absolute;
   bottom: 0;
   top: 0;
   width: 50%;
-
+  
   /* Move the bar infinitely */
   animation-duration: 2s;
   animation-iteration-count: infinite;

@@ -165,6 +165,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
      * Abort the exporsure
      */
     async function abortExposure() {
+        setCurrTimer(undefined);
         if (!isExposing) return;
 
         setStopRealTime(true);
@@ -199,7 +200,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             {/* Exposure Time */}
             {((exposureType !== 'Real Time') && (imageType !== "Bias"))
             && <label> Exposure Time
-                <input type='number' {...register('exptime', { required: true })}/>
+                <input type='number' {...register('exptime', { required: true })} placeholder="seconds"/>
                 </label>
             }
 
@@ -240,10 +241,6 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
                 <button onClick={() => setStopRealTime(true)}>End Exposure</button>
             )}
 
-            {/* Get Exposure Button */}
-<<<<<<< HEAD
-            {!isExposing && (<button className="btn"disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>)}
-
             {/* Show the timer and the progress bar */}
             {currTimer !== undefined && (
                 <div >
@@ -254,10 +251,10 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
                     </div>
                 </div>
             )}
-=======
+
+            {/* Get Exposure Button */}
             <button disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>
             {(exposureType !== "Real Time" && <button disabled={!isExposing} onClick={abortExposure}>Abort Exposure</button>)}
->>>>>>> upstream/main
 
             </fieldset>
         </form>
