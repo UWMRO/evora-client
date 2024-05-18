@@ -31,7 +31,7 @@ function App() {
   const [disableControls, setDisableControls] = useState(false)
   const [initialized, setInitialized] = useState(getStatus()['status'] === '20073')
 
-  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage, {refresh: true}), 500)}, [displayedImage])
+  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage, {refresh: true}), 2000)}, [displayedImage])
 
 
   return (
