@@ -33,6 +33,9 @@ function SetTemp({temp, setTemp, isDisabled}) {
 
     return (
       <fieldset disabled={isDisabled}> 
+        <legend>
+        Temperature
+        </legend>
       <form onSubmit={handleSubmit(onSubmit)} className='Temperature'>
         <label>Set Temperature</label>
         <span className='tempCelsiusIcon'>

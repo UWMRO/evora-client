@@ -40,7 +40,7 @@ function App() {
       <img src={logo} className='Logo' alt='Logo'/>
     </a>
 
-    <h1 className='Title' style={{fontSize: '20px'}}>Manastash Ridge Observatory Controls</h1>
+    <h1 className='Title' style={{fontSize: 'px'}}>Manastash Ridge Observatory Controls</h1>
     <div className="Interface">
       <div className="Controls">
         {/* <PingServer/> */}
@@ -62,7 +62,7 @@ function App() {
         />
         <Framing isDisabled={disableControls || !initialized}/>
         <Focus isDisabled={disableControls || !initialized}/>
-
+        
       </div>
       <div className="display">
         <div className="JS9Menubar"></div>

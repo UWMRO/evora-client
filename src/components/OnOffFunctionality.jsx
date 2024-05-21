@@ -32,6 +32,9 @@ function OnOff({initialized, setInitialized}) {
 
     return(
         <fieldset>
+            <legend>
+              Startup
+            </legend>
             <button disabled={initialized} onClick={onInitialize}>
                 { initializing ? "Initializing ..." : "Initialize" }
             </button>
