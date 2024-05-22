@@ -9,19 +9,18 @@
 .Interface {
   display: grid;
   grid-auto-flow: column;
-  margin: 1% 5% 0 5%;
-  padding: 20px;
-  justify-content: between;
+  margin: 1% 5% 1% 5%;
+  padding: 10px;
+  height: 75vh;
 }
 
 .Controls {
-  margin-right: 5%;
-  height: 80%;
+  margin-left: 5%;
+  width: 80%;
   overflow-y: auto;
 }
 
 .display {
-  margin-left: 5%;
   overflow: hidden;
 }
 
@@ -98,10 +97,17 @@
 }
 
 .Logo {
-  height: 90px;
-  width: 90px;
+  height: 120px;
+  width: 120px;
   border-radius: 30px;
-  margin-top: 1%;
+  margin: 1% 5% 3% 5%;
+}
+
+.WeatherIcon {
+  height: 120px;
+  width: 120px;
+  border-radius: 30px;
+  margin: 1% 5% 3% 5%;
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -12,6 +12,7 @@ import ExposureTypeSelector from './components/SetExposureType';
 import SetTemp from './components/SetTemp';
 import Focus from "./components/Focus";
 import Framing from "./components/Framing";
+import WeatherIcon from './weather_icon.png';
 
 // https://github.com/ericmandel/js9
 
@@ -36,11 +37,7 @@ function App() {
 
   return (
     <div className='App' >
-    <a href='https://sites.google.com/a/uw.edu/mro/' target='_blank' rel='noreferrer'>
-      <img src={logo} className='Logo' alt='Logo'/>
-    </a>
-
-    <h1 className='Title' style={{fontSize: 'px'}}>Manastash Ridge Observatory Controls</h1>
+    <h1 className='Title' style={{fontSize: '20px'}}>Manastash Ridge Observatory Controls</h1>
     <div className="Interface">
       <div className="Controls">
         {/* <PingServer/> */}
@@ -70,6 +67,15 @@ function App() {
         <div className="JS9Statusbar"></div>
       </div>
     </div>
+
+    <a href='https://sites.google.com/a/uw.edu/mro/' target='_blank' rel='noreferrer'>
+      <img src={logo} className='Logo' alt='Logo'/>
+    </a>
+
+    <a href='https://www.wunderground.com/dashboard/pws/KWAELLEN214' target='_blank' rel='noreferrer'>
+      <img src={WeatherIcon} className='WeatherIcon' alt='WeatherIcon'/>
+    </a>
+
     </div>
       
   );
