@@ -127,7 +127,7 @@
 body {
   background: linear-gradient(45deg, rgb(78, 76, 160) 0%, rgb(35, 17, 65) 20%, rgb(53, 32, 90) 50%, rgb(35, 17, 65) 80%, rgb(78, 76, 160) 100%);
   color: white;
-  height: 100vh;
+  background-repeat: no-repeat;
 }
 
 .display {
