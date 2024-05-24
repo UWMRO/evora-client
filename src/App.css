@@ -16,7 +16,7 @@
 
 .Controls {
   margin-left: 5%;
-  width: 80%;
+  width: 75%;
   overflow-y: auto;
 }
 
@@ -97,16 +97,16 @@
 }
 
 .Logo {
-  height: 120px;
-  width: 120px;
-  border-radius: 30px;
+  height: 100px;
+  width: 100px;
+  border-radius: 35px;
   margin: 1% 5% 3% 5%;
 }
 
 .WeatherIcon {
-  height: 120px;
-  width: 120px;
-  border-radius: 30px;
+  height: 100px;
+  width: 100px;
+  border-radius: 35px;
   margin: 1% 5% 3% 5%;
 }
 
@@ -151,7 +151,7 @@
 }
 
 body {
-  background: linear-gradient(45deg, rgb(78, 76, 160) 0%, rgb(35, 17, 65) 20%, rgb(53, 32, 90) 50%, rgb(35, 17, 65) 80%, rgb(78, 76, 160) 100%);
+  background: linear-gradient(45deg, rgb(78, 76, 160) 5%, rgb(35, 17, 65) 20%, rgb(53, 32, 90) 50%, rgb(35, 17, 65) 80%, rgb(78, 76, 160) 95%);
   color: white;
   background-repeat: no-repeat;
 }
