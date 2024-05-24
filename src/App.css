@@ -217,3 +217,23 @@ fieldset {
     width: 100%;
   }
 }
+
+.framing input {
+  margin: 7.5px 2.5px;
+}
+
+.framing button {
+  margin-top: 10px;
+}
+
+.focus input {
+  margin: 10px 7.5px;
+}
+
+.focus button {
+  margin-top: 10px;
+}
+
+.focus label {
+  margin-left: 10px;
+}

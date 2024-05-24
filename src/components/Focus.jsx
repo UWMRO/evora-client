@@ -96,7 +96,7 @@ function Focus() {
 
 
   return (
-    <fieldset className="Focus">
+    <fieldset className="focus">
     <div>
           <label htmlFor="filename">File name:</label>
           <input type="text" id="filename" value={filename} onChange={handleFilenameChange} />

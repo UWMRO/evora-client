@@ -200,14 +200,14 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             {/* Exposure Time */}
             {((exposureType !== 'Real Time') && (imageType !== "Bias"))
             && <label> Exposure Time
-                <input type='number' {...register('exptime', { required: true })} placeholder="seconds"/>
+                <input type='number' {...register('exptime', { required: true })} placeholder="seconds" min={0}/>
                 </label>
             }
 
             {/* Number of Exposures */}
             {exposureType === 'Series'
             && <label> Number of Exposures
-                <input type='number' {...register('expnum', { required: false })}/>
+                <input type='number' {...register('expnum', { required: false })} min={1}/>
                 </label>
             }
 
