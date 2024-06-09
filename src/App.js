@@ -4,14 +4,14 @@ import { getStatus } from "./apiClient";
 import logo from './aueg_logo.png';
 import ExposureControls from './components/ExposureControls';
 import FilterTypeSelector from './components/FilterControls';
+import Focus from "./components/Focus";
+import Framing from "./components/Framing";
 import GetStatus from './components/GetStatus';
 import GetTemp from './components/GetTemp';
 import ImageTypeSelector from './components/ImageTypeSelector';
 import OnOff from './components/OnOffFunctionality';
 import ExposureTypeSelector from './components/SetExposureType';
 import SetTemp from './components/SetTemp';
-import Focus from "./components/Focus";
-import Framing from "./components/Framing";
 import WeatherIcon from './weather_icon.png';
 
 // https://github.com/ericmandel/js9
@@ -31,9 +31,25 @@ function App() {
   const [displayedImage, setDisplayedImage] = useState(process.env.PUBLIC_URL + '/coma.fits')
   const [disableControls, setDisableControls] = useState(false)
   const [initialized, setInitialized] = useState(getStatus()['status'] === '20073')
+  const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(()=>{setTimeout(()=>window.JS9.Load(displayedImage, {refresh: true}), 2000)}, [displayedImage])
-
+  useEffect(
+    () => {
+      if (isLoading) {
+        // On page load, display the default image and set the zoom to fit (after some
+        // delays to allow JS9 to load and display on the image properly).
+        setTimeout(
+          () => {
+            window.JS9.Load(displayedImage);
+            setTimeout(() => window.JS9.SetZoom('toFit'), 1000);
+            setIsLoading(false);
+          }, 2000)
+        } else {
+          // For images captured by the camera after the initial load, refresh the 
+          // image, which preservers the current settings (e.g. zoom, pan, etc.)
+          window.JS9.RefreshImage(displayedImage);
+        }
+      }, [displayedImage, isLoading])
 
   return (
     <div className='App' >
@@ -77,7 +93,7 @@ function App() {
     </a>
 
     </div>
-      
+
   );
 }
 
