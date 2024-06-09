@@ -37,8 +37,9 @@ export async function getTemperature() {
 
 export async function initialize() {
     const response = await fetch(`${baseURL}/initialize`)
+    console.log(response);
     if (response.status !== 200) {  // if the response was not OK
-      return JSON.stringify({ 'status': -1 })
+      return false;
     }
     const data = await response.json()
     return JSON.stringify(data)

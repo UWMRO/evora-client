@@ -17,7 +17,7 @@ function OnOff({initialized, setInitialized}) {
 
         const msg = await initialize();
         console.log(msg);
-        if (msg.status !== -1) {
+        if (msg === false) {
             console.log("Failed to initialize Andor.");
             setFailure(true);
         } else {
