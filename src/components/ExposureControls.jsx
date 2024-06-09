@@ -22,7 +22,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
     const {register, handleSubmit} = useForm()
 
-    // For timet/loading bar
+    // For timer/loading bar
     const [time, setTime] = useState(undefined);  // progress bar progress
     const [currTimer, setCurrTimer] = useState(undefined);
     const [endTime, setEndTime] = useState(null);  // Timer accuracy
@@ -60,7 +60,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         data.exptime = data.exptime.toString()
         data.filtype = filterType
 
-        if (exposureType !== "Bias" && exposureType != "Real Time") {
+        if (data.imgtype !== "Bias" && data.exptype != "Real Time") {
             setTime(data.exptime);
             setCurrTimer(data.exptime);
             setEndTime(Date.now() + data.exptime * 1000);
