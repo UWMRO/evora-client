@@ -9,14 +9,19 @@
 .Interface {
   display: grid;
   grid-auto-flow: column;
-  margin-top: -1%;
+  margin: 1% 5% 1% 5%;
+  padding: 10px;
+  height: 75vh;
 }
 
 .Controls {
-  display: grid;
-  justify-content: space between;
-  margin-left: 15%;
-  margin-top: 1em;
+  margin-left: 5%;
+  width: 80%;
+  overflow-y: auto;
+}
+
+.display {
+  overflow: hidden;
 }
 
 .exposure-controls label {
@@ -92,10 +97,17 @@
 }
 
 .Logo {
-  height: 90px;
-  width: 90px;
-  border-radius: 30px;
-  margin-top: 1%;
+  height: 100px;
+  width: 100px;
+  border-radius: 35px;
+  margin: 1% 5% 3% 5%;
+}
+
+.WeatherIcon {
+  height: 100px;
+  width: 100px;
+  border-radius: 35px;
+  margin: 1% 5% 3% 5%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -139,16 +151,12 @@
 }
 
 body {
-  background: linear-gradient(45deg, rgb(78, 76, 160) 0%, rgb(35, 17, 65) 20%, rgb(53, 32, 90) 50%, rgb(35, 17, 65) 80%, rgb(78, 76, 160) 100%);
+  background: linear-gradient(45deg, rgb(78, 76, 160) 5%, rgb(35, 17, 65) 20%, rgb(53, 32, 90) 50%, rgb(35, 17, 65) 80%, rgb(78, 76, 160) 95%);
   color: white;
   background-repeat: no-repeat;
 }
 
-.display {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  margin-left: 3%;
-}
+
 
 .display div {
   margin: auto;
