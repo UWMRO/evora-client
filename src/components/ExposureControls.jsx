@@ -22,7 +22,21 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
     const {register, handleSubmit} = useForm()
 
+    // For timer/loading bar
+    const [time, setTime] = useState(undefined);  // progress bar progress
+    const [currTimer, setCurrTimer] = useState(undefined);
+    const [endTime, setEndTime] = useState(null);  // Timer accuracy
 
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+      
+        // Pad the minutes and seconds with leading zeros if they are less than 10
+        const formattedMinutes = minutes.toString().padStart(2, '0');
+        const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+      
+        return `${formattedMinutes}:${formattedSeconds}`;
+    }
 
     const onSubmit = async data => {
         if (isExposing) return
@@ -45,6 +59,12 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         data.imgtype = data.exptime === 0 ? "Bias" : imageType
         data.exptime = data.exptime.toString()
         data.filtype = filterType
+
+        if (data.imgtype !== "Bias" && data.exptype != "Real Time") {
+            setTime(data.exptime);
+            setCurrTimer(data.exptime);
+            setEndTime(Date.now() + data.exptime * 1000);
+        }
 
         setIsExposing(true)
 
@@ -98,7 +118,6 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     }, [exposureData]
     )
 
-
     // toggle audio playing
     useEffect(() => {
         playing ? audio.play() : audio.pause();
@@ -114,6 +133,25 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
       };
     }, [audio]);
 
+    useEffect(() => {
+        let intervalId;
+
+        if (currTimer !== undefined) {
+            intervalId = setInterval(() => {
+                // Need Date.now because setInterval can drift
+                const timeLeftInSeconds = Math.round((endTime - Date.now()) / 1000);
+                if (timeLeftInSeconds >= 0) {
+                    setCurrTimer(timeLeftInSeconds);
+                } else {
+                    clearInterval(intervalId);
+                    setCurrTimer(undefined); // Clear timer when it reaches zero
+                }
+            }, 1000);
+        }
+
+        return () => clearInterval(intervalId);
+    }, [endTime, currTimer]);
+
 
     function seriesLinks() {
         const links = seriesExposures.map((link) => {
@@ -127,6 +165,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
      * Abort the exporsure
      */
     async function abortExposure() {
+        setCurrTimer(undefined);
         if (!isExposing) return;
 
         setStopRealTime(true);
@@ -161,14 +200,14 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             {/* Exposure Time */}
             {((exposureType !== 'Real Time') && (imageType !== "Bias"))
             && <label> Exposure Time
-                <input type='number' {...register('exptime', { required: true })}/>
+                <input type='number' {...register('exptime', { required: true })} placeholder="seconds" min={0}/>
                 </label>
             }
 
             {/* Number of Exposures */}
             {exposureType === 'Series'
             && <label> Number of Exposures
-                <input type='number' {...register('expnum', { required: false })}/>
+                <input type='number' {...register('expnum', { required: false })} min={1}/>
                 </label>
             }
 
@@ -200,6 +239,17 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             {/* End exposure (for real time) */}
             {(isExposing && exposureType === "Real Time" &&
                 <button onClick={() => setStopRealTime(true)}>End Exposure</button>
+            )}
+
+            {/* Show the timer and the progress bar */}
+            {currTimer !== undefined && (
+                <div >
+                    {formatTime(currTimer)}
+                    <div className="timerOutside">
+                        {/* Key causes a rerender for series */}
+                        <div key={endTime} className="timerInside" style={{animation: `smoothProgress ${time}s linear forwards`}} />
+                    </div>
+                </div>
             )}
 
             {/* Get Exposure Button */}
