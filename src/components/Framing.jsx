@@ -73,7 +73,7 @@ function Framing(isDisabled) {
     };
 
     return (
-        <fieldset className="Framing">
+        <fieldset className="framing">
             <legend>Framing</legend>
 
             <div>
