@@ -9,14 +9,20 @@ function OnOff({initialized, setInitialized}) {
 
     const [initializing, setInitializing] = useState(false);
     const [shuttingDown, setShuttingDown] = useState(false);
+    const [failure, setFailure] = useState(false);
 
     async function onInitialize() {
         console.log("Initializing Andor...");
         setInitializing(true);
 
         const msg = await initialize();
-        console.log(msg);
-        setInitialized(true);
+        if (msg === false) {
+            console.log("Failed to initialize Andor.");
+            setFailure(true);
+        } else {
+            setFailure(false);
+            setInitialized(true);
+        }
         setInitializing(false);
     }
 
@@ -41,6 +47,7 @@ function OnOff({initialized, setInitialized}) {
             <button disabled={!initialized} onClick={onShutdown}>
                 { shuttingDown ? "Shutting Down ..." : "Shut Down" }
             </button>
+            {failure && <p>Initialization failed (Is the server running?)</p>}
             <label style={{ width: '200px' }}>
               <BeatLoader
                 cssOverride={{ verticalAlign: 'bottom', alignContent: 'end' }}
