@@ -105,12 +105,12 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
       <button onClick={graphButtonHandler} style={{ width:'52px'}}>{buttonText}</button>
       {tempMessage}
       <div className="graphContainer" style={{ display: graphDisplay}}>
-        Update Interval (Current: {graphDelay === -1 ? "Disabled" : graphDelay / 1000 + "s"}): <select name="delay" id="delay">
+        Update Interval (Current: {graphDelay === -1 ? "Disabled" : graphDelay / 1000 + "s"}): <select name="delay" id="delay" defaultValue={'30000'}>
           <option value="3000">3s</option>
           <option value="5000">5s</option>
           <option value="10000">10s</option>
           <option value="15000">15s</option>
-          <option selected="selected" value="30000">30s</option>
+          <option value="30000">30s</option>
           <option value="-1">Disable</option>
         </select>
         <button onClick={function() {setGraphDelay(Number(document.getElementById("delay").value));}}>Set</button>

@@ -20,15 +20,24 @@ function SetTemp({temp, setTemp, isDisabled}) {
       if (isNaN(val)){
           console.log('Not A Number')
       } else {
-        // callSetTemperature(val)
-        setTemp(await setTemperature(val))
-        console.log('temperature set!')
+        const response = await setTemperature(val);
+
+        if (response === '-999') {  // -999 is an error code from the server
+          console.log('Temperature out of range!');
+          setTemp('Temperature out of range!');
+          return;
+        }
+
+        setTemp(response);
+        console.log('Temperature set!');
       }
     }
 
     let coolingMessage = "";
     if(temp != null){
-      coolingMessage = <span className='tempMessage'>Cooling to: {temp} °C</span>
+      // display either temperature or error message
+      coolingMessage = (!isNaN(parseInt(temp))) ? <span className='tempMessage'>Cooling to: {temp} °C</span> 
+                                                : <span className='tempMessage'>{temp}</span>
     }
 
     return (

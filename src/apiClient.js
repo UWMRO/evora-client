@@ -52,7 +52,6 @@ export async function shutdown() {
 
 export async function setTemperature(input) {
   //need to pass in input variable into Flask server
-  console.log(typeof input);
   const response = await fetch(`${baseURL}/setTemperature`, {
     method: 'POST',
     body: JSON.stringify({ temperature: input.toString() }),
