@@ -30,11 +30,11 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     function formatTime(seconds) {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
-      
+
         // Pad the minutes and seconds with leading zeros if they are less than 10
         const formattedMinutes = minutes.toString().padStart(2, '0');
         const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
-      
+
         return `${formattedMinutes}:${formattedSeconds}`;
     }
 
@@ -91,7 +91,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         }))
         setLastExpName(message.url)
         seriesExposures.push(message.url)
-        
+
         // take another exposure for series
         if (exposureType === "Series" && data.expnum > 1) {
             data.expnum--;
@@ -200,7 +200,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             {/* Exposure Time */}
             {((exposureType !== 'Real Time') && (imageType !== "Bias"))
             && <label> Exposure Time
-                <input type='number' {...register('exptime', { required: true })} placeholder="seconds" min={0}/>
+                <input type='number' {...register('exptime', { required: true })} placeholder="seconds" min={0.01} max={3600} step={0.01} />
                 </label>
             }
 
@@ -226,13 +226,13 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             {(exposureType === "Series" && seriesExposures.length !== 0) &&
                 (<><div>Series exposures:</div><br /></>)
             }
-        
+
             {(exposureType === "Series" && seriesExposures.length !== 0) &&
                 seriesLinks()
             }
 
             {/* Capture response */}
-            {(!isExposing && 
+            {(!isExposing &&
                 <p>{capture_response}</p>
             )}
 

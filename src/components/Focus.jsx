@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import React from "react";
 
-// const backendUrl = 'http://localhost:3005';  
+// const backendUrl = 'http://localhost:3005';
 const backendUrl = '/api'
 
 
@@ -63,7 +63,7 @@ function Focus() {
     setImg(imageObjectURL);
   };
 
-  
+
   const handleResetButtonClick = () => {
     // Send request to backend to analyze data
     console.log('Sending request to backend to analyze data');
@@ -97,6 +97,8 @@ function Focus() {
 
   return (
     <fieldset className="focus">
+      <legend>Focus</legend>
+
     <div>
           <label htmlFor="filename">File name:</label>
           <input type="text" id="filename" value={filename} onChange={handleFilenameChange} />
@@ -114,4 +116,3 @@ function Focus() {
 
 
 export default Focus;
-
