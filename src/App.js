@@ -13,6 +13,7 @@ import OnOff from './components/OnOffFunctionality';
 import ExposureTypeSelector from './components/SetExposureType';
 import SetTemp from './components/SetTemp';
 import WeatherIcon from './weather_icon.png';
+import Feedback from './components/Feedback';
 
 // https://github.com/ericmandel/js9
 
@@ -91,6 +92,8 @@ function App() {
     <a href='https://www.wunderground.com/dashboard/pws/KWAELLEN214' target='_blank' rel='noreferrer'>
       <img src={WeatherIcon} className='WeatherIcon' alt='WeatherIcon'/>
     </a>
+
+    <Feedback/>
 
     </div>
 
