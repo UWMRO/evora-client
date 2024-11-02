@@ -135,3 +135,10 @@ export async function homeFilterWheel() {
   const data = await response.json();
   return data;
 }
+
+export async function getWeatherData() {
+  const response = await fetch(`${baseURL}/getWeatherData`);
+  const data = await response.json();
+  console.log(data);
+  return data;
+}
