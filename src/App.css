@@ -141,6 +141,7 @@ body {
   color: white;
   background-repeat: no-repeat;
   min-height: 100vh;
+  padding-bottom: 8vh;
 }
 
 
@@ -244,4 +245,22 @@ fieldset {
 
 .focus label {
   margin-left: 10px;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.exposureNumberField {
+  width: 52px;
+}
+
+.headerCommentField {
+  width: 300px;
+  max-width: 30%;
 }

@@ -194,20 +194,20 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
             {/* Header comment field */}
             <label>Header Comment
-                <input type='text' {...register('comment', { required: false })}/>
+                <input className='headerCommentField' type='text' maxLength='70' {...register('comment', { required: false })}/>
             </label>
 
             {/* Exposure Time */}
             {((exposureType !== 'Real Time') && (imageType !== "Bias"))
             && <label> Exposure Time
-                <input type='number' {...register('exptime', { required: true })} placeholder="seconds" min={0.01} max={3600} step={0.01} />
+                <input className='exposureNumberField' type='number' {...register('exptime', { required: true })} placeholder="seconds" min={0.01} max={3600} step={0.01} />
                 </label>
             }
 
             {/* Number of Exposures */}
             {exposureType === 'Series'
             && <label> Number of Exposures
-                <input type='number' {...register('expnum', { required: false })} min={1}/>
+                <input className='exposureNumberField' type='number' {...register('expnum', { required: false })} min={1}/>
                 </label>
             }
 
