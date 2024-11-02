@@ -7,16 +7,21 @@ function Weather() {
     const [humidity, setHumidity] = useState(0);
     const [wind, setWind] = useState(0);
 
+    function updateWeatherData() {
+        getWeatherData().then((data) => {
+            setTemp(data.tempf);
+            setHumidity(data.humidity);
+            setWind(data.windspeedmph);
+        });
+    }
+
     useEffect(() => {
+        updateWeatherData();
         const interval = setInterval(() => {
-            getWeatherData().then((data) => {
-                setTemp(data.tempf);
-                setHumidity(data.humidity);
-                setWind(data.windspeedmph);
-            });
+            updateWeatherData();
         }, 60000);
         return () => clearInterval(interval);
-    });
+    }, []);
 
     return (
         <div className="weather-card">
