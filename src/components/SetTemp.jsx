@@ -48,7 +48,7 @@ function SetTemp({temp, setTemp, isDisabled}) {
       <form onSubmit={handleSubmit(onSubmit)} className='Temperature'>
         <label>Set Temperature</label>
         <span className='tempCelsiusIcon'>
-          <input type='text' {...register('temperature', { required: true })} maxLength='4' placeholder='-50' disabled={isDisabled}/>
+          <input className='tempInputField' type='number' {...register('temperature', { required: true })} maxLength='4' placeholder='-50' min={-120} max={-10} disabled={isDisabled}/>
         </span>
         <button type='submit' disabled={isDisabled}>Set</button>
         {coolingMessage}
