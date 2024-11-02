@@ -181,10 +181,12 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='exposure-controls'>
-            <fieldset disabled={isDisabled}>
+            <fieldset class = "nice-fieldset"disabled={isDisabled}>
+            <span>
             <legend>
                 Exposure Controls
             </legend>
+            </span>
 
             {/* [OLD] File name field */}
             {/* <label> File Name
@@ -194,20 +196,20 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
             {/* Header comment field */}
             <label>Header Comment
-                <input className='headerCommentField' type='text' maxLength='70' {...register('comment', { required: false })}/>
+                <input type='text' {...register('comment', { required: false })}/>
             </label>
 
             {/* Exposure Time */}
             {((exposureType !== 'Real Time') && (imageType !== "Bias"))
             && <label> Exposure Time
-                <input className='exposureNumberField' type='number' {...register('exptime', { required: true })} placeholder="seconds" min={0.01} max={3600} step={0.01} />
+                <input type='number' {...register('exptime', { required: true })} placeholder="seconds" min={0.01} max={3600} step={0.01} />
                 </label>
             }
 
             {/* Number of Exposures */}
             {exposureType === 'Series'
             && <label> Number of Exposures
-                <input className='exposureNumberField' type='number' {...register('expnum', { required: false })} min={1}/>
+                <input type='number' {...register('expnum', { required: false })} min={1}/>
                 </label>
             }
 

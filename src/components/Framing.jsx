@@ -73,9 +73,8 @@ function Framing(isDisabled) {
     };
 
     return (
-        <fieldset className="framing">
-            <legend>Framing</legend>
-
+        <fieldset class="nice-fieldset">
+            <span><legend>Framing</legend></span>
             <div>
                 <label htmlFor="filename">File name:</label>
                 <input

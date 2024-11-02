@@ -8,35 +8,38 @@ function ImageTypeSelector({imageType, setImageType, isDisabled}) {
     }
     
   return (
-    <fieldset disabled={isDisabled}> 
-        <legend>
-            Image Type
-        </legend>
-        <label> Bias
-            <input type='radio' name='ExpType' onChange={GetImageTypeClicked} value='Bias'
+    <fieldset class="nice-fieldset" disabled={isDisabled}>
+    <span><legend>Image Type</legend></span>
+    <div class="radio-buttons">
+        <label class="custom-radio">
+            <input 
+            type="radio" 
+            name="ExpType" 
+            onChange={GetImageTypeClicked}
+            value="Bias"
             checked={
                 imageType === 'Bias'
-            }/>
+                } />
+            <span>Bias</span>
         </label>
-        <label> Flat
-            <input type='radio' name='ExpType' onChange={GetImageTypeClicked} value='Flat'
-            checked={
-                imageType === 'Flat'
-            }/>
+        <label class="custom-radio">
+            <input type="radio" name="ExpType" onChange={GetImageTypeClicked} value="Flat"
+            checked={imageType === 'Flat'} />
+            <span>Flat</span>
         </label>
-        <label> Dark
-            <input type='radio' name='ExpType' onChange={GetImageTypeClicked} value='Dark'
-            checked={
-                imageType === 'Dark'
-            }/>
+        <label class="custom-radio">
+            <input type="radio" name="ExpType" onChange={GetImageTypeClicked} value="Dark"
+            checked={imageType === 'Dark'} />
+            <span>Dark</span>
         </label>
-        <label> Object
-            <input type='radio' name='ExpType' onChange={GetImageTypeClicked} value='Object'
-            checked={
-                imageType === 'Object'
-            }/>
+        <label class="custom-radio">
+            <input type="radio" name="ExpType" onChange={GetImageTypeClicked} value="Object"
+            checked={imageType === 'Object'} />
+            <span>Object</span>
         </label>
-    </fieldset>
+    </div>
+</fieldset>
+
   );
 }
 
