@@ -8,27 +8,38 @@ function ExposureTypeSelector({exposureType, setExposureType, isDisabled}) {
     }
 
     return (
-      <fieldset disabled={isDisabled}> 
-          <legend>
+      <fieldset class="nice-fieldset" disabled={isDisabled}> 
+          <span><legend>
               Exposure Type
-          </legend>
-          <label> Single
-              <input type='radio' name='ImageType' onChange={GetExposureTypeClicked} value='Single' 
+          </legend></span>
+          <label class = "custom-radio">
+              <input 
+              type='radio' 
+              name='ImageType' 
+              onChange={GetExposureTypeClicked} 
+              value='Single' 
               checked={
                 exposureType === 'Single'
               }/>
+              <span>Single</span>
           </label>
-          <label> Real Time
-              <input type='radio' name='ImageType' onChange={GetExposureTypeClicked} value='Real Time'
+          <label class="custom-radio">
+              <input 
+              type='radio' 
+              name='ImageType' 
+              onChange={GetExposureTypeClicked} 
+              value='Real Time'
               checked={
                 exposureType === 'Real Time'
               }/>
+              <span>Real Time</span>
           </label>
-          <label> Series
+          <label class="custom-radio">
               <input type='radio' name='ImageType' onChange={GetExposureTypeClicked} value='Series'
               checked={
                 exposureType === 'Series'
               }/>
+              <span>Series</span>
           </label>
           
       </fieldset>

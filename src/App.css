@@ -153,12 +153,15 @@ body {
 fieldset.filter > label,button  {
   margin-left: 10px;
   border-radius: 5px;
+  border-color: black
 }
 
 fieldset {
   border: 1px solid;
   border-radius: 5px;
   background-color: rgb(41, 37, 37);
+  border-color: black;
+  
 }
 .graphContainer {
   width: 80%;
@@ -264,3 +267,224 @@ input[type=number] {
   width: 300px;
   max-width: 30%;
 }
+
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+}
+
+
+.nice-fieldset {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: #1e1e1e;
+  max-width: 500px;
+
+}
+
+.nice-fieldset legend {
+  font-weight: bold;
+  color: #e0e0e0;
+  margin-right: 10px;
+}
+
+.radio-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.custom-radio {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.custom-radio input[type="radio"] {
+  display: none;
+}
+
+.custom-radio span {
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: #333;
+  border-radius: 20px;
+  color: #e0e0e0;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+
+.custom-radio input[type="radio"]:checked + span {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.custom-radio span:hover {
+  background-color: #444;
+}
+
+.nice-button {
+  padding: 10px 18px;
+  background-color: #333;
+  border-radius: 20px;
+  color: #e0e0e0;
+  font-weight: 500;
+}
+.nice-button:hover{
+  padding: 10px 18px;
+  background-color: #444;
+  border-radius: 20px;
+  color: #ffffff;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s
+}
+
+button {
+  background-color: #333;
+  color: #e0e0e0;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
+  margin-top: 10px;
+  text-align: center;
+  width: auto;
+  white-space: nowrap;
+}
+
+button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  color: #888;
+}
+
+button:hover:enabled {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.failure-message {
+  color: red;
+  font-size: 0.9em;
+}
+
+.loader-container {
+  width: 200px;
+  display: flex;
+  justify-content: center;
+}
+
+
+.Temperature label {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+/* GetTemp Component */
+.TemperatureField {
+  border: 2px solid #555;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 10px;
+  color: #f5f5f5;
+  background-color: #333;
+}
+
+.TemperatureField label {
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: inline-block;
+  color: #f5f5f5;
+}
+
+.TemperatureField button {
+  padding: 6px 12px;
+  margin-right: 8px;
+  background-color: #444;
+  color: #f5f5f5;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.TemperatureField button:hover {
+  background-color: #666;
+}
+
+.tempMessage {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #0ed100;
+}
+
+.graphContainer {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #222;
+  border-radius: 8px;
+  display: block;
+}
+
+.graphContainer select, .graphContainer button {
+  margin-top: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #444;
+  color: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  
+}
+
+.graphContainer select:focus, .graphContainer button:hover {
+  background-color: #666;
+}
+
+.graphContainer button {
+  margin-left: 8px;
+}
+
+
+/* SetTemp Component */
+.SetTemperatureField {
+  border: 2px solid #555;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 10px;
+  color: #f5f5f5;
+  background-color: #333;
+}
+
+.SetTemperatureField label {
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: inline-block;
+  color: #f5f5f5;
+}
+
+
+.SetTemperatureField button:hover {
+  background-color: #666;
+}
+
+.SetTemperatureField input[type="text"] {
+  padding: 4px 8px;
+  margin-right: 8px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #222;
+  color: #f5f5f5;
+}
+
+
+

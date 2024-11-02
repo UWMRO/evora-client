@@ -13,8 +13,6 @@ import OnOff from './components/OnOffFunctionality';
 import ExposureTypeSelector from './components/SetExposureType';
 import SetTemp from './components/SetTemp';
 import WeatherIcon from './weather_icon.png';
-import Feedback from './components/Feedback';
-import Weather from './components/Weather';
 
 // https://github.com/ericmandel/js9
 
@@ -86,8 +84,6 @@ function App() {
       </div>
     </div>
 
-    <Weather />
-
     <a href='https://sites.google.com/a/uw.edu/mro/' target='_blank' rel='noreferrer'>
       <img src={logo} className='Logo' alt='Logo'/>
     </a>
@@ -95,8 +91,6 @@ function App() {
     <a href='https://www.wunderground.com/dashboard/pws/KWAELLEN214' target='_blank' rel='noreferrer'>
       <img src={WeatherIcon} className='WeatherIcon' alt='WeatherIcon'/>
     </a>
-
-    <Feedback/>
 
     </div>
 

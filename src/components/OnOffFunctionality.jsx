@@ -37,27 +37,25 @@ function OnOff({initialized, setInitialized}) {
     }
 
     return(
-        <fieldset>
-            <legend>
-              Startup
-            </legend>
-            <button disabled={initialized} onClick={onInitialize}>
-                { initializing ? "Initializing ..." : "Initialize" }
-            </button>
-            <button disabled={!initialized} onClick={onShutdown}>
-                { shuttingDown ? "Shutting Down ..." : "Shut Down" }
-            </button>
-            {failure && <p>Initialization failed (Is the server running?)</p>}
-            <label style={{ width: '200px' }}>
-              <BeatLoader
-                cssOverride={{ verticalAlign: 'bottom', alignContent: 'end' }}
+        <fieldset class="nice-fieldset">
+        <span><legend>Startup</legend></span>
+        <button disabled={initialized} onClick={onInitialize}>
+            {initializing ? "Initializing ..." : "Initialize"}
+        </button>
+        <button disabled={!initialized} onClick={onShutdown}>
+            {shuttingDown ? "Shutting Down ..." : "Shut Down"}
+        </button>
+        {failure && <p className="failure-message">Initialization failed (Is the server running?)</p>}
+        <div className="loader-container">
+            <BeatLoader
                 color="red"
                 size={12}
                 loading={initializing || shuttingDown}
                 speedMultiplier={0.7}
-              />
-            </label>
-        </fieldset>
+            />
+        </div>
+    </fieldset>
+    
     )
 }
 

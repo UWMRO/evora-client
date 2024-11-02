@@ -96,12 +96,12 @@ function Focus() {
 
 
   return (
-    <fieldset className="focus">
-      <legend>Focus</legend>
+    <fieldset class="nice-fieldset">
+      <span><legend>Focus</legend></span>
 
     <div>
           <label htmlFor="filename">File name:</label>
-          <input type="text" id="filename" value={filename} onChange={handleFilenameChange} />
+          <input type="text" id="filename" value={filename} onChange={handleFilenameChange} /><br></br>
           <label htmlFor="focuserPosition">Focuser Position:</label>
           <input type="text" id="focuserPosition" value={focuserPosition} onChange={handleFocuserPositionChange} />
           <button onClick={handleSendButtonClick}>Send</button>
