@@ -12,29 +12,33 @@ function ImageTypeSelector({imageType, setImageType, isDisabled}) {
         <legend>
             Image Type
         </legend>
-        <label> Bias
+        <label class = "custom-radio">
             <input type='radio' name='ExpType' onChange={GetImageTypeClicked} value='Bias'
             checked={
                 imageType === 'Bias'
             }/>
+            <span>Bias</span>
         </label>
-        <label> Flat
+        <label class = "custom-radio">
             <input type='radio' name='ExpType' onChange={GetImageTypeClicked} value='Flat'
             checked={
                 imageType === 'Flat'
             }/>
+            <span>Flat</span>
         </label>
-        <label> Dark
+        <label class = "custom-radio">
             <input type='radio' name='ExpType' onChange={GetImageTypeClicked} value='Dark'
             checked={
                 imageType === 'Dark'
             }/>
+            <span>Dark</span>
         </label>
-        <label> Object
+        <label class = "custom-radio">
             <input type='radio' name='ExpType' onChange={GetImageTypeClicked} value='Object'
             checked={
                 imageType === 'Object'
             }/>
+            <span>Object</span>
         </label>
     </fieldset>
   );

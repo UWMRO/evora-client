@@ -182,6 +182,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='exposure-controls'>
             <fieldset disabled={isDisabled}>
+
             <legend>
                 Exposure Controls
             </legend>
@@ -253,8 +254,8 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             )}
 
             {/* Get Exposure Button */}
-            <button disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>
-            {(exposureType !== "Real Time" && <button disabled={!isExposing} onClick={abortExposure}>Abort Exposure</button>)}
+            <button class = "temp-set" disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>
+            {(exposureType !== "Real Time" && <button class = "temp-set" disabled={!isExposing} onClick={abortExposure}>Abort Exposure</button>)}
 
             </fieldset>
         </form>

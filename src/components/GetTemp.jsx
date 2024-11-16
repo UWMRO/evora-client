@@ -101,8 +101,8 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
   return (
     <fieldset className="Temperature" disabled={isDisabled}>
       <label>Get Temperature</label>
-      <button onClick={callGetTemperature}>Get</button>
-      <button onClick={graphButtonHandler} style={{ width:'52px'}}>{buttonText}</button>
+      <button class = "temp-set" onClick={callGetTemperature}>Get</button>
+      <button class = "temp-set" onClick={graphButtonHandler} style={{ width:'52px'}}>{buttonText}</button>
       {tempMessage}
       <div className="graphContainer" style={{ display: graphDisplay}}>
         Update Interval (Current: {graphDelay === -1 ? "Disabled" : graphDelay / 1000 + "s"}): <select name="delay" id="delay" defaultValue={'30000'}>
@@ -113,7 +113,7 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
           <option value="30000">30s</option>
           <option value="-1">Disable</option>
         </select>
-        <button onClick={function() {setGraphDelay(Number(document.getElementById("delay").value));}}>Set</button>
+        <button class = "temp-set" onClick={function() {setGraphDelay(Number(document.getElementById("delay").value));}}>Set</button>
         <Line data={data} options={options}/>
       </div>
     </fieldset>

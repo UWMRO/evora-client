@@ -17,9 +17,9 @@ function GetStatus({currStatus, setCurrStatus}) {
     }
 
     return (
-      <fieldset className="Status">
-        <label>Get Status</label>
-        <button onClick={callGetStatus}>Get</button>
+      <fieldset>
+        
+        <button class = "stat_button" onClick={callGetStatus}>Get Status</button>
         {statusMessage}
       </fieldset>
     );

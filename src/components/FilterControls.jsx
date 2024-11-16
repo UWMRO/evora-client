@@ -44,10 +44,10 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
   };
 
   return (
-    <fieldset disabled={moving || isDisabled} className="filter">
+    <fieldset disabled={moving || isDisabled}>
       <legend>Filters</legend>
-      <label>
-        Ha
+      <label class = "custom-radio">
+        
         <input
           type="radio"
           name="FilterType"
@@ -55,9 +55,10 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
           value="Ha"
           checked={filterType === 'Ha'}
         />
+        <span>Ha</span>
       </label>
-      <label>
-        B
+      <label class = "custom-radio">
+        
         <input
           type="radio"
           name="FilterType"
@@ -65,9 +66,10 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
           value="B"
           checked={filterType === 'B'}
         />
+        <span>B</span>
       </label>
-      <label>
-        V
+      <label class = "custom-radio">
+        
         <input
           type="radio"
           name="FilterType"
@@ -75,9 +77,10 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
           value="V"
           checked={filterType === 'V'}
         />
+        <span>V</span>
       </label>
-      <label>
-        g
+      <label class = "custom-radio">
+        
         <input
           type="radio"
           name="FilterType"
@@ -85,9 +88,10 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
           value="g"
           checked={filterType === 'g'}
         />
+        <span>g</span>
       </label>
-      <label>
-        r
+      <label class = "custom-radio">
+        
         <input
           type="radio"
           name="FilterType"
@@ -95,9 +99,9 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
           value="r"
           checked={filterType === 'r'}
         />
+        <span>r</span>
       </label>
-      <label>
-        i
+      <label class = "custom-radio">
         <input
           type="radio"
           name="FilterType"
@@ -105,8 +109,9 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
           value="r"
           checked={filterType === 'i'}
         />
+        <span>i</span>
       </label>
-      {!moving && <button onClick={handleHome}>Home</button>}
+      {!moving && <button class="filter-button" onClick={handleHome}>Home</button>}
       {moving && (
         <label style={{ width: '200px' }}>
           <BeatLoader
