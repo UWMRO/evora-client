@@ -126,7 +126,7 @@ function Framing(isDisabled) {
                         Working on it...
                     </button>
                 ) : (
-                    <button onClick={handleSendButtonClick}>Plate solve</button>
+                    <button class = "temp-set"onClick={handleSendButtonClick}>Plate solve</button>
                 )}
             </div>
 

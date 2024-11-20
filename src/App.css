@@ -12,6 +12,7 @@
   margin: 1% 5% 1% 5%;
   padding: 10px;
   height: 90vh;
+  font-family: Inter;
 }
 
 .Controls {
@@ -156,9 +157,11 @@ fieldset.filter > label,button  {
 }
 
 fieldset {
-  border: 1px solid;
-  border-radius: 5px;
-  background-color: rgb(41, 37, 37);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding:12px;
+  background-color: #1e1e1e;
+  box-shadow: 5px 5px 4px #1e1e1e;
 }
 .graphContainer {
   width: 80%;
@@ -263,4 +266,77 @@ input[type=number] {
 .headerCommentField {
   width: 300px;
   max-width: 30%;
+}
+
+.onoff{
+  background-color: #333;
+  color: #e0e0e0;
+  padding: 10px 10px;
+  border:none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover:enabled{
+  background-color: #444;
+}
+
+.stat_button{
+  background-color: #333;
+  color: #e0e0e0;
+  padding: 10px 10px;
+  border:none;
+  transition: opacity 0.3s, color 0.3s;
+  font-family: Inter;
+}
+
+.custom-radio{
+  margin: 2px;
+}
+
+.custom-radio span {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  border-radius: 6px;
+  margin: 3px;
+  color: #e0e0e0;
+  transition: background-color 0.3s, color 0.3s;
+  font-family: Inter;
+}
+
+.custom-radio input[type="radio"] {
+  display: none;
+}
+
+.custom-radio input[type="radio"]:checked + span {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.custom-radio input[type="radio"]:disabled + span, button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  color: #888;
+}
+
+.custom-radio span:hover {
+  background-color: #444;
+}
+
+.filter-button {
+  background-color: #333;
+  color: #e0e0e0;
+  padding: 11.5px 10px;
+  border:none;
+  transition: opacity 0.3s, color 0.3s;
+  font-family: Inter;
+}
+
+.temp-set {
+  background-color: #333;
+  color: #e0e0e0;
+  padding: 5px 5px;
+  border:none;
+  transition: opacity 0.3s, color 0.3s;
+  font-family: Inter;
 }

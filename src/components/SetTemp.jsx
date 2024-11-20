@@ -50,7 +50,7 @@ function SetTemp({temp, setTemp, isDisabled}) {
         <span className='tempCelsiusIcon'>
           <input className='tempInputField' type='number' {...register('temperature', { required: true })} maxLength='4' placeholder='-50' min={-120} max={-10} disabled={isDisabled}/>
         </span>
-        <button type='submit' disabled={isDisabled}>Set</button>
+        <button class = "temp-set"type='submit' disabled={isDisabled}>Set</button>
         {coolingMessage}
       </form>
       </fieldset>

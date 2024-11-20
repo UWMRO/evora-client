@@ -104,9 +104,9 @@ function Focus() {
           <input type="text" id="filename" value={filename} onChange={handleFilenameChange} />
           <label htmlFor="focuserPosition">Focuser Position:</label>
           <input type="text" id="focuserPosition" value={focuserPosition} onChange={handleFocuserPositionChange} />
-          <button onClick={handleSendButtonClick}>Send</button>
+          <button class = "temp-set"onClick={handleSendButtonClick}>Send</button>
         </div>
-        <button onClick={handleResetButtonClick}>Reset</button>
+        <button class = "temp-set"onClick={handleResetButtonClick}>Reset</button>
         {img && (
           <img src={img} alt="An example image" />
         )}
