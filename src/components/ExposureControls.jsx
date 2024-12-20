@@ -254,8 +254,8 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             )}
 
             {/* Get Exposure Button */}
-            <button class = "temp-set" disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>
-            {(exposureType !== "Real Time" && <button class = "temp-set" disabled={!isExposing} onClick={abortExposure}>Abort Exposure</button>)}
+            <button className="temp-set" disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>
+            {(exposureType !== "Real Time" && <button className="temp-set" disabled={!isExposing} onClick={abortExposure}>Abort Exposure</button>)}
 
             </fieldset>
         </form>

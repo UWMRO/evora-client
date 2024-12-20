@@ -70,10 +70,10 @@ function App() {
           exposureType={exposureType}
           imageType={imageType}
           filterType={filterType}
-          temp = {temp}
-          setDisplayedImage = {setDisplayedImage}
-          setDisableControls = {setDisableControls}
-          isDisabled = {!initialized}
+          temp={temp}
+          setDisplayedImage={setDisplayedImage}
+          setDisableControls={setDisableControls}
+          isDisabled={!initialized}
         />
         <Framing isDisabled={disableControls || !initialized}/>
         <Focus isDisabled={disableControls || !initialized}/>
@@ -99,7 +99,6 @@ function App() {
     <Feedback/>
 
     </div>
-
   );
 }
 

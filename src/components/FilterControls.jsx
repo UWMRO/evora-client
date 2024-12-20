@@ -46,8 +46,7 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
   return (
     <fieldset disabled={moving || isDisabled}>
       <legend>Filters</legend>
-      <label class = "custom-radio">
-        
+      <label className="custom-radio">
         <input
           type="radio"
           name="FilterType"
@@ -57,8 +56,7 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
         />
         <span>Ha</span>
       </label>
-      <label class = "custom-radio">
-        
+      <label className="custom-radio">
         <input
           type="radio"
           name="FilterType"
@@ -68,8 +66,7 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
         />
         <span>B</span>
       </label>
-      <label class = "custom-radio">
-        
+      <label className="custom-radio">
         <input
           type="radio"
           name="FilterType"
@@ -79,8 +76,7 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
         />
         <span>V</span>
       </label>
-      <label class = "custom-radio">
-        
+      <label className="custom-radio">
         <input
           type="radio"
           name="FilterType"
@@ -90,8 +86,7 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
         />
         <span>g</span>
       </label>
-      <label class = "custom-radio">
-        
+      <label className="custom-radio">
         <input
           type="radio"
           name="FilterType"
@@ -101,7 +96,7 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
         />
         <span>r</span>
       </label>
-      <label class = "custom-radio">
+      <label className="custom-radio">
         <input
           type="radio"
           name="FilterType"
