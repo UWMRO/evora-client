@@ -12,9 +12,9 @@ function Focus() {
   const [img, setImg] = useState();
 
   const refreshSid = () => {
-        // Generate a timestamp session id
-        const sessionId = Date.now().toString();
-        setSid(sessionId);
+    // Generate a timestamp session id
+    const sessionId = Date.now().toString();
+    setSid(sessionId);
   };
 
   useEffect(() => {
@@ -24,9 +24,9 @@ function Focus() {
   const handleFilenameChange = (event) => {
     setFilename(event.target.value);
   };
+  
   const handleFocuserPositionChange = (event) => {
     setFocuserPosition(event.target.value);
-
   };
 
   const handleSendButtonClick = () => {
@@ -63,7 +63,6 @@ function Focus() {
     setImg(imageObjectURL);
   };
 
-
   const handleResetButtonClick = () => {
     // Send request to backend to analyze data
     console.log('Sending request to backend to analyze data');
@@ -94,25 +93,22 @@ function Focus() {
       });
   };
 
-
   return (
     <fieldset className="focus">
       <legend>Focus</legend>
-
-    <div>
-          <label htmlFor="filename">File name:</label>
-          <input type="text" id="filename" value={filename} onChange={handleFilenameChange} />
-          <label htmlFor="focuserPosition">Focuser Position:</label>
-          <input type="text" id="focuserPosition" value={focuserPosition} onChange={handleFocuserPositionChange} />
-          <button class = "temp-set"onClick={handleSendButtonClick}>Send</button>
-        </div>
-        <button class = "temp-set"onClick={handleResetButtonClick}>Reset</button>
-        {img && (
-          <img src={img} alt="An example image" />
-        )}
+      <div>
+        <label htmlFor="filename">File name:</label>
+        <input type="text" id="filename" value={filename} onChange={handleFilenameChange} />
+        <label htmlFor="focuserPosition">Focuser Position:</label>
+        <input type="text" id="focuserPosition" value={focuserPosition} onChange={handleFocuserPositionChange} />
+        <button className="temp-set"onClick={handleSendButtonClick}>Send</button>
+      </div>
+      <button className="temp-set"onClick={handleResetButtonClick}>Reset</button>
+      {img && (
+        <img src={img} alt="An example image" />
+      )}
     </fieldset>
   );
 }
-
 
 export default Focus;
