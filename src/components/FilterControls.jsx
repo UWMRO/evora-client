@@ -106,7 +106,7 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
         />
         <span>i</span>
       </label>
-      {!moving && <button class="filter-button" onClick={handleHome}>Home</button>}
+      {!moving && <button className="filter-button" onClick={handleHome}>Home</button>}
       {moving && (
         <label style={{ width: '200px' }}>
           <BeatLoader
