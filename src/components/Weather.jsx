@@ -24,14 +24,13 @@ function Weather() {
     }, []);
 
     return (
-        <div className="weather-card">
-            <h2>Current Weather</h2>
-            <div className="weather-info">
-                <p>Temperature: {temp}°F</p>
-                <p>Humidity: {humidity}%</p>
-                <p>Wind: {wind}mph</p>
-            </div>
+      <div className="weather-card">
+        <div className="weather-info">
+          <p>Temperature: <span>{temp}°F</span></p>
+          <p>Humidity: <span>{humidity}%</span></p>
+          <p>Wind: <span>{wind}mph</span></p>
         </div>
+      </div>
     );
 }
 

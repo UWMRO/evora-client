@@ -1,28 +1,141 @@
 /*
  * Styles for the frontend
  */
- 
-.App {
-  text-align: center;
+
+* {
+  margin: 0;
+  /* overflow: hidden; */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+html {
+  font-size: 23px;
+}
+
+body {
+  overflow: hidden;
+}
+
+.sideBarToggleButton {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  height: 40px;
+  width: 30px;
+  background-color: inherit;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: left 0.4s ease;
+  z-index: 2;
+}
+
+.link:hover {
+  color: #c000c3;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.infoPanel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+  width: 100%;
+  height: auto;
+  gap: 0;
+}
+
+.infoPanel > div {
+  margin: 10px;
+  font-size: 20px;
+}
+
+.infoPanel > div > span {
+  font-weight: bold;
+  color: rgb(189, 188, 188);
+}
+
+.infoPanel > div:not(:last-child) {
+  border-right: 3px solid rgb(75, 75, 75);
+}
+
+.infoBarGrid {
+  font-size: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0 5px;
+  width: 90%;
+  height: 80%;
+  margin: 20px auto 0 auto;
+}
+
+.infoBarGrid > div {
+  display: flex;
+  text-align: left;
+  align-items: center;
+}
+
+.infoBarGrid > div > span {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.logContainer {
+  border-radius: 5px;
+  overflow-y: scroll;
+  height: 90%;
+  background-color: #1e1e1e;
+}
+
+.logContainer > p {
+  font-size: 13px;
+  padding: 5px;
+  text-align: left;
+}
+
+.logContainer > p:first-child {
+  padding-top: 10px;
+}
+
+.fsBtn {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.fsBtn:hover {
+  background-color: #00c01a !important;
 }
 
 .Interface {
-  display: grid;
-  grid-auto-flow: column;
-  margin: 1% 5% 1% 5%;
+  margin: 0 auto;
+  font-size: 16px;
+  width: 97.5%;
+  height: 95%;
   padding: 10px;
-  height: 90vh;
   font-family: Inter;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+fieldset legend {
+  text-align: left;
 }
 
 .Controls {
-  margin-left: 5%;
-  width: 80%;
-  overflow-y: auto;
+  width: 50%;
 }
 
 .display {
-  overflow: hidden;
+  width: 45%;
+  margin-top: 50px;
 }
 
 .exposure-controls label {
@@ -100,15 +213,25 @@
 .Logo {
   height: 75px;
   width: 75px;
-  border-radius: 35px;
-  margin: 1% 3% 3% 3%;
+  border-radius: 15px;
+  margin: 3%;
 }
 
-.WeatherIcon {
-  height: 75px;
-  width: 75px;
-  border-radius: 35px;
-  margin: 1% 3% 3% 3%;
+.weather-info {
+  margin-top: 15px;
+}
+
+.weather-info > p:first-child {
+  padding-top: 10px;
+}
+
+.weather-info > p {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.weather-info > p > span {
+  font-weight: bold;
 }
 
 .blink {
@@ -138,14 +261,13 @@
 }
 
 body {
-  background: linear-gradient(45deg, rgb(78, 76, 160) 5%, rgb(35, 17, 65) 20%, rgb(53, 32, 90) 50%, rgb(35, 17, 65) 80%, rgb(78, 76, 160) 95%);
+  /* background: linear-gradient(45deg, rgb(78, 76, 160) 5%, rgb(35, 17, 65) 20%, rgb(53, 32, 90) 50%, rgb(35, 17, 65) 80%, rgb(78, 76, 160) 95%); */
+  background: #0a0a0a;
   color: white;
   background-repeat: no-repeat;
   min-height: 100vh;
   padding-bottom: 8vh;
 }
-
-
 
 .display div {
   margin: auto;
@@ -161,7 +283,6 @@ fieldset {
   border-radius: 8px;
   padding:12px;
   background-color: #1e1e1e;
-  box-shadow: 5px 5px 4px #1e1e1e;
 }
 .graphContainer {
   width: 80%;
@@ -231,7 +352,7 @@ fieldset {
 }
 
 .framing input {
-  margin: 7.5px 2.5px;
+  margin: 15px 10px;
 }
 
 .framing button {
@@ -239,7 +360,7 @@ fieldset {
 }
 
 .focus input {
-  margin: 10px 7.5px;
+  margin: 20px 15px;
 }
 
 .focus button {
@@ -248,6 +369,10 @@ fieldset {
 
 .focus label {
   margin-left: 10px;
+}
+
+.framing, .focus {
+  padding: 20px;
 }
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
