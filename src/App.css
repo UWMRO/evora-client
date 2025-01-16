@@ -20,6 +20,27 @@ body {
   overflow: hidden;
 }
 
+.warning {
+  color: red;
+}
+
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.sideBar {
+  width: 15%;
+  height: 100vh;
+  background-color: #363636;
+  padding: 10px;
+  position: absolute;
+  transition: left 0.5s ease;
+  min-width: 300px;
+  max-height: 100vh;
+}
+
 .sideBarToggleButton {
   margin: 0;
   position: absolute;
@@ -113,7 +134,7 @@ body {
   background-color: #00c01a !important;
 }
 
-.Interface {
+.interface {
   margin: 0 auto;
   font-size: 16px;
   width: 97.5%;
@@ -123,14 +144,16 @@ body {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  text-align: center;
 }
 
 fieldset legend {
   text-align: left;
 }
 
-.Controls {
-  width: 50%;
+.controls {
+  width: 75%;
+  font-size: 15px;
 }
 
 .display {
