@@ -146,8 +146,8 @@ function App() {
   ]
 
   const cameraComponent = (
-    <div className="Interface">
-      <div className="Controls">
+    <div className="interface">
+      <div className="controls">
         {/* <PingServer/> */}
         <OnOff initialized={initialized} setInitialized={setInitialized}/>
         <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus}/>
@@ -194,7 +194,7 @@ function App() {
     <>
       <h2 style={{ margin: '10px'}}>Settings</h2>
       <div style={{ margin: '30px', float: 'left'}}>
-        <div>Hide Info Panel <input type="checkbox" checked={infoBarHidden} onChange={() => setInforBarHidden(!infoBarHidden)}/></div><br />
+        <div>Show Info Panel <input type="checkbox" checked={!infoBarHidden} onChange={() => setInforBarHidden(!infoBarHidden)}/></div><br />
         <div>Fullscreen: <button className="fsBtn" onClick={fullScreenHandler}>{isFullScreen ? 'Exit' : 'Enter'}</button></div>
       </div>
     </>
@@ -209,31 +209,28 @@ function App() {
       >
         {sideBarHidden ? <SlArrowRight /> : <SlArrowLeft />}
       </button>
-
       <div className='sideBar' style={{ left: sideBarHidden ? `${Math.min(-350, window.innerWidth * -0.25)}px` : '0' }}>
         <>
-          <div className='logoContainer' style={{width: '30%', float: 'left'}}>
+          <div className='logoContainer'>
             <a href='https:///sites.google.com/a/uw.edu/mro/' target='_blank'>
-              <img src={logo} className='Logo' style={{height: '3.5rem', width: '3.5rem'}} alt='UW Manastash Ridge Observatory Logo'/>
+              <img src={logo} className='logo' alt='UW Manastash Ridge Observatory Logo'/>
             </a>
           </div>
-          <div className='title' style={{width: '68%', float: 'right', fontWeight: 'bold', fontSize: '25px', marginTop: '3%', textAlign: 'left'}}>
-            Manastash Ridge Observatory
-          </div>
+          <div className='observatoryTitle'>Manastash Ridge Observatory</div>
         </>
-        <hr style={{width: '100%', marginTop: '100px'}}/>
-        <div style={{height: '80%', fontWeight: 'bold', float: 'left', textAlign: 'left', padding: '20px 0 0 20px'}}>
+        <hr className="lineBreak"/>
+        <div className="sideBarLinkContainer">
           <h3>Controls</h3>
           {controls.map((tab) => (
-            <div style={{margin: '10px 0', padding: '0 20px', display: 'flex', alignItems: 'center', fontSize: '0.9rem'}}>
-              <div style={{ marginRight: '8px', alignItems: 'center', display: 'flex', fontSize: '25px' }}>{tab.icon}</div>
+            <div className="sideBarLink">
+              <div className="sideBarLinkIcon">{tab.icon}</div>
               <div className="link" onClick={() => {setActiveTab(tab.id)}} style={{color: activeTab == tab.id ? '#9100c3 ' : ''}}>{tab.label}</div>
             </div>
           ))}
-          <h3 style={{ marginTop: '50px'}}>Links</h3>
+          <h3>Links</h3>
           {miscLinks.map((tab) => (
-            <div style={{margin: '10px 0', padding: '0 20px', display: 'flex', alignItems: 'center', fontSize: '0.9rem'}}>
-              <div style={{ marginRight: '10px', alignItems: 'center', display: 'flex', fontSize: '25px' }}>{tab.icon}</div>
+            <div className="sideBarLink">
+              <div className="sideBarLinkIcon">{tab.icon}</div>
               <div><a className="link" href={tab.link} target="_blank">{tab.label}</a></div>
             </div>
           ))}
@@ -241,25 +238,25 @@ function App() {
       </div>
       {/* This is a dummy div for transition smoothness */}
       <div style={{width: sideBarHidden ? '0': '15%', transition: '0.5s'}}></div> 
-      <div className='mainContainer' style={{width: sideBarHidden ? '99.5%' : '83%', textAlign: 'center', marginLeft: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', transition: 'width 0.3s ease'}}>
+      <div className='mainContainer' style={{ width: sideBarHidden ? '99.5%' : `${window.innerWidth * 0.25 > 350 ? '83%' : `calc(100% - 320px)`}` }}>
         {!infoBarHidden && 
-        <div className='infoPanel' style={{ height: '20vh', width: '97.5%', backgroundColor: '#363636', borderRadius: '10px', marginTop: '10px'}}>
+        <div className='infoPanel'>
           <div>
             <span>Camera</span>
             <div class="infoBarGrid">
-              <div><span>Temperature:</span> N/A</div>
-              <div><span>Filter:</span>N/A</div>
-              <div><span>Time left:</span>N/A</div>
-              <div><span>Status:</span>N/A</div>
+              <div><span>Temperature:</span> <span>N/A</span></div>
+              <div><span>Filter:</span><span>N/A</span></div>
+              <div><span>Time left:</span><span>N/A</span></div>
+              <div><span>Status:</span><span>N/A</span></div>
             </div>
           </div>
           <div>
             <span>Telescope</span>
             <div class="infoBarGrid">
-              <div><span>RA:</span> N/A</div>
-              <div><span>DEC:</span>N/A</div>
-              <div><span>Target Object:</span>N/A</div>
-              <div><span>Tracking Status:</span>N/A</div>
+              <div><span>RA:</span> <span>N/A</span></div>
+              <div><span>DEC:</span><span>N/A</span></div>
+              <div><span>Target Object:</span><span>N/A</span></div>
+              <div><span>Tracking Status:</span><span>N/A</span></div>
             </div>
           </div>
           <div>
@@ -283,7 +280,7 @@ function App() {
             <p>[21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -</p>
           </div>
         </div>}
-        <div className='mainPanel' style={{ minHeight: infoBarHidden ? '97vh' : '75vh', width: '97.5%', backgroundColor: '#363636', borderRadius: '10px', marginTop: '20px', overflowY: 'auto', overflowX: 'hidden'}}>
+        <div className='mainPanel' style={{ minHeight: infoBarHidden ? '97vh' : '75vh' }}>
           {/* Camera tab needs to persist so that JS9 has always a valid canvas to load in */}
           <div style={{ display: activeTab === 'camera' ? 'block' : 'none'}}>{cameraComponent}</div>
           {activeTab === 'framing_and_focus' && framingAndFocusComponent}
