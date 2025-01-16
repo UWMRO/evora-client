@@ -175,8 +175,8 @@ function App() {
   )
 
   const framingAndFocusComponent = (
-    <div className="Interface" style={{textAlign: 'center', display: 'flex', justifyContent: 'center'}}>
-      <div className="Controls" style={{width: '75%'}}>
+    <div className="interface">
+      <div className="controls">
         <Framing isDisabled={disableControls || !initialized}/>
         <Focus isDisabled={disableControls || !initialized}/>
       </div>
@@ -184,24 +184,24 @@ function App() {
   )
 
   const telescopeComponent = (
-    <div>
-      <h2 style={{ margin: '10px'}}>Telescope Controls</h2>
-      <p style={{ color: 'red'}}>To be implemented</p>
-    </div>
+    <>
+      <h2 style={{ margin: '10px' }}>Telescope Controls</h2>
+      <p className="warning">To be implemented</p>
+    </>
   )
 
   const settingsComponent = (
-    <div>
+    <>
       <h2 style={{ margin: '10px'}}>Settings</h2>
       <div style={{ margin: '30px', float: 'left'}}>
         <div>Hide Info Panel <input type="checkbox" checked={infoBarHidden} onChange={() => setInforBarHidden(!infoBarHidden)}/></div><br />
         <div>Fullscreen: <button className="fsBtn" onClick={fullScreenHandler}>{isFullScreen ? 'Exit' : 'Enter'}</button></div>
       </div>
-    </div>
+    </>
   )
 
   return (
-    <div style={{display: 'flex', width: '100vw', height: '100vh'}}>
+    <div className="container">
       <button
         className="sideBarToggleButton"
         onClick={() => setSideBarHidden(!sideBarHidden)}
@@ -210,9 +210,7 @@ function App() {
         {sideBarHidden ? <SlArrowRight /> : <SlArrowLeft />}
       </button>
 
-      <div className='sideBar' style={{ width: '15%', height: '100vh', backgroundColor: '#363636', padding: '10px', position: 'absolute', 
-          left: sideBarHidden ? `${Math.min(-350, window.innerWidth * -0.25)}px` : '0',
-          transition: 'left 0.5s ease', minWidth: '300px', maxHeight: '100vh'}}>
+      <div className='sideBar' style={{ left: sideBarHidden ? `${Math.min(-350, window.innerWidth * -0.25)}px` : '0' }}>
         <>
           <div className='logoContainer' style={{width: '30%', float: 'left'}}>
             <a href='https:///sites.google.com/a/uw.edu/mro/' target='_blank'>
@@ -292,7 +290,6 @@ function App() {
           {activeTab === 'telescope' && telescopeComponent}
           {activeTab === 'settings' && settingsComponent}
         </div>
-
       </div>
     </div>
   );
