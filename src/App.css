@@ -73,12 +73,14 @@ body {
 }
 
 .infoPanel > div {
-  margin: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 20px;
 }
 
 .infoPanel > div > span {
   font-weight: bold;
+  font-size: 18px;
   color: rgb(189, 188, 188);
 }
 
@@ -90,28 +92,33 @@ body {
   font-size: 16px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 0 5px;
+  gap: 10px 5px;
   width: 90%;
-  height: 80%;
-  margin: 20px auto 0 auto;
+  height: 70%;
+  margin: 10px auto 0 auto;
 }
 
 .infoBarGrid > div {
-  display: flex;
-  text-align: left;
+  display: grid;
+  text-align: center;
   align-items: center;
 }
 
-.infoBarGrid > div > span {
+.infoBarGrid > div > span:nth-child(1) {
   font-weight: bold;
-  margin-right: 5px;
+  display: inline-block;
+}
+
+.infoBarGrid > div > span:nth-child(2) {
+  color: red
 }
 
 .logContainer {
   border-radius: 5px;
   overflow-y: scroll;
   height: 90%;
+  width: 95%;
+  margin: 0 auto;
   background-color: #1e1e1e;
 }
 
@@ -136,24 +143,21 @@ body {
 
 .interface {
   margin: 0 auto;
-  font-size: 16px;
-  width: 97.5%;
+  width: 100%;
   height: 95%;
   padding: 10px;
   font-family: Inter;
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
-  text-align: center;
+}
+
+.controls {
+  width: 50%;
+  font-size: 15px;
 }
 
 fieldset legend {
   text-align: left;
-}
-
-.controls {
-  width: 75%;
-  font-size: 15px;
 }
 
 .display {
@@ -233,15 +237,87 @@ fieldset legend {
   pointer-events: none;
 }
 
-.Logo {
-  height: 75px;
-  width: 75px;
+.logo {
+  height: 3.5rem;
+  width: 3.5rem;
   border-radius: 15px;
   margin: 3%;
 }
 
-.weather-info {
-  margin-top: 15px;
+.logoContainer {
+  width: 30%;
+  float: left;
+}
+
+.observatoryTitle {
+  width: 68%;
+  float: right;
+  font-weight: bold;
+  font-size: 25px;
+  margin-top: 3%;
+  text-align: left;
+}
+
+.lineBreak {
+  width: 100%; 
+  margin-top: 100px;
+}
+
+.sideBarLinkContainer {
+  height: 80%;
+  font-weight: bold;
+  float: left;
+  text-align: left;
+  padding: 20px 0 0 20px;
+}
+
+.sideBarLink {
+  margin: 10px 0;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.sideBarLinkIcon {
+  margin-right: 10px;
+  align-items: center;
+  display: flex;
+  font-size: 25px;
+}
+
+.sideBarLinkContainer h3:nth-child(2) {
+  margin-top: 50px;
+}
+
+.mainContainer {
+  text-align: center;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: width 0.5s ease;
+}
+
+.mainPanel {
+  width: 97.5%;
+  background-color: #363636;
+  border-radius: 10px;
+  margin-top: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.infoPanel {
+  height: 20vh;
+  width: 97.5%;
+  background-color: #363636;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.infoPanel > div {
+  overflow-y: auto;
 }
 
 .weather-info > p:first-child {
@@ -416,7 +492,7 @@ input[type=number] {
   max-width: 30%;
 }
 
-.onoff{
+.onoff {
   background-color: #333;
   color: #e0e0e0;
   padding: 10px 10px;
@@ -424,11 +500,11 @@ input[type=number] {
   transition: background-color 0.3s, color 0.3s;
 }
 
-button:hover:enabled{
+button:hover:enabled {
   background-color: #444;
 }
 
-.stat_button{
+.stat_button {
   background-color: #333;
   color: #e0e0e0;
   padding: 10px 10px;
@@ -437,7 +513,7 @@ button:hover:enabled{
   font-family: Inter;
 }
 
-.custom-radio{
+.custom-radio {
   margin: 2px;
 }
 
