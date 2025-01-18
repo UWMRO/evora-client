@@ -9,9 +9,7 @@ import "chart.js/auto";
  */
 function GetTemp({currTemp, setCurrTemp, isDisabled}) {
 
-
   let NUM_OF_DATA_POINTS = 20;
-
   let tempMessage = <span className='tempMessage'>Current Temperature: -999 °C</span>;
 
   const initialize_array = (num) => {
@@ -69,7 +67,7 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
     setCurrTemp(rounded.toString())
   }
 
-  if(currTemp != null){
+  if (currTemp != null) {
     tempMessage = <span className='tempMessage'>Current Temperature: {currTemp} °C</span>
   }
 
@@ -86,7 +84,6 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
   };
 
   const options = require("./resources/graph_options.json");
-  
 
   const graphButtonHandler = () => {
     if(buttonText === 'Details'){
@@ -102,18 +99,18 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
     <fieldset className="Temperature" disabled={isDisabled}>
       <label>Get Temperature</label>
       <button className="temp-set" onClick={callGetTemperature}>Get</button>
-      <button className="temp-set" onClick={graphButtonHandler} style={{ width:'52px'}}>{buttonText}</button>
+      <button className="temp-set" onClick={graphButtonHandler} style={{ width:'52px' }}>{buttonText}</button>
       {tempMessage}
-      <div className="graphContainer" style={{ display: graphDisplay}}>
-        Update Interval (Current: {graphDelay === -1 ? "Disabled" : graphDelay / 1000 + "s"}): <select name="delay" id="delay" defaultValue={'30000'}>
+      <div className="graphContainer" style={{ display: graphDisplay }}>
+        <span>Update Interval: </span>
+        <select onChange={(e) => setGraphDelay(Number(e.target.value))} defaultValue={'30000'}>
           <option value="3000">3s</option>
           <option value="5000">5s</option>
           <option value="10000">10s</option>
           <option value="15000">15s</option>
           <option value="30000">30s</option>
-          <option value="-1">Disable</option>
+          <option value="-1">Disabled</option>
         </select>
-        <button className="temp-set" onClick={function() {setGraphDelay(Number(document.getElementById("delay").value));}}>Set</button>
         <Line data={data} options={options}/>
       </div>
     </fieldset>
