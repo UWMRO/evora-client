@@ -4,6 +4,8 @@ import { getStatus } from "./apiClient";
 import './App.css';
 import logo from './aueg_logo.png';
 
+import { ERROR_CODES } from "./components/resources/andor_codes";
+
 // Icons
 import { FaRegStar } from "react-icons/fa";
 import { IoTelescopeOutline } from "react-icons/io5";
@@ -27,7 +29,6 @@ import ImageTypeSelector from './components/ImageTypeSelector';
 import OnOff from './components/OnOffFunctionality';
 import ExposureTypeSelector from './components/SetExposureType';
 import SetTemp from './components/SetTemp';
-import Feedback from './components/Feedback';
 import Weather from './components/Weather';
 
 // https://github.com/ericmandel/js9
@@ -49,6 +50,8 @@ function App() {
   const [initialized, setInitialized] = useState(getStatus()['status'] === '20073')
   const [isLoading, setIsLoading] = useState(true)
 
+  const [currTimer, setCurrTimer] = useState(undefined); // Exposure progress --> use context?
+
   const [activeTab, setActiveTab] = useState("camera");
   const [sideBarHidden, setSideBarHidden] = useState(false);
   const [infoBarHidden, setInforBarHidden] = useState(false);
@@ -57,6 +60,20 @@ function App() {
   const fullScreenHandler = () => {
     checkFullScreen() ? exitFullscreen() : enterFullScreen();
   };
+
+  // Repetitive from Exposure controls
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    // Pad the minutes and seconds with leading zeros if they are less than 10
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+
+    if (seconds === undefined) return 'Idle';
+
+    return `${formattedMinutes}:${formattedSeconds}`;
+}
 
   const enterFullScreen = () => {
     let element = document.documentElement;
@@ -164,6 +181,8 @@ function App() {
           setDisplayedImage={setDisplayedImage}
           setDisableControls={setDisableControls}
           isDisabled={!initialized}
+          currTimer={currTimer}
+          setCurrTimer={setCurrTimer}
         />        
       </div>
       <div className="display">
@@ -194,8 +213,12 @@ function App() {
     <>
       <h2 style={{ margin: '10px'}}>Settings</h2>
       <div style={{ margin: '30px', float: 'left'}}>
-        <div>Show Info Panel <input type="checkbox" checked={!infoBarHidden} onChange={() => setInforBarHidden(!infoBarHidden)}/></div><br />
-        <div>Fullscreen: <button className="fsBtn" onClick={fullScreenHandler}>{isFullScreen ? 'Exit' : 'Enter'}</button></div>
+        <div>Show Info Panel
+          <input type="checkbox" checked={!infoBarHidden} onChange={() => setInforBarHidden(!infoBarHidden)}/>
+        </div><br />
+        <div>Fullscreen: 
+          <button className="fsBtn" onClick={fullScreenHandler}>{isFullScreen ? 'Exit' : 'Enter'}</button>
+        </div>
       </div>
     </>
   )
@@ -209,10 +232,12 @@ function App() {
       >
         {sideBarHidden ? <SlArrowRight /> : <SlArrowLeft />}
       </button>
-      <div className='sideBar' style={{ left: sideBarHidden ? `${Math.min(-350, window.innerWidth * -0.25)}px` : '0' }}>
+      <div
+        className='sideBar' 
+        style={{ left: sideBarHidden ? `${Math.min(-350, window.innerWidth * -0.25)}px` : '0' }}>
         <>
           <div className='logoContainer'>
-            <a href='https:///sites.google.com/a/uw.edu/mro/' target='_blank'>
+            <a href='https:///sites.google.com/a/uw.edu/mro/' target='_blank' rel="noopener noreferrer">
               <img src={logo} className='logo' alt='UW Manastash Ridge Observatory Logo'/>
             </a>
           </div>
@@ -224,30 +249,36 @@ function App() {
           {controls.map((tab) => (
             <div className="sideBarLink">
               <div className="sideBarLinkIcon">{tab.icon}</div>
-              <div className="link" onClick={() => {setActiveTab(tab.id)}} style={{color: activeTab == tab.id ? '#9100c3 ' : ''}}>{tab.label}</div>
+              <div 
+                className="link" 
+                onClick={() => {setActiveTab(tab.id)}} 
+                style={{color: activeTab === tab.id ? '#9100c3 ' : ''}}
+              >{tab.label}</div>
             </div>
           ))}
           <h3>Links</h3>
           {miscLinks.map((tab) => (
             <div className="sideBarLink">
               <div className="sideBarLinkIcon">{tab.icon}</div>
-              <div><a className="link" href={tab.link} target="_blank">{tab.label}</a></div>
+              <div><a className="link" href={tab.link} target="_blank" rel="noopener noreferrer">{tab.label}</a></div>
             </div>
           ))}
         </div>
       </div>
       {/* This is a dummy div for transition smoothness */}
       <div style={{width: sideBarHidden ? '0': '15%', transition: '0.5s'}}></div> 
-      <div className='mainContainer' style={{ width: sideBarHidden ? '99.5%' : `${window.innerWidth * 0.25 > 350 ? '83%' : `calc(100% - 320px)`}` }}>
+      <div 
+        className='mainContainer'
+        style={{ width: sideBarHidden ? '99.5%' : `${window.innerWidth * 0.25 > 350 ? `calc(100% - 320px)` : '83%'}` }}>
         {!infoBarHidden && 
         <div className='infoPanel'>
           <div>
             <span>Camera</span>
             <div class="infoBarGrid">
-              <div><span>Temperature:</span> <span>N/A</span></div>
-              <div><span>Filter:</span><span>N/A</span></div>
-              <div><span>Time left:</span><span>N/A</span></div>
-              <div><span>Status:</span><span>N/A</span></div>
+              <div><span>Temperature:</span><span style={{ color: initialized ? '#5bcc09' : '' }}>{initialized ? currTemp + ' C°' : 'N/A'}</span></div>
+              <div><span>Filter:</span><span style={{ color: initialized ? '#5bcc09' : '' }}>{filterType}</span></div>
+              <div><span>Time left:</span><span style={{ color: initialized ? '#5bcc09' : '' }}>{initialized ? formatTime(currTimer) : 'N/A'}</span></div>
+              <div><span>Status:</span><span style={{ color: initialized ? '#5bcc09' : '' }}>{initialized ? ERROR_CODES[currStatus] : 'N/A'}</span></div>
             </div>
           </div>
           <div>
