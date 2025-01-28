@@ -1,15 +1,10 @@
 /*
- * Styles for the frontend
+ * General styles for the frontend components
  */
 
 * {
   margin: 0;
   /* overflow: hidden; */
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
 }
 
 html {
@@ -18,128 +13,41 @@ html {
 
 body {
   overflow: hidden;
+  /* background: linear-gradient(45deg, rgb(78, 76, 160) 5%, rgb(35, 17, 65) 20%, rgb(53, 32, 90) 50%, rgb(35, 17, 65) 80%, rgb(78, 76, 160) 95%); */
+  background: #0a0a0a;
+  color: white;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding-bottom: 8vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button:hover:enabled {
+  background-color: #444;
+}
+
+fieldset legend {
+  text-align: left;
+}
+
+fieldset.filter > label,button  {
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+fieldset {
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding:12px;
+  background-color: #1e1e1e;
 }
 
 .warning {
   color: red;
-}
-
-.container {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-}
-
-.sideBar {
-  width: 15%;
-  height: 100vh;
-  background-color: #363636;
-  padding: 10px;
-  position: absolute;
-  transition: left 0.5s ease;
-  min-width: 300px;
-  max-height: 100vh;
-}
-
-.sideBarToggleButton {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 20px;
-  height: 40px;
-  width: 30px;
-  background-color: inherit;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: left 0.4s ease;
-  z-index: 2;
-}
-
-.link:hover {
-  color: #c000c3;
-  transition: 0.2s;
-  cursor: pointer;
-}
-
-.infoPanel {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 1fr;
-  width: 100%;
-  height: auto;
-  gap: 0;
-}
-
-.infoPanel > div {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 20px;
-}
-
-.infoPanel > div > span {
-  font-weight: bold;
-  font-size: 18px;
-  color: rgb(189, 188, 188);
-}
-
-.infoPanel > div:not(:last-child) {
-  border-right: 3px solid rgb(75, 75, 75);
-}
-
-.infoBarGrid {
-  font-size: 16px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px 5px;
-  width: 90%;
-  height: 70%;
-  margin: 10px auto 0 auto;
-}
-
-.infoBarGrid > div {
-  display: grid;
-  text-align: center;
-  align-items: center;
-}
-
-.infoBarGrid > div > span:nth-child(1) {
-  font-weight: bold;
-  display: inline-block;
-}
-
-.infoBarGrid > div > span:nth-child(2) {
-  font-weight: bold;
-  color: red;
-}
-
-.logContainer {
-  border-radius: 5px;
-  overflow-y: scroll;
-  height: 90%;
-  width: 95%;
-  margin: 0 auto;
-  background-color: #1e1e1e;
-}
-
-.logContainer > p {
-  font-size: 13px;
-  padding: 5px;
-  text-align: left;
-}
-
-.logContainer > p:first-child {
-  padding-top: 10px;
-}
-
-.fsBtn {
-  padding: 5px 10px;
-  font-size: 14px;
-}
-
-.fsBtn:hover {
-  background-color: #00c01a !important;
 }
 
 .interface {
@@ -157,17 +65,13 @@ body {
   font-size: 15px;
 }
 
-fieldset legend {
-  text-align: left;
-}
-
 .display {
   width: 45%;
   margin-top: 50px;
 }
 
 .exposure-controls label {
-  display:block;
+  display: block;
   margin: 8px;
 }
 
@@ -233,107 +137,6 @@ fieldset legend {
   margin: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.logo {
-  height: 3.5rem;
-  width: 3.5rem;
-  border-radius: 15px;
-  margin: 3%;
-}
-
-.logoContainer {
-  width: 30%;
-  float: left;
-}
-
-.observatoryTitle {
-  width: 68%;
-  float: right;
-  font-weight: bold;
-  font-size: 25px;
-  margin-top: 3%;
-  text-align: left;
-}
-
-.lineBreak {
-  width: 100%; 
-  margin-top: 100px;
-}
-
-.sideBarLinkContainer {
-  height: 80%;
-  font-weight: bold;
-  float: left;
-  text-align: left;
-  padding: 20px 0 0 20px;
-}
-
-.sideBarLink {
-  margin: 10px 0;
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  font-size: 0.9rem;
-}
-
-.sideBarLinkIcon {
-  margin-right: 10px;
-  align-items: center;
-  display: flex;
-  font-size: 25px;
-}
-
-.sideBarLinkContainer h3:nth-child(2) {
-  margin-top: 50px;
-}
-
-.mainContainer {
-  text-align: center;
-  margin-left: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: width 0.5s ease;
-}
-
-.mainPanel {
-  width: 97.5%;
-  background-color: #363636;
-  border-radius: 10px;
-  margin-top: 20px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.infoPanel {
-  height: 20vh;
-  width: 97.5%;
-  background-color: #363636;
-  border-radius: 10px;
-  margin-top: 10px;
-}
-
-.infoPanel > div {
-  overflow-y: auto;
-}
-
-.weather-info > p:first-child {
-  padding-top: 10px;
-}
-
-.weather-info > p {
-  font-size: 16px;
-  margin-top: 10px;
-}
-
-.weather-info > p > span {
-  font-weight: bold;
-}
-
 .blink {
   margin-top: 20px;
   animation: blinker 2s linear infinite;
@@ -354,36 +157,10 @@ fieldset legend {
   transition: width 1s ease;
 }
 
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
-}
-
-body {
-  /* background: linear-gradient(45deg, rgb(78, 76, 160) 5%, rgb(35, 17, 65) 20%, rgb(53, 32, 90) 50%, rgb(35, 17, 65) 80%, rgb(78, 76, 160) 95%); */
-  background: #0a0a0a;
-  color: white;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  padding-bottom: 8vh;
-}
-
 .display div {
   margin: auto;
 }
 
-fieldset.filter > label,button  {
-  margin-left: 10px;
-  border-radius: 5px;
-}
-
-fieldset {
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding:12px;
-  background-color: #1e1e1e;
-}
 .graphContainer {
   width: 80%;
   margin: 0 auto;
@@ -451,6 +228,12 @@ fieldset {
   }
 }
 
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 .framing input {
   margin: 15px 10px;
 }
@@ -499,10 +282,6 @@ input[type=number] {
   padding: 10px 10px;
   border:none;
   transition: background-color 0.3s, color 0.3s;
-}
-
-button:hover:enabled {
-  background-color: #444;
 }
 
 .stat_button {
@@ -564,4 +343,45 @@ button:hover:enabled {
   border:none;
   transition: opacity 0.3s, color 0.3s;
   font-family: Inter;
+}
+
+.weather-info > p:first-child {
+  padding-top: 10px;
+}
+
+.weather-info > p {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.weather-info > p > span {
+  font-weight: bold;
+}
+
+.logContainer {
+  border-radius: 5px;
+  overflow-y: scroll;
+  height: 90%;
+  width: 95%;
+  margin: 0 auto;
+  background-color: #1e1e1e;
+}
+
+.logContainer > p {
+  font-size: 13px;
+  padding: 5px;
+  text-align: left;
+}
+
+.logContainer > p:first-child {
+  padding-top: 10px;
+}
+
+.fsBtn {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.fsBtn:hover {
+  background-color: #00c01a !important;
 }
