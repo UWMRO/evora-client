@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getStatus } from "./apiClient";
 
 import './App.css';
+import './Layout.css';
 import logo from './aueg_logo.png';
 
 import { ERROR_CODES } from "./components/resources/andor_codes";
@@ -276,7 +277,7 @@ function App() {
             <span>Camera</span>
             <div class="infoBarGrid">
               <div><span>Temperature:</span><span style={{ color: initialized ? '#5bcc09' : '' }}>{initialized ? currTemp + ' C°' : 'N/A'}</span></div>
-              <div><span>Filter:</span><span style={{ color: initialized ? '#5bcc09' : '' }}>{filterType}</span></div>
+              <div><span>Filter:</span><span style={{ color: initialized ? '#5bcc09' : 'orange' }}>{filterType}</span></div>
               <div><span>Time left:</span><span style={{ color: initialized ? '#5bcc09' : '' }}>{initialized ? formatTime(currTimer) : 'N/A'}</span></div>
               <div><span>Status:</span><span style={{ color: initialized ? '#5bcc09' : '' }}>{initialized ? ERROR_CODES[currStatus] : 'N/A'}</span></div>
             </div>
