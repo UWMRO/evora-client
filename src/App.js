@@ -23,6 +23,7 @@ import { SlArrowRight } from "react-icons/sl";
 import ExposureControls from './components/ExposureControls';
 import FilterTypeSelector from './components/FilterControls';
 import Focus from "./components/Focus";
+import FocusControls from "./components/FocusControls";
 import Framing from "./components/Framing";
 import GetStatus from './components/GetStatus';
 import GetTemp from './components/GetTemp';
@@ -199,6 +200,7 @@ function App() {
       <div className="controls">
         <Framing isDisabled={disableControls || !initialized}/>
         <Focus isDisabled={disableControls || !initialized}/>
+        <FocusControls />
       </div>
     </div>
   )
