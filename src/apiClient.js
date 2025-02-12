@@ -142,3 +142,25 @@ export async function getWeatherData() {
   console.log(data);
   return data;
 }
+
+// TODO this may need to be changed to be plus/minus focus
+export async function setFocus(amount) {
+  const response = await fetch(`${baseURL}/setFocus`, {
+    method: 'POST',
+    body: JSON.stringify({focus: amount}),
+    cache: 'no-cache',
+    headers: new Headers({
+      'content-type': 'application/json',
+    })
+  });
+  const data = await response.json();
+  console.log(data);
+  return data;
+}
+
+export async function getFocus() {
+  const response = await fetch(`${baseURL}/getFocus`);
+  const data = await response.json();
+  console.log(data);
+  return data;
+}
