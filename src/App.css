@@ -385,3 +385,7 @@ input[type=number] {
 .fsBtn:hover {
   background-color: #00c01a !important;
 }
+
+.minusFocusButton {
+  margin-right: 10px;
+}
