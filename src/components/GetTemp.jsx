@@ -103,7 +103,7 @@ function GetTemp({currTemp, setCurrTemp, isDisabled}) {
       {tempMessage}
       <div className="graphContainer" style={{ display: graphDisplay }}>
         <span>Update Interval: </span>
-        <select onChange={(e) => setGraphDelay(Number(e.target.value))} defaultValue={'30000'}>
+        <select onChange={(e) => setGraphDelay(Number(e.target.value))} defaultValue={'-1'}>
           <option value="3000">3s</option>
           <option value="5000">5s</option>
           <option value="10000">10s</option>

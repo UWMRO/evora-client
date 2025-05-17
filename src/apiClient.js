@@ -143,24 +143,22 @@ export async function getWeatherData() {
   return data;
 }
 
-// TODO this may need to be changed to be plus/minus focus
-export async function setFocus(amount) {
-  const response = await fetch(`${baseURL}/setFocus`, {
-    method: 'POST',
-    body: JSON.stringify({focus: amount}),
-    cache: 'no-cache',
-    headers: new Headers({
-      'content-type': 'application/json',
-    })
-  });
-  const data = await response.json();
-  console.log(data);
-  return data;
+export const MIN_FOCUS_DELTA = 400;
+export const MAX_FOCUS_DELTA = 10000;
+
+export async function moveFocus(amount) {
+  if (Math.abs(amount) > MAX_FOCUS_DELTA || Math.abs(amount) < MIN_FOCUS_DELTA) {
+    return false;
+  }
+  // const response = await fetch(`${baseURL}/focusMoveSteps?steps=${amount}`);
+  // const data = await response.json();
+  // console.log(data);
+  // return data;
 }
 
 export async function getFocus() {
-  const response = await fetch(`${baseURL}/getFocus`);
+  const response = await fetch(`${baseURL}/focusStatus`);
   const data = await response.json();
   console.log(data);
-  return data;
+  return data.step;
 }
