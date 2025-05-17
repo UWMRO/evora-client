@@ -10,7 +10,12 @@ function FocusControls() {
 
     useEffect(() => {
         getFocus().then((data) => {
-            setFocusDisplay(data);
+            if (data.error) {
+                setErrorDisplay('Error: ' + data.error);
+                setFocusDisplay('Error');
+            } else {
+                setFocusDisplay(data);
+            }
         });
     }, []);
 
@@ -21,8 +26,18 @@ function FocusControls() {
         }
         setErrorDisplay('');
         setFocusDisplay(`Moving focus by ${focusDelta}`)
-        moveFocus(focusDelta).then((_) => {
-            getFocus().then((value) => setFocusDisplay(value));
+        moveFocus(focusDelta).then((res) => {
+            if (res.error) {
+                setErrorDisplay('Error: ' + res.code + ' - ' + res.error)
+            }
+            getFocus().then((value) => {
+                if (value.error) {
+                    setErrorDisplay('Error: ' + value.error);
+                    setFocusDisplay('Error');
+                } else {
+                    setFocusDisplay(value);
+                }
+            });
         });
     }
 
@@ -33,8 +48,18 @@ function FocusControls() {
         }
         setErrorDisplay('');
         setFocusDisplay(`Moving focus by ${-focusDelta}`)
-        moveFocus(-focusDelta).then((_) => {
-            getFocus().then((value) => setFocusDisplay(value));
+        moveFocus(-focusDelta).then((res) => {
+            if (res.error) {
+                setErrorDisplay('Error: ' + res.code + ' - ' + res.error)
+            }
+            getFocus().then((value) => {
+                if (value.error) {
+                    setErrorDisplay('Error: ' + value.error);
+                    setFocusDisplay('Error');
+                } else {
+                    setFocusDisplay(value);
+                }
+            });
         });
     }
 
