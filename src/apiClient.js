@@ -150,7 +150,7 @@ export async function moveFocus(amount) {
   if (Math.abs(amount) > MAX_FOCUS_DELTA || Math.abs(amount) < MIN_FOCUS_DELTA) {
     return false;
   }
-  const response = await fetch(`${baseURL}/focusMoveSteps?steps=${amount}`);
+  const response = await fetch(`/focus/move/${amount}`);
   if (response.status !== 200) {
     return {"error": "Connection to evora server failed"};
   }
@@ -160,7 +160,7 @@ export async function moveFocus(amount) {
 }
 
 export async function getFocus() {
-  const response = await fetch(`${baseURL}/focusStatus`);
+  const response = await fetch(`/focus/status`);
   if (response.status !== 200) {
     return {"error": "Connection to evora server failed"};
   }
