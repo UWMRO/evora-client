@@ -187,7 +187,7 @@ function App() {
       id: 'website',
       label: 'MRO Website',
       icon: <CgWebsite />,
-      link: 'https://sites.google.com/a/uw.edu/mro/',
+      link: 'https://uwmro.github.io',
     },
     {
       id: 'weather',
