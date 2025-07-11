@@ -317,7 +317,7 @@ function App() {
         <>
           <div className="logoContainer">
             <a
-              href="https:///sites.google.com/a/uw.edu/mro/"
+              href="https://uwmro.github.io"
               target="_blank"
               rel="noopener noreferrer"
             >
