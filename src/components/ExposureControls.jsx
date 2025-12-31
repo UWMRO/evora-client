@@ -1,6 +1,6 @@
 import { capture, abort } from "../apiClient"
 import { set, useForm } from "react-hook-form"
-import {useEffect, useState} from "react"
+import {useEffect, useState, useRef} from "react"
 
 
 /**
@@ -21,7 +21,10 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
     const [seriesExposures, setSeriesExposures] = useState([])
 
-    const {register, handleSubmit} = useForm()
+    const {register, handleSubmit, getValues} = useForm()
+
+    const [exposureQueue, setExposureQueue] = useState([]) //stores the exposure queue, which allows the observer to queue up several exposures.
+    const shouldStopQueueRef = useRef(false) // ref to abort queue processing 
 
     // For timer/loading bar
     const [time, setTime] = useState(undefined);  // progress bar progress
@@ -37,6 +40,74 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
 
         return `${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    function addToExposureQueue(formData) { //allows an item to be added to exposureQueue
+        // Apply same logic as onSubmit for exposure time
+        let exptime;
+        if (exposureType === "Real Time") {
+            exptime = 1.0;
+        } else if (imageType === "Bias") {
+            exptime = 0.0;
+        } else {
+            exptime = Math.max(0, formData.exptime)
+        }
+
+        // Apply same logic as onSubmit for image type
+        const imgtype = exptime === 0 ? "Bias" : imageType
+
+        const queueItem = {
+            comment: formData.comment,
+            exptime: exptime,
+            expnum: Math.max(1, formData.expnum || 1),
+            exptype: exposureType === "Series" ? "Single" : exposureType,
+            imgtype: imgtype,
+            filtype: filterType
+        }
+        setExposureQueue(prev => [...exposureQueue, queueItem])
+    }
+
+    function clearExposureQueue() { // allows for the user to clear the Queue.
+        setExposureQueue([])
+    }
+
+    async function submitQueuedExposures() {
+        if (exposureQueue.length === 0 || isExposing) {
+            return;
+        }
+
+        // Reset the stop flag at the start
+        shouldStopQueueRef.current = false;
+
+        const itemsToProcess = [...exposureQueue];
+
+        for (let i = 0; i < itemsToProcess.length; i++) {
+            if (shouldStopQueueRef.current) {
+                setExposureQueue([]); 
+                shouldStopQueueRef.current = false;
+                return;
+            }
+
+            const queueItem = itemsToProcess[i];
+
+            setExposureQueue(prev => prev.slice(1));
+
+            const data = {
+                comment: queueItem.comment,
+                exptime: queueItem.exptime.toString(),
+                expnum: queueItem.expnum.toString(),
+                exptype: queueItem.exptype,
+                imgtype: queueItem.imgtype,
+                filtype: queueItem.filtype
+            };
+
+            await onSubmit(data);
+
+            // Wait 1 second before next item
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+
+        shouldStopQueueRef.current = false;
     }
 
     const onSubmit = async data => {
@@ -91,7 +162,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             return message.url
         }))
         setLastExpName(message.url)
-        seriesExposures.push(message.url)
+        setSeriesExposures(prev => [...prev, message.url])
 
         // take another exposure for series
         if (exposureType === "Series" && data.expnum > 1) {
@@ -154,6 +225,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     }, [endTime, currTimer]);
 
 
+
     function seriesLinks() {
         const links = seriesExposures.map((link) => {
                 return (<><div>{link}</div><a href={link}>Download</a><br /><br /></>)
@@ -163,10 +235,13 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     }
 
     /**
-     * Abort the exporsure
+     * Abort the exposure and stop queue processing
      */
     async function abortExposure() {
         setCurrTimer(undefined);
+
+        shouldStopQueueRef.current = true;
+
         if (!isExposing) return;
 
         setStopRealTime(true);
@@ -217,19 +292,19 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             {isExposing && <><div className='blink'>Exposing</div><br/></>}
 
             {/* fits file download text */}
-            {(!isExposing && lastExpName !== "" && exposureType !== "Series") &&
+            {(!isExposing && lastExpName !== "" && exposureType !== "Series" && seriesExposures.length === 0) &&
                 <div>Last exposure: {lastExpName} &nbsp;
                     <a href={lastExpName}>Download</a>
                     <br/><br/>
                 </div>
             }
 
-            {/* Download mutliple (Series) */}
-            {(exposureType === "Series" && seriesExposures.length !== 0) &&
-                (<><div>Series exposures:</div><br /></>)
+            {/* Download multiple (Series or Queue) */}
+            {(seriesExposures.length !== 0) &&
+                (<><div>{exposureType === "Series" ? "Series exposures:" : "Completed exposures:"}</div><br /></>)
             }
 
-            {(exposureType === "Series" && seriesExposures.length !== 0) &&
+            {(seriesExposures.length !== 0) &&
                 seriesLinks()
             }
 
@@ -258,6 +333,27 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             <button className="temp-set" disabled={isExposing} onClick={() => {setSeriesExposures([]); setStopRealTime(false)}} type='submit'>Get Exposure</button>
             {(exposureType !== "Real Time" && <button className="temp-set" disabled={!isExposing} onClick={abortExposure}>Abort Exposure</button>)}
 
+            {/* Add to Exposure Queue button */}
+            <button type="button" className="temp-set" disabled={isExposing} onClick={() => addToExposureQueue(getValues())}>Add to Queue</button>
+
+            {/* Clear queue button */}
+            {exposureQueue.length > 0 &&
+            <button type="button" className="temp-set" disabled={isExposing} onClick={() => clearExposureQueue()}>Clear Queue</button>}
+
+            {/* Send exporsure queue button */}
+            {exposureQueue.length > 0 &&
+            <button type="button" className="temp-set" disabled={isExposing} onClick={() => {setSeriesExposures([]); submitQueuedExposures()}}>Send Exposure Queue</button>}
+
+            {/*Displays the queued exposures. */}
+            {exposureQueue.length > 0 &&
+                <ol style={{listStyleType: 'none'}}>
+                    {exposureQueue.map(exposure => (
+                        <li key={exposure.id} >
+                            {exposure.comment + " " + exposure.exptime + " " + exposure.expnum + " " + exposure.exptype + " " + exposure.imgtype + " " + exposure.filtype} 
+                        </li>
+                    ))}
+                </ol>
+            }
             </fieldset>
         </form>
     );
