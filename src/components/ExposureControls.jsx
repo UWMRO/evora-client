@@ -1,4 +1,4 @@
-import { capture, abort } from "../apiClient"
+import { capture, abort, setFilterWheel, getFilterWheel } from "../apiClient"
 import { set, useForm } from "react-hook-form"
 import {useEffect, useState, useRef} from "react"
 
@@ -24,7 +24,8 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
     const {register, handleSubmit, getValues} = useForm()
 
     const [exposureQueue, setExposureQueue] = useState([]) //stores the exposure queue, which allows the observer to queue up several exposures.
-    const shouldStopQueueRef = useRef(false) // ref to abort queue processing 
+    const shouldStopQueueRef = useRef(false) // ref to abort queue processing
+    const [queueFilter, setQueueFilter] = useState('Ha') // filter selection for queue items 
 
     // For timer/loading bar
     const [time, setTime] = useState(undefined);  // progress bar progress
@@ -62,7 +63,7 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             expnum: Math.max(1, formData.expnum || 1),
             exptype: exposureType === "Series" ? "Single" : exposureType,
             imgtype: imgtype,
-            filtype: filterType
+            filtype: queueFilter
         }
         setExposureQueue(prev => [...exposureQueue, queueItem])
     }
@@ -91,6 +92,12 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             const queueItem = itemsToProcess[i];
 
             setExposureQueue(prev => prev.slice(1));
+
+            const filterWheel = await getFilterWheel();
+
+            if(filterWheel.filter !== queueItem.filtype) {
+                await handleFilterChange(queueItem.filtype);
+            }
 
             const data = {
                 comment: queueItem.comment,
@@ -179,6 +186,12 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         setDisableControls(false)
         setExposureData(data)
     }
+
+    //ability to change filter between exposure in queue. 
+    const handleFilterChange = (filter) => {
+        return setFilterWheel(filter)
+            .catch((err) => console.log(err));
+    };
 
     // Repeat exposures in Real Time until stopped
     useEffect(() => {
@@ -334,7 +347,19 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
             {(exposureType !== "Real Time" && <button className="temp-set" disabled={!isExposing} onClick={abortExposure}>Abort Exposure</button>)}
 
             {/* Add to Exposure Queue button */}
-            <button type="button" className="temp-set" disabled={isExposing} onClick={() => addToExposureQueue(getValues())}>Add to Queue</button>
+            {exposureType !== "Real Time" && exposureType !== "Series" &&
+                <>
+                    <button type="button" className="temp-set" disabled={isExposing} onClick={() => addToExposureQueue(getValues())}>Add to Queue</button>
+                    <select className="temp-set" value={queueFilter} onChange={(e) => setQueueFilter(e.target.value)}>
+                        <option value="Ha">Ha</option>
+                        <option value="B">B</option>
+                        <option value="V">V</option>
+                        <option value="g">g</option>
+                        <option value="r">r</option>
+                        <option value="i">i</option>
+                    </select>
+                </>
+            }
 
             {/* Clear queue button */}
             {exposureQueue.length > 0 &&
