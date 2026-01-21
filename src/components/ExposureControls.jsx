@@ -7,7 +7,7 @@ import {useEffect, useState, useRef} from "react"
  * Fields for submitting exposure request including header comment, exposure time, number of exposures, and
  * extra displays for successful exposures.
  */
-function ExposureControls({ exposureType, imageType, filterType, setDisplayedImage,
+function ExposureControls({ exposureType, imageType, filterType,setFilterType ,setDisplayedImage,
                             setDisableControls, isDisabled, currTimer, setCurrTimer }) {
 
     const [playing, setPlaying] = useState(false)
@@ -93,10 +93,9 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
 
             setExposureQueue(prev => prev.slice(1));
 
-            const filterWheel = await getFilterWheel();
-
-            if(filterWheel.filter !== queueItem.filtype) {
-                await handleFilterChange(queueItem.filtype);
+            if(filterType !== queueItem.filtype) {
+                await handleFilterChange(queueItem.filtype)
+                    .then(() => setFilterType(queueItem.filtype));
             }
 
             const data = {
@@ -237,7 +236,9 @@ function ExposureControls({ exposureType, imageType, filterType, setDisplayedIma
         return () => clearInterval(intervalId);
     }, [endTime, currTimer]);
 
-
+    useEffect(() => {
+        setQueueFilter(filterType);
+    }, [filterType]);
 
     function seriesLinks() {
         const links = seriesExposures.map((link) => {

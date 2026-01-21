@@ -19,7 +19,7 @@ function FilterTypeSelector({ filterType, setFilterType, isDisabled }) {
   useEffect(() => {
     // Do this once when the app loads.
     updateFilterPosition();
-  }, [updateFilterPosition]);
+  }, [updateFilterPosition, filterType]); //updates for filter change from queue exposure. 
 
   const handleFilterChange = (filter) => {
     setMoving(true);
