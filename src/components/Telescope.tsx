@@ -4,8 +4,8 @@
  */
 
 function TelescopeControl() {
-  const sendCommand = (command) => {
-    fetch(`http://72.233.250.83:80/tcs/ascii/${command}`, { method: 'GET' })
+  const sendCommand = (command: string) => {
+    fetch(`/api/tcs/ascii/${command}`, { method: 'GET' })
       .then()
       .catch((error) => {
         console.error(`Error sending command ${command}:`, error);

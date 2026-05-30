@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { getStatus } from './apiClient';
+import { useCallback, useEffect, useState } from 'react';
 
 import './App.css';
 import './Layout.css';
@@ -18,6 +17,12 @@ import { VscFeedback } from 'react-icons/vsc';
 
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 
+import {
+  getFocus,
+  MAX_FOCUS_DELTA,
+  MIN_FOCUS_DELTA,
+  moveFocus,
+} from './apiClient';
 import ExposureControls from './components/ExposureControls';
 import FilterTypeSelector from './components/FilterControls';
 import Focus from './components/Focus';
@@ -36,6 +41,161 @@ import Weather from './components/Weather';
 
 // Use python http.server to serve downloaded files?
 
+function TelescopeStatusHeader() {
+  const [ra, setRA] = useState<number | null>(null);
+  const [dec, setDec] = useState<number | null>(null);
+  const [lst, setLST] = useState<number | null>(null);
+  const [airmass, setAirmass] = useState<number | null>(null);
+
+  const fetchTelescopeStatus = useCallback(async () => {
+    const reponse = await fetch('/api/tcs/ascii/status');
+    if (reponse.status !== 200) {
+      console.error('Failed to fetch telescope status');
+      setRA(null);
+      setDec(null);
+      setLST(null);
+      setAirmass(null);
+    }
+
+    const data = await reponse.json();
+    setRA(data.right_ascension * 15);
+    setDec(data.declination);
+    setLST(data.scope_sidereal_time);
+    setAirmass(data.air_mass);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchTelescopeStatus();
+    }, 5000); // Update every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div>
+      <span>Telescope</span>
+      <div className='infoBarGrid'>
+        <div>
+          <span>RA:</span> <span>{ra !== null ? ra.toFixed(4) : 'N/A'}</span>
+        </div>
+        <div>
+          <span>DEC:</span>
+          <span>{dec !== null ? dec.toFixed(4) : 'N/A'}</span>
+        </div>
+        <div>
+          <span>Airmass:</span>
+          <span>{airmass !== null ? airmass.toFixed(4) : 'N/A'}</span>
+        </div>
+        <div>
+          <span>LST:</span>
+          <span>{lst !== null ? lst.toFixed(4) : 'N/A'}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FocusHeader() {
+  const [focusPosition, setFocusPosition] = useState<number | null>(null);
+  const [focusStatus, setFocusStatus] = useState('N/A');
+
+  const [focusDelta, setFocusDelta] = useState(1500);
+
+  const fetchFocusPosition = useCallback(async () => {
+    const response = await getFocus();
+    setFocusPosition(response.step);
+    setFocusStatus(response.moving ? 'MOVING' : 'IDLE');
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchFocusPosition();
+    }, 5000); // Update every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handlePlusFocus = useCallback(
+    async (direction: number) => {
+      const delta = direction * focusDelta;
+
+      if (
+        Math.abs(delta) > MAX_FOCUS_DELTA ||
+        Math.abs(delta) < MIN_FOCUS_DELTA
+      ) {
+        alert(
+          `Error: Focus delta must be between ${
+            MIN_FOCUS_DELTA
+          } and ${MAX_FOCUS_DELTA}`
+        );
+        return;
+      }
+
+      setFocusStatus('MOVING');
+      let res = await moveFocus(delta);
+      if (res === false) {
+        setFocusStatus('ERROR');
+      }
+    },
+    [moveFocus, setFocusStatus, focusDelta]
+  );
+
+  return (
+    <div>
+      <span>Focus</span>
+      <div
+        className='infoBarGrid'
+        style={{ paddingTop: '10px', display: 'block' }}
+      >
+        <div style={{ display: 'block' }}>
+          <span>Current:</span>{' '}
+          <span style={{ paddingLeft: '10px' }}>
+            {focusPosition !== null ? focusPosition : 'N/A'}
+          </span>
+        </div>
+
+        <div style={{ display: 'block', paddingTop: '10px' }}>
+          <span>Status:</span>{' '}
+          <span style={{ paddingLeft: '10px' }}>{focusStatus}</span>
+        </div>
+
+        <div
+          style={{
+            display: 'block',
+            paddingTop: '20px',
+            pointerEvents: focusStatus === 'MOVING' ? 'none' : 'auto',
+          }}
+        >
+          <button
+            className='btn-outline'
+            title='Decrease Focus'
+            onClick={() => handlePlusFocus(-1)}
+          >
+            -
+          </button>
+          <input
+            className='btn-outline'
+            type='number'
+            value={focusDelta}
+            style={{ width: '60px', marginLeft: '10px', marginRight: '10px' }}
+            onChange={(e) => setFocusDelta(Number(e.target.value))}
+          />
+
+          <button
+            className='btn-outline'
+            title='Increase Focus'
+            style={{ marginLeft: '0px' }}
+            onClick={() => handlePlusFocus(1)}
+          >
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /**
  * Main page of MRO Controls. Contains all child elements.
  */
@@ -45,14 +205,12 @@ function App() {
   const [filterType, setFilterType] = useState('Ha');
   const [temp, setTemp] = useState();
   const [currTemp, setCurrTemp] = useState();
-  const [currStatus, setCurrStatus] = useState();
+  const [currStatus, setCurrStatus] = useState(20075);
   const [displayedImage, setDisplayedImage] = useState(
-    process.env.PUBLIC_URL + '/coma.fits'
+    `${import.meta.env.BASE_URL}coma.fits`
   );
   const [disableControls, setDisableControls] = useState(false);
-  const [initialized, setInitialized] = useState(
-    getStatus()['status'] === '20073'
-  );
+  const [initialized, setInitialized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const [currTimer, setCurrTimer] = useState(undefined); // Exposure progress --> use context?
@@ -116,9 +274,9 @@ function App() {
   const checkFullScreen = () => {
     return Boolean(
       document.fullscreenElement || // Standard
-        document.webkitFullscreenElement || // Chrome and Opera
-        document.mozFullScreenElement || // Firefox
-        document.msFullscreenElement // IE/Edge
+      document.webkitFullscreenElement || // Chrome and Opera
+      document.mozFullScreenElement || // Firefox
+      document.msFullscreenElement // IE/Edge
     );
   };
 
@@ -210,8 +368,8 @@ function App() {
   ];
 
   const cameraComponent = (
-    <div className="interface">
-      <div className="controls">
+    <div className='interface'>
+      <div className='controls'>
         {/* <PingServer/> */}
         <OnOff initialized={initialized} setInitialized={setInitialized} />
         <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus} />
@@ -252,17 +410,17 @@ function App() {
           setCurrTimer={setCurrTimer}
         />
       </div>
-      <div className="display">
-        <div className="JS9Menubar"></div>
-        <div className="JS9"></div>
-        <div className="JS9Statusbar"></div>
+      <div className='display'>
+        <div className='JS9Menubar'></div>
+        <div className='JS9'></div>
+        <div className='JS9Statusbar'></div>
       </div>
     </div>
   );
 
   const framingAndFocusComponent = (
-    <div className="interface">
-      <div className="controls">
+    <div className='interface'>
+      <div className='controls'>
         <Framing isDisabled={disableControls || !initialized} />
         <Focus isDisabled={disableControls || !initialized} />
         <FocusControls />
@@ -277,7 +435,7 @@ function App() {
         <div>
           Show Info Panel
           <input
-            type="checkbox"
+            type='checkbox'
             checked={!infoBarHidden}
             onChange={() => setInforBarHidden(!infoBarHidden)}
           />
@@ -285,7 +443,7 @@ function App() {
         <br />
         <div>
           Fullscreen:
-          <button className="fsBtn" onClick={fullScreenHandler}>
+          <button className='fsBtn' onClick={fullScreenHandler}>
             {isFullScreen ? 'Exit' : 'Enter'}
           </button>
         </div>
@@ -294,9 +452,9 @@ function App() {
   );
 
   return (
-    <div className="container">
+    <div className='container'>
       <button
-        className="sideBarToggleButton"
+        className='sideBarToggleButton'
         onClick={() => setSideBarHidden(!sideBarHidden)}
         style={{
           left: sideBarHidden
@@ -307,7 +465,7 @@ function App() {
         {sideBarHidden ? <SlArrowRight /> : <SlArrowLeft />}
       </button>
       <div
-        className="sideBar"
+        className='sideBar'
         style={{
           left: sideBarHidden
             ? `${Math.min(-350, window.innerWidth * -0.25)}px`
@@ -315,29 +473,29 @@ function App() {
         }}
       >
         <>
-          <div className="logoContainer">
+          <div className='logoContainer'>
             <a
-              href="https://uwmro.github.io"
-              target="_blank"
-              rel="noopener noreferrer"
+              href='https://uwmro.github.io'
+              target='_blank'
+              rel='noopener noreferrer'
             >
               <img
                 src={logo}
-                className="logo"
-                alt="UW Manastash Ridge Observatory Logo"
+                className='logo'
+                alt='UW Manastash Ridge Observatory Logo'
               />
             </a>
           </div>
-          <div className="observatoryTitle">Manastash Ridge Observatory</div>
+          <div className='observatoryTitle'>Manastash Ridge Observatory</div>
         </>
-        <hr className="lineBreak" />
-        <div className="sideBarLinkContainer">
+        <hr className='lineBreak' />
+        <div className='sideBarLinkContainer'>
           <h3>Controls</h3>
           {controls.map((tab) => (
-            <div className="sideBarLink">
-              <div className="sideBarLinkIcon">{tab.icon}</div>
+            <div className='sideBarLink'>
+              <div className='sideBarLinkIcon'>{tab.icon}</div>
               <div
-                className="link"
+                className='link'
                 onClick={() => {
                   setActiveTab(tab.id);
                 }}
@@ -349,14 +507,14 @@ function App() {
           ))}
           <h3>Links</h3>
           {miscLinks.map((tab) => (
-            <div className="sideBarLink">
-              <div className="sideBarLinkIcon">{tab.icon}</div>
+            <div className='sideBarLink'>
+              <div className='sideBarLinkIcon'>{tab.icon}</div>
               <div>
                 <a
-                  className="link"
+                  className='link'
                   href={tab.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target='_blank'
+                  rel='noopener noreferrer'
                 >
                   {tab.label}
                 </a>
@@ -370,7 +528,7 @@ function App() {
         style={{ width: sideBarHidden ? '0' : '15%', transition: '0.5s' }}
       ></div>
       <div
-        className="mainContainer"
+        className='mainContainer'
         style={{
           width: sideBarHidden
             ? '99.5%'
@@ -380,10 +538,10 @@ function App() {
         }}
       >
         {!infoBarHidden && (
-          <div className="infoPanel">
+          <div className='infoPanel'>
             <div>
               <span>Camera</span>
-              <div class="infoBarGrid">
+              <div className='infoBarGrid'>
                 <div>
                   <span>Temperature:</span>
                   <span style={{ color: initialized ? '#5bcc09' : '' }}>
@@ -405,58 +563,26 @@ function App() {
                 <div>
                   <span>Status:</span>
                   <span style={{ color: initialized ? '#5bcc09' : '' }}>
-                    {initialized ? ERROR_CODES[currStatus] : 'N/A'}
+                    {initialized
+                      ? (ERROR_CODES[currStatus as keyof typeof ERROR_CODES] ??
+                        'Unknown')
+                      : 'N/A'}
                   </span>
                 </div>
               </div>
             </div>
-            <div>
-              <span>Telescope</span>
-              <div class="infoBarGrid">
-                <div>
-                  <span>RA:</span> <span>N/A</span>
-                </div>
-                <div>
-                  <span>DEC:</span>
-                  <span>N/A</span>
-                </div>
-                <div>
-                  <span>Target Object:</span>
-                  <span>N/A</span>
-                </div>
-                <div>
-                  <span>Tracking Status:</span>
-                  <span>N/A</span>
-                </div>
-              </div>
-            </div>
+            <TelescopeStatusHeader />
+            <FocusHeader />
             <div>
               <span>Weather</span>
               <div>
                 <Weather />
               </div>
             </div>
-            <div className="logContainer">
-              <p style={{ color: 'red' }}>vv Dummy data vv</p>
-              <p>
-                [21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -
-                /getStatus HTTP/1.1" 200
-              </p>
-              <p>[21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -</p>
-              <p>[21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -</p>
-              <p>[21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -</p>
-              <p>[21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -</p>
-              <p>[21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -</p>
-              <p>[21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -</p>
-              <p>[21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -</p>
-              <p>[21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -</p>
-              <p>[21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -</p>
-              <p>[21/Dec/2024 03:34:15] "GET /getStatus HTTP/1.1" 200 -</p>
-            </div>
           </div>
         )}
         <div
-          className="mainPanel"
+          className='mainPanel'
           style={{ minHeight: infoBarHidden ? '97vh' : '75vh' }}
         >
           {/* Camera tab needs to persist so that JS9 has always a valid canvas to load in */}
