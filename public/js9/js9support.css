@@ -58,6 +58,13 @@
   src: url("font/context-menu-icons.eot?2lkho#iefix") format("embedded-opentype"), url("font/context-menu-icons.woff2?2lkho") format("woff2"), url("font/context-menu-icons.woff?2lkho") format("woff"), url("font/context-menu-icons.ttf?2lkho") format("truetype");
 }
 
+/* 3dPlot tooltip z-index fix */
+/* Only targets the tooltip if it is a direct child of body, is 200px wide, and white 
+(there was no class for the element) */
+body > div[style*="position: absolute"][style*="width: 200px"][style*="color: rgb(255, 255, 255)"] {
+    z-index: 1000 !important;
+}
+
 .context-menu-icon-add:before {
   content: "\EA01";
 }
