@@ -58,10 +58,10 @@ function TelescopeStatusHeader() {
     }
 
     const data = await reponse.json();
-    setRA(data.right_ascension * 15);
-    setDec(data.declination);
-    setLST(data.scope_sidereal_time);
-    setAirmass(data.air_mass);
+    setRA(data.right_ascension || null);
+    setDec(data.declination || null);
+    setLST(data.scope_sidereal_time || null);
+    setAirmass(data.air_mass || null);
   }, []);
 
   useEffect(() => {
