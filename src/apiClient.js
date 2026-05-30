@@ -1,8 +1,8 @@
 /*
  * Contains all functions for api requests to the server.
  */
-// const baseURL = 'http://localhost:3005';  
-const baseURL = '/api'
+// const baseURL = 'http://localhost:3005';
+const baseURL = '/api';
 
 // Creates a POST request.
 export function buildPostPayload(data) {
@@ -36,18 +36,19 @@ export async function getTemperature() {
 }
 
 export async function initialize() {
-    const response = await fetch(`${baseURL}/initialize`)
-    if (response.status !== 200) {  // if the response was not OK
-      return false;
-    }
-    const data = await response.json()
-    return JSON.stringify(data)
+  const response = await fetch(`${baseURL}/initialize`);
+  if (response.status !== 200) {
+    // if the response was not OK
+    return false;
+  }
+  const data = await response.json();
+  return JSON.stringify(data);
 }
 
 export async function shutdown() {
-    const response = await fetch(`${baseURL}/shutdown`)
-    const data = await response.json()
-    return JSON.stringify(data)
+  const response = await fetch(`${baseURL}/shutdown`);
+  const data = await response.json();
+  return JSON.stringify(data);
 }
 
 export async function setTemperature(input) {
@@ -147,12 +148,22 @@ export const MIN_FOCUS_DELTA = 400;
 export const MAX_FOCUS_DELTA = 10000;
 
 export async function moveFocus(amount) {
-  if (Math.abs(amount) > MAX_FOCUS_DELTA || Math.abs(amount) < MIN_FOCUS_DELTA) {
+  if (
+    Math.abs(amount) > MAX_FOCUS_DELTA ||
+    Math.abs(amount) < MIN_FOCUS_DELTA
+  ) {
     return false;
   }
-  const response = await fetch(`/focus/move/${amount}`);
+  const response = await fetch(`/focus/move?steps=${amount}`, {
+    method: 'POST',
+    body: JSON.stringify(''),
+    cache: 'no-cache',
+    headers: new Headers({
+      'content-type': 'application/json',
+    }),
+  });
   if (response.status !== 200) {
-    return {"error": "Connection to evora server failed"};
+    return { error: 'Connection to evora server failed' };
   }
   const data = await response.json();
   console.log(data);
@@ -162,7 +173,7 @@ export async function moveFocus(amount) {
 export async function getFocus() {
   const response = await fetch(`/focus/status`);
   if (response.status !== 200) {
-    return {"error": "Connection to evora server failed"};
+    return { error: 'Connection to evora server failed' };
   }
   const data = await response.json();
   console.log(data);

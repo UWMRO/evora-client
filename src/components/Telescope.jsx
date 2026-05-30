@@ -5,7 +5,7 @@
 
 function TelescopeControl() {
   const sendCommand = (command) => {
-    fetch(`http://localhost:9090/ascii/${command}`, { method: 'GET' })
+    fetch(`http://72.233.250.83:80/tcs/ascii/${command}`, { method: 'GET' })
       .then()
       .catch((error) => {
         console.error(`Error sending command ${command}:`, error);
@@ -15,36 +15,50 @@ function TelescopeControl() {
   return (
     <>
       <h2 style={{ margin: '10px' }}>Telescope Controls</h2>
-      <div
-        style={{
-          justifySelf: 'center',
-          width: '300px',
-          marginTop: '30px',
-          display: 'flex',
-          flexWrap: 'wrap',
-          flexDirection: 'column',
-        }}
-      >
-        <button
-          style={{ margin: '10px', padding: '20px 30px', fontSize: '24px' }}
-          onClick={() => sendCommand('park')}
+      <div style={{ justifySelf: 'center', display: 'grid' }}>
+        <div
+          style={{
+            justifySelf: 'center',
+            width: '300px',
+            marginTop: '30px',
+            display: 'flex',
+            flexWrap: 'wrap',
+            flexDirection: 'column',
+          }}
         >
-          Go to Park
-        </button>
+          <button
+            style={{ margin: '10px', padding: '20px 30px', fontSize: '24px' }}
+            onClick={() => sendCommand('park')}
+          >
+            Go to Park
+          </button>
 
-        <button
-          style={{ margin: '10px', padding: '20px 30px', fontSize: '24px' }}
-          onClick={() => sendCommand('goto_cover')}
-        >
-          Go to Cover Position
-        </button>
+          <button
+            style={{ margin: '10px', padding: '20px 30px', fontSize: '24px' }}
+            onClick={() => sendCommand('goto_cover')}
+          >
+            Go to Cover Position
+          </button>
 
-        <button
-          style={{ margin: '10px', padding: '20px 30px', fontSize: '24px' }}
-          onClick={() => sendCommand('sync_to_zenith')}
-        >
-          Sync at Zenith
-        </button>
+          <button
+            style={{ margin: '10px', padding: '20px 30px', fontSize: '24px' }}
+            onClick={() => sendCommand('sync_to_zenith')}
+          >
+            Initialise to Zenith
+          </button>
+
+          <button
+            style={{
+              margin: '10px',
+              padding: '20px 30px',
+              fontSize: '24px',
+              backgroundColor: 'darkred',
+            }}
+            onClick={() => sendCommand('stop')}
+          >
+            STOP
+          </button>
+        </div>
       </div>
     </>
   );
