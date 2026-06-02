@@ -6,14 +6,21 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': {
+      '/evora': {
         target: 'http://72.233.250.83:80',
-        changeOrigin: true, // Ensure the request appears to come from the frontend server
-        rewrite: (path) => path.replace(/^\/api/, ''), // Optional: Rewrite the path if your backend doesn't expect the /api prefix
+        changeOrigin: true,
+      },
+      '/tcs': {
+        target: 'http://72.233.250.83:80',
+        changeOrigin: true,
+      },
+      '/focuser': {
+        target: 'http://72.233.250.83:80',
+        changeOrigin: true,
       },
       '/data': {
         target: 'http://72.233.250.83:80',
-        changeOrigin: true, // Ensure the request appears to come from the frontend server
+        changeOrigin: true,
       },
     },
   },

@@ -5,7 +5,7 @@
 
 function TelescopeControl() {
   const sendCommand = (command: string) => {
-    fetch(`/api/tcs/ascii/${command}`, { method: 'GET' })
+    fetch(`/tcs/ascii/${command}`, { method: 'GET' })
       .then()
       .catch((error) => {
         console.error(`Error sending command ${command}:`, error);

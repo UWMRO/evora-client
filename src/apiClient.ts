@@ -21,7 +21,7 @@ export async function getTemperature() {
   // await is kind of like a dotted line where the interpreter snips the function in two.
   // Everything that would execute after the await keyword is shelved until the network
   // request completes.
-  const response = await fetch('/api/evora/temperature/');
+  const response = await fetch('/evora/temperature/status');
   // The same applies here - we make another dotted line between trying to read the response
   // body as JSON and the remainder of the function
   const data = await response.json();
@@ -33,7 +33,7 @@ export async function getTemperature() {
 }
 
 export async function initialize() {
-  const response = await fetch('/api/evora/initialize');
+  const response = await fetch('/evora/initialize');
   if (response.status !== 200) {
     // if the response was not OK
     return false;
@@ -42,15 +42,13 @@ export async function initialize() {
 }
 
 export async function shutdown() {
-  const response = await fetch('/api/evora/shutdown');
+  const response = await fetch('/evora/shutdown');
   const data = await response.json();
   return data;
 }
 
 export async function setTemperature(input: number) {
-  const response = await fetch(
-    `/api/evora/temperature/set?temperature=${input}`
-  );
+  const response = await fetch(`/evora/temperature/set?temperature=${input}`);
 
   if (response.status !== 200) {
     // if the response was not OK
@@ -64,7 +62,7 @@ export async function setTemperature(input: number) {
 export async function capture(input) {
   console.log(input);
 
-  const response = await fetch('/api/evora/expose/', {
+  const response = await fetch('/evora/expose/', {
     method: 'POST',
     body: JSON.stringify(input),
     cache: 'no-cache',
@@ -79,13 +77,13 @@ export async function capture(input) {
 }
 
 export async function abort() {
-  const response = await fetch('/api/evora/expose/abort');
+  const response = await fetch('/evora/expose/abort');
   const data = await response.json();
   return data;
 }
 
 export async function setFilter(input) {
-  const response = await fetch('/api/evora/setFilter', {
+  const response = await fetch('/evora/setFilter', {
     method: 'POST',
     body: JSON.stringify(input),
     cache: 'no-cache',
@@ -100,7 +98,7 @@ export async function setFilter(input) {
 }
 
 export async function getStatusTEC() {
-  const response = await fetch('/api/evora/getStatusTEC');
+  const response = await fetch('/evora/getStatusTEC');
 
   const data = await response.json();
 
@@ -108,31 +106,31 @@ export async function getStatusTEC() {
 }
 
 export async function getStatus() {
-  const response = await fetch('/api/evora/status/');
+  const response = await fetch('/evora/status/');
   const data = await response.json();
   return data;
 }
 
 export async function getFilterWheel() {
-  const response = await fetch('/api/evora/filter/');
+  const response = await fetch('/evora/filter/status');
   const data = await response.json();
   return data;
 }
 
 export async function setFilterWheel(filter: string) {
-  const response = await fetch(`/api/evora/filter/set?filter_name=${filter}`);
+  const response = await fetch(`/evora/filter/set?filter_name=${filter}`);
   const data = await response.json();
   return data;
 }
 
 export async function homeFilterWheel() {
-  const response = await fetch('/api/evora/filter/home');
+  const response = await fetch('/evora/filter/home');
   const data = await response.json();
   return data;
 }
 
 export async function getWeatherData() {
-  const response = await fetch('/api/evora/weather/');
+  const response = await fetch('/evora/weather/status');
   const data = await response.json();
   return data;
 }
@@ -147,7 +145,7 @@ export async function moveFocus(amount: number) {
   ) {
     return false;
   }
-  const response = await fetch(`/api/focus/move?steps=${amount}`, {
+  const response = await fetch(`/focuser/move?steps=${amount}`, {
     method: 'POST',
     body: JSON.stringify(''),
     cache: 'no-cache',
@@ -163,7 +161,7 @@ export async function moveFocus(amount: number) {
 }
 
 export async function getFocus() {
-  const response = await fetch('/api/focus/status');
+  const response = await fetch('/focuser/status');
   if (response.status !== 200) {
     return { error: 'Connection to evora server failed' };
   }

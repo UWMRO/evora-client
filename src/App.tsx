@@ -48,7 +48,7 @@ function TelescopeStatusHeader() {
   const [airmass, setAirmass] = useState<number | null>(null);
 
   const fetchTelescopeStatus = useCallback(async () => {
-    const reponse = await fetch('/api/tcs/ascii/status');
+    const reponse = await fetch('/tcs/ascii/status');
     if (reponse.status !== 200) {
       console.error('Failed to fetch telescope status');
       setRA(null);
