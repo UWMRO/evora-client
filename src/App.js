@@ -210,64 +210,29 @@ function App() {
   ];
 
   const cameraComponent = (
-    <div className="interface">
-      <div className="controls">
-        {/* <PingServer/> */}
-        <OnOff initialized={initialized} setInitialized={setInitialized} />
-        <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus} />
-        <ImageTypeSelector
-          imageType={imageType}
-          setImageType={setImageType}
-          isDisabled={disableControls || !initialized}
-        />
-        <ExposureTypeSelector
-          exposureType={exposureType}
-          setExposureType={setExposureType}
-          isDisabled={disableControls || !initialized}
-        />
-        <FilterTypeSelector
-          filterType={filterType}
-          setFilterType={setFilterType}
-          isDisabled={disableControls || !initialized}
-        />
-        <SetTemp
-          temp={temp}
-          setTemp={setTemp}
-          isDisabled={disableControls || !initialized}
-        />
-        <GetTemp
-          currTemp={currTemp}
-          setCurrTemp={setCurrTemp}
-          isDisabled={!initialized}
-        />
-        <ExposureControls
-          exposureType={exposureType}
-          imageType={imageType}
-          filterType={filterType}
-          temp={temp}
-          setDisplayedImage={setDisplayedImage}
-          setDisableControls={setDisableControls}
-          isDisabled={!initialized}
-          currTimer={currTimer}
-          setCurrTimer={setCurrTimer}
-        />
-      </div>
-      <div className="display">
-        <div className="JS9Menubar"></div>
-        <div className="JS9"></div>
-        <div className="JS9Statusbar"></div>
-      </div>
-    </div>
-  );
+        <div className="controls" style={{ width: '100%' }}>
+          <OnOff initialized={initialized} setInitialized={setInitialized} />
+          <GetStatus currStatus={currStatus} setCurrStatus={setCurrStatus} />
+          <ImageTypeSelector imageType={imageType} setImageType={setImageType} isDisabled={disableControls || !initialized} />
+          <ExposureTypeSelector exposureType={exposureType} setExposureType={setExposureType} isDisabled={disableControls || !initialized} />
+          <FilterTypeSelector filterType={filterType} setFilterType={setFilterType} isDisabled={disableControls || !initialized} />
+          <SetTemp temp={temp} setTemp={setTemp} isDisabled={disableControls || !initialized} />
+          <GetTemp currTemp={currTemp} setCurrTemp={setCurrTemp} isDisabled={!initialized} />
+          <ExposureControls
+            exposureType={exposureType} imageType={imageType} filterType={filterType} temp={temp}
+            setDisplayedImage={setDisplayedImage} setDisableControls={setDisableControls} isDisabled={!initialized}
+            currTimer={currTimer} setCurrTimer={setCurrTimer}
+          />
+        </div>
+    );
 
   const framingAndFocusComponent = (
-    <div className="interface">
-      <div className="controls">
+      <div className="controls" style={{ width: '100%' }}>
         <Framing isDisabled={disableControls || !initialized} />
-        <Focus isDisabled={disableControls || !initialized} />
+        {/* Pass setDisplayedImage to Focus */}
+        <Focus isDisabled={disableControls || !initialized} setDisplayedImage={setDisplayedImage} />
         <FocusControls />
       </div>
-    </div>
   );
 
   const settingsComponent = (
@@ -459,11 +424,27 @@ function App() {
           className="mainPanel"
           style={{ minHeight: infoBarHidden ? '97vh' : '75vh' }}
         >
-          {/* Camera tab needs to persist so that JS9 has always a valid canvas to load in */}
-          <div style={{ display: activeTab === 'camera' ? 'block' : 'none' }}>
-            {cameraComponent}
+          {/* Shared Interface for Camera and Focus Tabs */}
+          <div className="interface" style={{ display: (activeTab === 'camera' || activeTab === 'framing_and_focus') ? 'flex' : 'none' }}>
+             
+             {/* Render Camera Controls on the left */}
+             <div style={{ width: '50%', display: activeTab === 'camera' ? 'block' : 'none' }}>
+                {cameraComponent}
+             </div>
+
+             {/* Render Focus Controls on the left */}
+             <div style={{ width: '50%', display: activeTab === 'framing_and_focus' ? 'block' : 'none' }}>
+                {framingAndFocusComponent}
+             </div>
+
+             {/* Shared JS9 Display on the right */}
+             <div className="display">
+                <div className="JS9Menubar"></div>
+                <div className="JS9"></div>
+                <div className="JS9Statusbar"></div>
+             </div>
           </div>
-          {activeTab === 'framing_and_focus' && framingAndFocusComponent}
+
           {activeTab === 'telescope' && <TelescopeControl />}
           {activeTab === 'settings' && settingsComponent}
         </div>
