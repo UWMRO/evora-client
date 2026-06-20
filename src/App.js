@@ -244,6 +244,7 @@ function App() {
           exposureType={exposureType}
           imageType={imageType}
           filterType={filterType}
+          setFilterType = {setFilterType}
           temp={temp}
           setDisplayedImage={setDisplayedImage}
           setDisableControls={setDisableControls}
