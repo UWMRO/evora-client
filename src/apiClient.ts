@@ -106,7 +106,7 @@ export async function getStatusTEC() {
 }
 
 export async function getStatus() {
-  const response = await fetch('/evora/status/');
+  const response = await fetch('/evora/status');
   const data = await response.json();
   return data;
 }
