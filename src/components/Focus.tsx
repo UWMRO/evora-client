@@ -1,120 +1,207 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-function Focus() {
-  const [focuserPosition, setFocuserPosition] = useState('');
-  const [filename, setFilename] = useState('');
-  const [sid, setSid] = useState('');
-  const [img, setImg] = useState();
+import {
+  abortAutofocus,
+  confirmAutofocus,
+  getAutofocusStatus,
+  getFocus,
+  startAutofocus,
+  type AutofocusStatus,
+} from '../apiClient';
 
-  const refreshSid = () => {
-    // Generate a timestamp session id
-    const sessionId = Date.now().toString();
-    setSid(sessionId);
-  };
+const emptyStatus: AutofocusStatus = {
+  state: 'idle',
+  message: '',
+  completed: 0,
+  total: 0,
+  recommended_position: null,
+};
+
+function Focus({ isDisabled }: { isDisabled?: boolean }) {
+  const [f0, setF0] = useState('');
+  const [delta, setDelta] = useState('500');
+  const [nPositions, setNPositions] = useState('7');
+  const [exposureTime, setExposureTime] = useState('1');
+  const [status, setStatus] = useState<AutofocusStatus>(emptyStatus);
+  const [localError, setLocalError] = useState('');
+  const pollTimer = useRef<number | undefined>(undefined);
+  const alive = useRef(true);
+
+  const running = status.state === 'running';
 
   useEffect(() => {
-    refreshSid();
+    getFocus().then((data) => {
+      if (data && typeof data.step === 'number') {
+        setF0((current) => (current === '' ? String(data.step) : current));
+      }
+    });
   }, []);
 
-  const handleFilenameChange = (event) => {
-    setFilename(event.target.value);
+  useEffect(() => {
+    alive.current = true;
+    return () => {
+      alive.current = false;
+      window.clearTimeout(pollTimer.current);
+    };
+  }, []);
+
+  const applyStatus = (next: AutofocusStatus) => {
+    if (!alive.current) {
+      return;
+    }
+    setStatus(next);
+    if (next.state === 'running') {
+      window.clearTimeout(pollTimer.current);
+      pollTimer.current = window.setTimeout(() => {
+        getAutofocusStatus()
+          .then(applyStatus)
+          .catch((error: Error) => {
+            if (alive.current) {
+              setLocalError(error.message);
+            }
+          });
+      }, 1000);
+    }
   };
 
-  const handleFocuserPositionChange = (event) => {
-    setFocuserPosition(event.target.value);
+  const handleStart = async () => {
+    setLocalError('');
+    const body = {
+      f0: Number(f0),
+      delta: Number(delta),
+      n_positions: Number(nPositions),
+      exposure_time: Number(exposureTime),
+    };
+    if (
+      !Number.isInteger(body.f0) ||
+      !Number.isInteger(body.delta) ||
+      body.delta === 0 ||
+      !Number.isInteger(body.n_positions) ||
+      body.n_positions < 3 ||
+      body.n_positions > 25 ||
+      !(body.exposure_time > 0) ||
+      body.exposure_time > 3600
+    ) {
+      setLocalError(
+        'Use a whole-number f0 and delta, 3 to 25 positions, and an exposure above 0 seconds and at most 3600.'
+      );
+      return;
+    }
+    try {
+      applyStatus(await startAutofocus(body));
+    } catch (error) {
+      setLocalError(error instanceof Error ? error.message : 'Start failed');
+    }
   };
 
-  const handleSendButtonClick = () => {
-    // Send request to backend with focuserPosition and filename
-    console.log(
-      `Sending request to backend with focuserPosition: ${focuserPosition} and filename: ${filename}`
-    );
-
-    fetch('/evora/focus/add_focus_datapoint', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ sid, focuserPosition, filename }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log('Response from backend:', data);
-        fetchPlot();
-      })
-      .catch((error) => {
-        console.error('Error sending request to backend:', error);
-      });
+  const handleAbort = async () => {
+    setLocalError('');
+    try {
+      applyStatus(await abortAutofocus());
+    } catch (error) {
+      setLocalError(error instanceof Error ? error.message : 'Abort failed');
+    }
   };
 
-  const fetchPlot = async () => {
-    const res = await fetch(`/evora/focus/plot/${sid}`, {});
-    const imageBlob = await res.blob();
-    const imageObjectURL = URL.createObjectURL(imageBlob);
-    setImg(imageObjectURL);
-  };
-
-  const handleResetButtonClick = () => {
-    // Send request to backend to analyze data
-    console.log('Sending request to backend to analyze data');
-
-    fetch(`/evora/focus/reset`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        sid,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log('Response from backend:', data);
-        setImg(null);
-        refreshSid();
-      })
-      .catch((error) => {
-        console.error('Error sending request to backend:', error);
-        refreshSid();
-      });
+  const handleConfirm = async (move: boolean) => {
+    setLocalError('');
+    try {
+      applyStatus(await confirmAutofocus(move));
+    } catch (error) {
+      setLocalError(error instanceof Error ? error.message : 'Move failed');
+    }
   };
 
   return (
     <fieldset className='focus'>
-      <legend>Focus</legend>
-      <div>
-        <label htmlFor='filename'>File name:</label>
-        <input
-          type='text'
-          id='filename'
-          value={filename}
-          onChange={handleFilenameChange}
-        />
-        <label htmlFor='focuserPosition'>Focuser Position:</label>
-        <input
-          type='text'
-          id='focuserPosition'
-          value={focuserPosition}
-          onChange={handleFocuserPositionChange}
-        />
-        <button className='temp-set' onClick={handleSendButtonClick}>
-          Send
-        </button>
+      <legend>Autofocus</legend>
+      <div className='autofocusFields'>
+        <label>
+          f0 (steps)
+          <input
+            type='number'
+            value={f0}
+            disabled={isDisabled || running}
+            onChange={(event) => setF0(event.target.value)}
+          />
+        </label>
+        <label>
+          Delta (steps)
+          <input
+            type='number'
+            value={delta}
+            disabled={isDisabled || running}
+            onChange={(event) => setDelta(event.target.value)}
+          />
+        </label>
+        <label>
+          Positions
+          <input
+            type='number'
+            min={3}
+            max={25}
+            value={nPositions}
+            disabled={isDisabled || running}
+            onChange={(event) => setNPositions(event.target.value)}
+          />
+        </label>
+        <label>
+          Exposure (s)
+          <input
+            type='number'
+            min={0}
+            max={3600}
+            step={0.1}
+            value={exposureTime}
+            disabled={isDisabled || running}
+            onChange={(event) => setExposureTime(event.target.value)}
+          />
+        </label>
       </div>
-      <button className='temp-set' onClick={handleResetButtonClick}>
-        Reset
-      </button>
-      {img && <img src={img} alt='An example image' />}
+      <div>
+        <button
+          className='temp-set'
+          type='button'
+          disabled={isDisabled || running}
+          onClick={handleStart}
+        >
+          Start
+        </button>
+        {running && (
+          <button className='tempGraphON' type='button' onClick={handleAbort}>
+            Abort
+          </button>
+        )}
+      </div>
+      {running && (
+        <p>
+          Focusing. {status.completed} of {status.total}.
+        </p>
+      )}
+      {!running && status.message && (
+        <p style={{ color: status.state === 'error' ? 'red' : undefined }}>
+          {status.message}
+        </p>
+      )}
+      {localError && <p style={{ color: 'red' }}>{localError}</p>}
+      {status.state === 'awaiting_confirm' && (
+        <div>
+          <button
+            className='temp-set'
+            type='button'
+            onClick={() => handleConfirm(true)}
+          >
+            Move there
+          </button>
+          <button
+            className='temp-set'
+            type='button'
+            onClick={() => handleConfirm(false)}
+          >
+            Leave it
+          </button>
+        </div>
+      )}
     </fieldset>
   );
 }

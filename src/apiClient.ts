@@ -160,6 +160,77 @@ export async function moveFocus(amount: number) {
   return data;
 }
 
+export type AutofocusStatus = {
+  state:
+    | 'idle'
+    | 'running'
+    | 'awaiting_confirm'
+    | 'aborted'
+    | 'error'
+    | 'done';
+  message: string;
+  completed: number;
+  total: number;
+  recommended_position: number | null;
+};
+
+async function autofocusError(response: Response) {
+  try {
+    const body = await response.json();
+    if (typeof body.detail === 'string') {
+      return body.detail;
+    }
+  } catch {
+    // The body was not JSON.
+  }
+  return response.statusText || 'Autofocus request failed';
+}
+
+export async function startAutofocus(input: {
+  f0: number;
+  delta: number;
+  n_positions: number;
+  exposure_time: number;
+}) {
+  const response = await fetch('/evora/autofocus/start', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  });
+  if (!response.ok) {
+    throw new Error(await autofocusError(response));
+  }
+  return (await response.json()) as AutofocusStatus;
+}
+
+export async function getAutofocusStatus() {
+  const response = await fetch('/evora/autofocus/status');
+  if (!response.ok) {
+    throw new Error(await autofocusError(response));
+  }
+  return (await response.json()) as AutofocusStatus;
+}
+
+export async function abortAutofocus() {
+  const response = await fetch('/evora/autofocus/abort', { method: 'POST' });
+  if (!response.ok) {
+    throw new Error(await autofocusError(response));
+  }
+  return (await response.json()) as AutofocusStatus;
+}
+
+export async function confirmAutofocus(move: boolean) {
+  const response = await fetch('/evora/autofocus/confirm', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ move }),
+  });
+  if (!response.ok) {
+    throw new Error(await autofocusError(response));
+  }
+  return (await response.json()) as AutofocusStatus;
+}
+
 export async function getFocus() {
   const response = await fetch('/focuser/status');
   if (response.status !== 200) {

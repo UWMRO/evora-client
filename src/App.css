@@ -188,6 +188,12 @@ fieldset {
   border: 3px solid black;
 }
 
+.autofocusProgress {
+  width: 100%;
+  height: 14px;
+  margin: 10px 0;
+}
+
 .indeterminate-progress-bar {
   background-color: #d1d5db;
   border-radius: 9999px;
@@ -252,6 +258,26 @@ fieldset {
 
 .focus label {
   margin-left: 10px;
+}
+
+.autofocusFields {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: center;
+  column-gap: 24px;
+  align-items: center;
+}
+
+.focus .autofocusFields label {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0;
+  white-space: nowrap;
+}
+
+.focus .autofocusFields input {
+  width: 8.5rem;
+  margin: 10px 0 10px 10px;
 }
 
 .framing, .focus {
