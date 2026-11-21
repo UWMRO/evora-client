@@ -336,6 +336,36 @@ input[type=number] {
   font-family: Inter;
 }
 
+.btn-outline {
+  /* Core layout rules */
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+
+  /* Theming & Transparency */
+  background-color: transparent;
+  color: #007bff;
+
+  /* Outline framing */
+  border: 2px solid #007bff;
+  border-radius: 4px;
+
+  /* Smooth color fill effect */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover dynamic state */
+.btn-outline:hover {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+/* Keyboard accessibility fallback */
+.btn-outline:focus-visible {
+  outline: 3px solid #0056b3;
+  outline-offset: 2px;
+}
 .temp-set {
   background-color: #333;
   color: #e0e0e0;
@@ -389,3 +419,8 @@ input[type=number] {
 .minusFocusButton {
   margin-right: 10px;
 }
+
+input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
+input:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
+input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
